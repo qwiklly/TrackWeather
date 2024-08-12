@@ -27,7 +27,6 @@
 	<PackageReference Include="TimeZoneConverter" Version="6.1.0" />
 	  
     <Folder Include="Controllers\" />
-    <Folder Include="DTOs\" />
     <Folder Include="Repositories\" />
     <Folder Include="Responses\" />
     <Folder Include="Services\" />
