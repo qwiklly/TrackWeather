@@ -13,6 +13,7 @@
 	<PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
 	<PackageReference Include="LocalStorage" Version="2.1.0" />
 	<PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.0" />
+	<PackageReference Include="Serilog" Version="4.0.1" />
 	<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 	<PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.6.2" />
 	<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.2.0" />
@@ -25,6 +26,10 @@
 	<!--Client-->
 	<PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.1" />
 	<PackageReference Include="TimeZoneConverter" Version="6.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="BusinessServices\" />
   </ItemGroup>
 
 </Project>

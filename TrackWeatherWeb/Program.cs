@@ -5,8 +5,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using TrackWeatherWeb.Data;
 using TrackWeatherWeb.Repositories;
-using TrackWeatherWeb.Services;
+using TrackWeatherWeb.HttpServices;
 using TrackWeatherWeb.States;
+using TrackWeatherWeb.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,7 +46,8 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
     };
 });
-builder.Services.AddScoped<IApplication, Application>();
+builder.Services.AddScoped<IAccount, Account>();
+builder.Services.AddScoped<ITransport, Transport>();
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7123/") });
 builder.Services.AddScoped<IApplicationService, ApplicationService>();
 builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationProvider>();
@@ -68,6 +70,8 @@ app.UseSwaggerUI(x =>
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseGlobalExceptionMiddleware();
+
 app.UseRouting();
 app.MapControllers();
 app.UseAuthentication();
@@ -81,7 +85,7 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var context = services.GetRequiredService<AppDbContext>();
-        await Application.Create_Admin(context);
+        await Account.Create_Admin(context);
     }
     catch (Exception ex)
     {
