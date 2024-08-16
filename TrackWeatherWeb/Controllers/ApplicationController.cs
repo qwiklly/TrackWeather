@@ -9,7 +9,7 @@ namespace TrackWeatherWeb.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class ApplicationController(IApplication _accountrepo) : ControllerBase
+    public class ApplicationController(IAccount _accountrepo, ITransport _transportrepo) : ControllerBase
     {
         [HttpGet("GetUsers")]
         [SwaggerOperation(
@@ -37,9 +37,9 @@ namespace TrackWeatherWeb.Controllers
             Summary = "Get all transport requests",
             Description = "Retrieve a list of all transport requests (coordinates) from the database."
         )]
-        public async Task<ActionResult<BaseResponse>> GetCoordinatesAsync()
+        public async Task<ActionResult<BaseResponse>> GetTransportRequestsAsync()
         {
-            var result = await _accountrepo.GetCoordinatesAsync();
+            var result = await _transportrepo.GetTransportRequestsAsync();
             return Ok(result);
         }
 
@@ -48,9 +48,9 @@ namespace TrackWeatherWeb.Controllers
             Summary = "Get a transport request by ID",
             Description = "Retrieve a specific transport request (coordinates) from the database using its ID."
         )]
-        public async Task<ActionResult<BaseResponse>> GetCoordinatesAsync(int id)
+        public async Task<ActionResult<BaseResponse>> GetTransportRequestAsync(int id)
         {
-            var result = await _accountrepo.GetCoordinateAsync(id);
+            var result = await _transportrepo.GetTransportRequestAsync(id);
             return Ok(result);
         }
 
@@ -83,7 +83,7 @@ namespace TrackWeatherWeb.Controllers
         )]
         public async Task<ActionResult<BaseResponse>> RequestTransportAsync(RequestTransportDTO model)
         {
-            var result = await _accountrepo.RequestTransportAsync(model);
+            var result = await _transportrepo.RequestTransportAsync(model);
             return Ok(result);
         }
 
@@ -103,9 +103,9 @@ namespace TrackWeatherWeb.Controllers
             Summary = "Delete transport coordinates.",
             Description = "Delete transport coordinates."
         )]
-        public async Task<ActionResult<BaseResponse>> DeleteCoordinates(DeleteTransportRequestDTO model)
+        public async Task<ActionResult<BaseResponse>> DeleteTransportRequest(DeleteTransportRequestDTO model)
         {
-            var result = await _accountrepo.DeleteCoordinatesAsync(model);
+            var result = await _transportrepo.DeleteTransportRequestAsync(model);
             return Ok(result);
         }
 
@@ -125,9 +125,9 @@ namespace TrackWeatherWeb.Controllers
             Summary = "Update transport request.",
             Description = "Update the details of an existing transport request (coordinates) by its ID."
         )]
-        public async Task<ActionResult<BaseResponse>> DeleteCoordinates(int id, RequestTransportDTO model)
+        public async Task<ActionResult<BaseResponse>> UpdateTransportRequest(int id, RequestTransportDTO model)
         {
-            var result = await _accountrepo.UpdateCoordinatesAsync(id, model);
+            var result = await _transportrepo.UpdateTransportRequestAsync(id, model);
             return Ok(result);
         }
     }
