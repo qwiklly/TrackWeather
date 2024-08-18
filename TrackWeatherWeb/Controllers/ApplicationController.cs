@@ -7,11 +7,11 @@ using TrackWeatherWeb.Repositories;
 namespace TrackWeatherWeb.Controllers
 {
 
-    [Route("api/[controller]")]
+    [Route("api/application")]
     [ApiController]
     public class ApplicationController(IAccount _accountrepo, ITransport _transportrepo) : ControllerBase
     {
-        [HttpGet("GetUsers")]
+        [HttpGet("getUsers")]
         [SwaggerOperation(
             Summary = "Get all users",
             Description = "Retrieve a list of all users from the database."
@@ -21,7 +21,7 @@ namespace TrackWeatherWeb.Controllers
             var result = await _accountrepo.GetUsersAsync();
             return Ok(result);
         }
-        [HttpGet("GetUser")]
+        [HttpGet("getUser")]
         [SwaggerOperation(
             Summary = "Get one user by id",
             Description = "Retrieve a single user from the database using their email address."
@@ -32,7 +32,7 @@ namespace TrackWeatherWeb.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetCoordinates")]
+        [HttpGet("getAllTransportRequests")]
         [SwaggerOperation(
             Summary = "Get all transport requests",
             Description = "Retrieve a list of all transport requests (coordinates) from the database."
@@ -43,7 +43,7 @@ namespace TrackWeatherWeb.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetCoordinate")]
+        [HttpGet("getTransportRequest")]
         [SwaggerOperation(
             Summary = "Get a transport request by ID",
             Description = "Retrieve a specific transport request (coordinates) from the database using its ID."
@@ -54,7 +54,7 @@ namespace TrackWeatherWeb.Controllers
             return Ok(result);
         }
 
-        [HttpPost("Register")]
+        [HttpPost("register")]
         [SwaggerOperation(
             Summary = "Register a new user",
             Description = "Registers a new user."
@@ -65,7 +65,7 @@ namespace TrackWeatherWeb.Controllers
             return Ok(result);
         }
 
-        [HttpPost("Login")]
+        [HttpPost("login")]
         [SwaggerOperation(
             Summary = "Login a user",
             Description = "Authenticate a user with email and password."
@@ -76,7 +76,7 @@ namespace TrackWeatherWeb.Controllers
             return Ok(result);
         }
 
-        [HttpPost("RequestTransport")]
+        [HttpPost("requestTransport")]
         [SwaggerOperation(
             Summary = "Request a transport",
             Description = "Request a special transport to x and y coordinates. Current data is created automatically."
@@ -87,7 +87,7 @@ namespace TrackWeatherWeb.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("DeleteUser")]
+        [HttpDelete("deleteUser")]
         [SwaggerOperation(
             Summary = "Delete a user",
             Description = "Delete a user."
@@ -98,7 +98,7 @@ namespace TrackWeatherWeb.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("DeleteCoordinates")]
+        [HttpDelete("deleteTransportRequest")]
         [SwaggerOperation(
             Summary = "Delete transport coordinates.",
             Description = "Delete transport coordinates."
@@ -109,7 +109,7 @@ namespace TrackWeatherWeb.Controllers
             return Ok(result);
         }
 
-        [HttpPut("UpdateUser/{email}")]
+        [HttpPut("updateUser/{email}")]
         [SwaggerOperation(
             Summary = "Update a user",
             Description = "Update a user's information, such as name, role, or password."
@@ -120,7 +120,7 @@ namespace TrackWeatherWeb.Controllers
             return Ok(result);
         }
 
-        [HttpPut("UpdateRequest/{id}")]
+        [HttpPut("updateTransportRequest/{id}")]
         [SwaggerOperation(
             Summary = "Update transport request.",
             Description = "Update the details of an existing transport request (coordinates) by its ID."
