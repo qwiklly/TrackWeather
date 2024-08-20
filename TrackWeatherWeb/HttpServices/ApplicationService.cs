@@ -26,38 +26,37 @@ namespace TrackWeatherWeb.HttpServices
         }
 
         public Task<BaseResponse> GetUsersAsync() =>
-            SendRequestAsync<BaseResponse>(() => _httpClient.GetAsync("api/account/getUsers"));
+            SendRequestAsync<BaseResponse>(() => _httpClient.GetAsync("api/application/getUsers"));
 
         public Task<BaseResponse> GetUserAsync(string email) =>
-            SendRequestAsync<BaseResponse>(() => _httpClient.PostAsJsonAsync("api/account/GetUser", email));
+            SendRequestAsync<BaseResponse>(() => _httpClient.PostAsJsonAsync("api/application/getUser", email));
 
-        public Task<BaseResponse> GetCoordinatesAsync() =>
-            SendRequestAsync<BaseResponse>(() => _httpClient.GetAsync("api/account/getCoordinates"));
+        public Task<BaseResponse> GetAllTransportRequestsAsync() =>
+            SendRequestAsync<BaseResponse>(() => _httpClient.GetAsync("api/application/getAllTransportRequests"));
 
-        public Task<BaseResponse> GetCoordinateAsync(int id) =>
-            SendRequestAsync<BaseResponse>(() => _httpClient.PostAsJsonAsync("api/account/GetCoordinate", id));
+        public Task<BaseResponse> GetTransportRequestAsync(int id) =>
+            SendRequestAsync<BaseResponse>(() => _httpClient.PostAsJsonAsync("api/application/getTransportRequest", id));
 
         public Task<LoginResponse> LoginAsync(LoginDTO model) =>
-            SendRequestAsync<LoginResponse>(() => _httpClient.PostAsJsonAsync("api/account/login", model));
+            SendRequestAsync<LoginResponse>(() => _httpClient.PostAsJsonAsync("api/application/login", model));
 
         public Task<BaseResponse> DeleteUserAsync(string email) =>
-            SendRequestAsync<BaseResponse>(() => _httpClient.DeleteAsync($"api/account/delete/{email}"));
+            SendRequestAsync<BaseResponse>(() => _httpClient.DeleteAsync($"api/application/deleteUser/{email}"));
 
-        public Task<BaseResponse> DeleteCoordinatesAsync(int id) =>
-            SendRequestAsync<BaseResponse>(() => _httpClient.DeleteAsync($"api/deleteCoordinates/{id}"));
+        public Task<BaseResponse> DeleteTransportRequestAsync(int id) =>
+            SendRequestAsync<BaseResponse>(() => _httpClient.DeleteAsync($"api/application/deleteTransportRequests/{id}"));
 
-        public Task<BaseResponse> UpdateCoordinatesAsync(RequestTransportDTO model) =>
-            SendRequestAsync<BaseResponse>(() => _httpClient.PutAsJsonAsync("api/updateRequestTransport", model));
+        public Task<BaseResponse> UpdateTransportRequestAsync(RequestTransportDTO model) =>
+            SendRequestAsync<BaseResponse>(() => _httpClient.PutAsJsonAsync("api/application/updateTransportRequests", model));
 
         public Task<BaseResponse> UpdateUserAsync(RegisterDTO model) =>
-            SendRequestAsync<BaseResponse>(() => _httpClient.PutAsJsonAsync("api/account/updateRegister", model));
+            SendRequestAsync<BaseResponse>(() => _httpClient.PutAsJsonAsync("api/application/updateUser", model));
 
         public Task<BaseResponse> ConfirmTransportRequestAsync(RequestTransportDTO model) =>
-            SendRequestAsync<BaseResponse>(() => _httpClient.PostAsJsonAsync("api/requestTransport", model));
+            SendRequestAsync<BaseResponse>(() => _httpClient.PostAsJsonAsync("api/application/requestTransport", model));
 
         public Task<RegisterResponse> RegisterAsync(RegisterDTO model) =>
-            SendRequestAsync<RegisterResponse>(() => _httpClient.PostAsJsonAsync("api/account/register", model));
+            SendRequestAsync<RegisterResponse>(() => _httpClient.PostAsJsonAsync("api/application/register", model));
     }
 }
-
 

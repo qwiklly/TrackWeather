@@ -6,14 +6,14 @@ namespace TrackWeatherWeb.HttpServices
     public interface IApplicationService
     {
         Task<BaseResponse> GetUsersAsync();
-        Task<BaseResponse> GetCoordinatesAsync();
+        Task<BaseResponse> GetAllTransportRequestsAsync();
         Task<RegisterResponse> RegisterAsync(RegisterDTO model);
         Task<LoginResponse> LoginAsync(LoginDTO model);
         Task<BaseResponse> ConfirmTransportRequestAsync(RequestTransportDTO model);
         Task<BaseResponse> DeleteUserAsync(string email);
-        Task<BaseResponse> DeleteCoordinatesAsync(int id);
+        Task<BaseResponse> DeleteTransportRequestAsync(int id);
         Task<BaseResponse> UpdateUserAsync(RegisterDTO model);
-        Task<BaseResponse> UpdateCoordinatesAsync(RequestTransportDTO model);
+        Task<BaseResponse> UpdateTransportRequestAsync(RequestTransportDTO model);
     }
 }
 
