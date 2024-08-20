@@ -12,7 +12,7 @@ using TrackWeatherWeb.Data;
 namespace TrackWeatherWeb.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240815112744_First")]
+    [Migration("20240817193713_First")]
     partial class First
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace TrackWeatherWeb.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.1")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -41,6 +41,10 @@ namespace TrackWeatherWeb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -58,15 +62,15 @@ namespace TrackWeatherWeb.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<decimal>("Coordinate_x")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Coordinate_y")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Description")
+                    b.Property<string>("Comment")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("Coordinate_x")
+                        .HasColumnType("decimal(18, 6)");
+
+                    b.Property<decimal?>("Coordinate_y")
+                        .HasColumnType("decimal(18, 6)");
 
                     b.Property<string>("Email")
                         .IsRequired()
