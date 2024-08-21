@@ -1,0 +1,41 @@
+﻿@page
+@model UsersPageModel
+@{
+    ViewData["Title"] = "Users";
+}
+
+<h2>Users List</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td>@user.Name</td>
+                <td>@user.Email</td>
+                <td>@user.Role</td>
+                <td>
+                    <form method="post" asp-page-handler="Delete" asp-route-email="@user.Email" onsubmit="return confirmDelete('@user.Name');">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script type="text/javascript">
+        function confirmDelete(userName) {
+            return confirm('Вы действительно хотите удалить пользователя ' + userName + '?');
+        }
+    </script>
+}
