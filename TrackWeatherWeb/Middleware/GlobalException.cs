@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using System.Net;
 using System.Text.Json;
-using TrackWeatherWeb.Logs;
 
 namespace TrackWeatherWeb.Middleware
 {
@@ -47,7 +47,7 @@ namespace TrackWeatherWeb.Middleware
             catch (Exception ex)
             {
                 // Log Original Exceptions
-                LogException.LogExceptions(ex);
+                Log.Error(ex, "error");
                 // cheack if Ex is Timeout(408)
                 if (ex is TaskCanceledException || ex is TimeoutException)
                 {

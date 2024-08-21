@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-
-namespace TrackWeatherWeb.Middleware
+﻿namespace TrackWeatherWeb.Middleware
 {
     public static class MiddlewareExtensions
     {
