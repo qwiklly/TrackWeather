@@ -8,8 +8,7 @@ using TrackWeatherWeb.Data;
 using TrackWeatherWeb.DTOs;
 using TrackWeatherWeb.Models;
 using Microsoft.EntityFrameworkCore;
-using TrackWeatherWeb.Logs;
-using Azure;
+using Serilog;
 
 namespace TrackWeatherWeb.Repositories
 {
@@ -33,7 +32,7 @@ namespace TrackWeatherWeb.Repositories
             }
             catch (Exception ex)
             {
-                LogException.LogExceptions(ex);
+                Log.Error(ex, "An error occurred while signing in");
                 //display user exception
                 return new LoginResponse(false, "Error occurred while signing in");
             }
@@ -62,14 +61,14 @@ namespace TrackWeatherWeb.Repositories
             }
             catch (Exception ex)
             {
-                LogException.LogExceptions(ex);
+                Log.Error(ex, "An error occurred while signing up");
                 //display user exception
                 return new RegisterResponse(false, "Error occurred while signing up");
             }
         }
 
         // Retrieves a list of all users in the system
-        public async Task<IEnumerable<GetUsersDTO>> GetUsersAsync()
+        public async Task<List<GetUsersDTO>> GetUsersAsync()
         {
             try
             {
@@ -86,7 +85,7 @@ namespace TrackWeatherWeb.Repositories
             }
             catch (Exception ex)
             {
-                LogException.LogExceptions(ex);
+                Log.Error(ex, "An error occurred while finding users");
                 //display user exception
                 throw new InvalidOperationException("Error while finding users ");
             }
@@ -124,7 +123,7 @@ namespace TrackWeatherWeb.Repositories
             }
             catch (Exception ex)
             {
-                LogException.LogExceptions(ex);
+                Log.Error(ex, "An error occurred while updating user's data");
                 //display user exception
                 return new RegisterResponse(false, "Error while updating user's data ");
             }
@@ -149,40 +148,13 @@ namespace TrackWeatherWeb.Repositories
             }
             catch (Exception ex)
             {
-                LogException.LogExceptions(ex);
+                Log.Error(ex, "An error occurred while deleting user");
                 //display user exception
                 return new BaseResponse(false, "Error while deleting user ");
             }
         }
-        public static async Task Create_Admin(AppDbContext context)
-        {
-            try
-            {
-                // Check if an admin already exists.
-                if (!context.Users.Any(u => u.Role == "Admin"))
-                {
-                    // Create a new admin user.
-                    var admin = new ApplicationUsers
-                    {
-                        Role = "Admin",
-                        Name = "Admin",
-                        Email = "admin@example.com",
-                        Password = BCrypt.Net.BCrypt.HashPassword("Admin123")
-                    };
-
-                    context.Users.Add(admin);
-                    await context.SaveChangesAsync();
-                }
-            }
-            catch (Exception ex)
-            {
-                LogException.LogExceptions(ex);
-
-                throw new Exception("Error while creating Admin ");
-            }
-        }
         // Generates a JWT token based on the user's details.
-        protected string GenerateToken(ApplicationUsers user)
+        private string GenerateToken(ApplicationUsers user)
         {
             try
             {
@@ -207,7 +179,7 @@ namespace TrackWeatherWeb.Repositories
             }
             catch (Exception ex)
             {
-                LogException.LogExceptions(ex);
+                Log.Error(ex, "error while Generating Token");
 
                 throw new Exception("Error while Generating Token ");
             }

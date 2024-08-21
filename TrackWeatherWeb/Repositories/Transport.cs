@@ -1,18 +1,17 @@
 ﻿using static TrackWeatherWeb.Responses.CustomResponses;
 using TrackWeatherWeb.DTOs;
-using TrackWeatherWeb.Logs;
 using TrackWeatherWeb.Models;
 using TrackWeatherWeb.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using Serilog;
 
 namespace TrackWeatherWeb.Repositories
 {
     public class Transport(AppDbContext appDbContext) : ITransport
     {
         // Retrieves all user coordinates.
-        public async Task<IEnumerable<RequestTransportDTO>> GetTransportRequestsAsync()
+        public async Task<List<RequestTransportDTO>> GetTransportRequestsAsync()
         {
             try
             {
@@ -30,7 +29,7 @@ namespace TrackWeatherWeb.Repositories
             }
             catch (Exception ex)
             {
-                LogException.LogExceptions(ex);
+                Log.Error(ex, "Error while getting TransportRequests");
                 //display user exception
                 throw new InvalidOperationException("Error while getting TransportRequests ");
             }
@@ -59,7 +58,7 @@ namespace TrackWeatherWeb.Repositories
             }
             catch (Exception ex)
             {
-                LogException.LogExceptions(ex);
+                Log.Error(ex, "Error while deleting TransportRequest");
 
                 return new BaseResponse(false, "Error while deleting TransportRequest ");
             }
@@ -88,7 +87,7 @@ namespace TrackWeatherWeb.Repositories
             }
             catch (Exception ex)
             {
-                LogException.LogExceptions(ex);
+                Log.Error(ex, "Error while updating TransportRequest");
 
                 return new BaseResponse(false, "Error while updating TransportRequest ");
             }
@@ -114,7 +113,7 @@ namespace TrackWeatherWeb.Repositories
             }
             catch (Exception ex)
             {
-                LogException.LogExceptions(ex);
+                Log.Error(ex, "Error while requesting TransportRequest");
                 return new BaseResponse(false, "Error while requesting TransportRequest ");
             }
         }
