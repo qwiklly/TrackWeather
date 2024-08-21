@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿@* <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -25,6 +25,18 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Register">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/UsersPage">Users</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/RequestTransportPage">RequestTransport</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -48,4 +60,138 @@
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+</html> *@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using System.Security.Claims
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - TrackWeatherWeb</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+	<link rel="stylesheet" href="~/css/layout.css" asp-append-version="true" />
+</head>
+<body>
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-dark">
+			<div class="container-fluid">
+				<a class="navbar-brand" asp-area="" asp-page="/Index">TrackWeatherWeb</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav ms-auto">
+						<!-- Профиль пользователя -->
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								<span class="bi bi-person-circle"></span> Profile
+							</a>
+							<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+								@if (await IsUserAuthenticated())
+								{
+									<li><a class="dropdown-item" asp-area="" asp-page="/LogoutPage">Logout</a></li>
+								}
+								else
+								{
+									<li class="nav-item">
+										<a class="dropdown-item" asp-area="" asp-page="/Login">Login</a>
+									</li>
+									<li class="nav-item">
+										<a class="dropdown-item" asp-area="" asp-page="/Register">Register</a>
+									</li>
+								}
+
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<div class="container-fluid">
+		<div class="row">
+			<nav class="col-md-3 col-lg-2 d-md-block sidebar">
+				<div class="position-sticky">
+					<ul class="nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link @((ViewContext.RouteData.Values["page"]?.ToString() == "/Index") ? "active" : "")" asp-area="" asp-page="/Index">
+								<span class="bi bi-house-door-fill"></span> Home
+							</a>
+						</li>
+						@if (await IsUserInRole("Admin"))
+						{
+
+							<li class="nav-item">
+								<a class="nav-link @((ViewContext.RouteData.Values["page"]?.ToString() == "/TransportRequestPage") ? "active" : "")" asp-area="" asp-page="/TransportRequestPage">TransportRequestPage</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" asp-area="" asp-page="/UsersPage">User Dashboard</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" asp-area="" asp-page="/Register">Register</a>
+							</li>
+						}
+						@if (await IsUserInRole("User"))
+						{
+							
+						}
+						@if (await IsUserAuthenticated()==false)
+						{
+							// Пункт меню "Login" для неавторизованных пользователей
+							<li class="nav-item">
+								<a class="nav-link" asp-area="" asp-page="/Login">Login</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" asp-area="" asp-page="/Map">Map</a>
+							</li>
+							// Пункт меню "Login" для неавторизованных пользователей
+							<li class="nav-item">
+								<a class="nav-link" asp-area="" asp-page="/Register">Register</a>
+							</li>
+						}
+					</ul>
+				</div>
+			</nav>
+			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+				@RenderBody()
+			</main>
+		</div>
+	</div>
+
+	<footer class="footer text-muted mt-3">
+		<div class="container">
+			&copy; 2024 - TrackWeatherWeb - <a asp-area="" asp-page="/Privacy">Privacy</a>
+		</div>
+	</footer>
+
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	@RenderSection("Scripts", required: false)
+</body>
 </html>
+
+@functions {
+	private async Task<ClaimsPrincipal> GetCurrentUserAsync()
+	{
+		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		return authState.User;
+	}
+
+	private async Task<bool> IsUserInRole(string role)
+	{
+		var user = await GetCurrentUserAsync();
+		return user.IsInRole(role);
+	}
+
+	private async Task<bool> IsUserAuthenticated()
+	{
+		var user = await GetCurrentUserAsync();
+		return user.Identity != null && user.Identity.IsAuthenticated;
+	}
+}
