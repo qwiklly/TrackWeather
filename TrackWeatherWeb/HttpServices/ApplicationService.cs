@@ -11,7 +11,6 @@ namespace TrackWeatherWeb.HttpServices
         {
             _httpClient = httpClient;
         }
-
         private static async Task<T> SendRequestAsync<T>(Func<Task<HttpResponseMessage>> httpRequest)
         {
             var response = await httpRequest();
