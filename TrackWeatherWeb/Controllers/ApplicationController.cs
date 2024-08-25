@@ -3,6 +3,7 @@ using static TrackWeatherWeb.Responses.CustomResponses;
 using Swashbuckle.AspNetCore.Annotations;
 using TrackWeatherWeb.DTOs;
 using TrackWeatherWeb.Repositories;
+using Newtonsoft.Json;
 
 namespace TrackWeatherWeb.Controllers
 {
@@ -11,6 +12,23 @@ namespace TrackWeatherWeb.Controllers
     [ApiController]
     public class ApplicationController(IAccount _accountrepo, ITransport _transportrepo) : ControllerBase
     {
+        [HttpGet("getWeather/{lat},{lon}")]
+		[SwaggerOperation(
+			Summary = "Get current weather",
+			Description = "Retrieve info about current weather."
+		)]
+		public async Task<ActionResult<BaseResponse>> GetWeather1(double lat, double lon)
+        {
+            try
+            {
+                var result = await _transportrepo.GetCurrentWeatherAsync(lat, lon);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error getting weather: {ex.Message}");
+            }
+        }
         [HttpGet("getUsers")]
         [SwaggerOperation(
             Summary = "Get all users",

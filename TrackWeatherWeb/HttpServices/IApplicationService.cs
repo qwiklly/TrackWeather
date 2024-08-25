@@ -6,6 +6,7 @@ namespace TrackWeatherWeb.HttpServices
     public interface IApplicationService
     {
         Task<BaseResponse> GetUsersAsync();
+        Task<BaseResponse> GetWeatherAsync();
         Task<BaseResponse> GetAllTransportRequestsAsync();
         Task<RegisterResponse> RegisterAsync(RegisterDTO model);
         Task<LoginResponse> LoginAsync(LoginDTO model);

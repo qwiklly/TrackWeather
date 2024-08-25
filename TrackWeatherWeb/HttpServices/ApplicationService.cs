@@ -3,14 +3,10 @@ using TrackWeatherWeb.DTOs;
 
 namespace TrackWeatherWeb.HttpServices
 {
-    public class ApplicationService : IApplicationService
+    public class ApplicationService(HttpClient httpClient) : IApplicationService
     {
-        private readonly HttpClient _httpClient;
+        private readonly HttpClient _httpClient = httpClient;
 
-        public ApplicationService(HttpClient httpClient)
-        {
-            _httpClient = httpClient;
-        }
         private static async Task<T> SendRequestAsync<T>(Func<Task<HttpResponseMessage>> httpRequest)
         {
             var response = await httpRequest();
@@ -26,6 +22,8 @@ namespace TrackWeatherWeb.HttpServices
 
         public Task<BaseResponse> GetUsersAsync() =>
             SendRequestAsync<BaseResponse>(() => _httpClient.GetAsync("api/application/getUsers"));
+        public Task<BaseResponse> GetWeatherAsync() =>
+           SendRequestAsync<BaseResponse>(() => _httpClient.GetAsync("api/application/getWeather"));
 
         public Task<BaseResponse> GetUserAsync(string email) =>
             SendRequestAsync<BaseResponse>(() => _httpClient.PostAsJsonAsync("api/application/getUser", email));
