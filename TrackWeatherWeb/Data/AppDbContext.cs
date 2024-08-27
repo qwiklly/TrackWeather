@@ -7,6 +7,5 @@ namespace TrackWeatherWeb.Data
     {
         public DbSet<ApplicationUsers> Users { get; set; }
         public DbSet<TransportRequests> Requests { get; set; }
-
     }
 }

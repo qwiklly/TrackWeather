@@ -2,8 +2,8 @@
 {
     public class WeatherDTO
     {
-        public string Temp { get; set; }
-        public string Summary { get; set; }
-        public string City { get; set; }
+        public string? Temp { get; set; }
+        public string? Summary { get; set; }
+        public string? City { get; set; }
     }
 }

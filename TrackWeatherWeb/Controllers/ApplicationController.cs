@@ -3,7 +3,6 @@ using static TrackWeatherWeb.Responses.CustomResponses;
 using Swashbuckle.AspNetCore.Annotations;
 using TrackWeatherWeb.DTOs;
 using TrackWeatherWeb.Repositories;
-using Newtonsoft.Json;
 
 namespace TrackWeatherWeb.Controllers
 {
