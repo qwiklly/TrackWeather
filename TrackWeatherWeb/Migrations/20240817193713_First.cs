@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
+
 #nullable disable
 
 namespace TrackWeatherWeb.Migrations
@@ -49,7 +50,18 @@ namespace TrackWeatherWeb.Migrations
                 columns: ["Name", "Email", "Role", "Password"],
                 values: ["Admin", "admin@example.com", "Admin", passwordHash]
             );
-        }
+			migrationBuilder.InsertData(
+	            table: "Requests",
+	            columns: ["Id", "Email", "Coordinate_x", "Coordinate_y", "Comment", "Timestamp"],
+	            values: [1, "user@example.com", 54.017703655095126m, 38.01406279530195m, "Raining, need transport", DateTime.Parse("2024-08-27 10:30:00")]
+            );
+
+			migrationBuilder.InsertData(
+				table: "Requests",
+				columns: ["Id", "Email", "Coordinate_x", "Coordinate_y", "Comment", "Timestamp"],
+				values: [2, "user2@example.com", 48.909172455411614m, 40.46727250624546m, "Raining, need transport", DateTime.Parse("2024-08-27 10:35:00")]
+			);
+		}
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
