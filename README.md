@@ -57,8 +57,7 @@ TrackWeather - это приложение для мониторинга пог�
 ### Профиль пользователя
 **Авторизован**            |  **Не авторизован**
 :-------------------------:|:-------------------------:
-![Screenshot 2024-08-28 172831](https://github.com/user-attachments/assets/bf7bf5fd-83c5-474b-92e2-698d6c2748dd)
- |  ![Screenshot 2024-08-28 172904](https://github.com/user-attachments/assets/d7b757be-d8fc-4f4b-930a-fe0d665feb32)
+![Screenshot 2024-08-28 172831](https://github.com/user-attachments/assets/bf7bf5fd-83c5-474b-92e2-698d6c2748dd) |  ![Screenshot 2024-08-28 172904](https://github.com/user-attachments/assets/d7b757be-d8fc-4f4b-930a-fe0d665feb32)
 
 ### **Окно Swagger**
 
