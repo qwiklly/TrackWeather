@@ -109,7 +109,7 @@ namespace TrackWeatherWeb.Controllers
             Summary = "Delete a user",
             Description = "Delete a user."
         )]
-        public async Task<ActionResult<BaseResponse>> DeleteUser(DeleteUserDTO model)
+        public async Task<ActionResult<BaseResponse>> DeleteUserAsync(DeleteUserDTO model)
         {
             var result = await _accountrepo.DeleteUserAsync(model);
             return Ok(result);
@@ -120,7 +120,7 @@ namespace TrackWeatherWeb.Controllers
             Summary = "Delete transport coordinates.",
             Description = "Delete transport coordinates."
         )]
-        public async Task<ActionResult<BaseResponse>> DeleteTransportRequest(DeleteTransportRequestDTO model)
+        public async Task<ActionResult<BaseResponse>> DeleteTransportRequestAsync(DeleteTransportRequestDTO model)
         {
             var result = await _transportrepo.DeleteTransportRequestAsync(model);
             return Ok(result);
@@ -131,7 +131,7 @@ namespace TrackWeatherWeb.Controllers
             Summary = "Update a user",
             Description = "Update a user's information, such as name, role, or password."
         )]
-        public async Task<ActionResult<BaseResponse>> UpdateUser(string email, RegisterDTO model)
+        public async Task<ActionResult<BaseResponse>> UpdateUserAsync(string email, RegisterDTO model)
         {
             var result = await _accountrepo.UpdateUserAsync(email, model);
             return Ok(result);
@@ -142,7 +142,7 @@ namespace TrackWeatherWeb.Controllers
             Summary = "Update transport request.",
             Description = "Update the details of an existing transport request (coordinates) by its ID."
         )]
-        public async Task<ActionResult<BaseResponse>> UpdateTransportRequest(int id, RequestTransportDTO model)
+        public async Task<ActionResult<BaseResponse>> UpdateTransportRequestAsync(int id, RequestTransportDTO model)
         {
             var result = await _transportrepo.UpdateTransportRequestAsync(id, model);
             return Ok(result);

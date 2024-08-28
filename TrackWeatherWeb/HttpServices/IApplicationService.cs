@@ -13,8 +13,8 @@ namespace TrackWeatherWeb.HttpServices
         Task<BaseResponse> ConfirmTransportRequestAsync(RequestTransportDTO model);
         Task<BaseResponse> DeleteUserAsync(string email);
         Task<BaseResponse> DeleteTransportRequestAsync(int id);
-        Task<BaseResponse> UpdateUserAsync(RegisterDTO model);
-        Task<BaseResponse> UpdateTransportRequestAsync(RequestTransportDTO model);
+        Task<BaseResponse> UpdateUserAsync(RegisterDTO model, string email);
+        Task<BaseResponse> UpdateTransportRequestAsync(RequestTransportDTO model, int id);
     }
 }
 

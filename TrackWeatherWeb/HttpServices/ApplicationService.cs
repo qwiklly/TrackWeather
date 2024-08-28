@@ -43,10 +43,10 @@ namespace TrackWeatherWeb.HttpServices
         public Task<BaseResponse> DeleteTransportRequestAsync(int id) =>
             SendRequestAsync<BaseResponse>(() => _httpClient.DeleteAsync($"api/application/deleteTransportRequests/{id}"));
 
-        public Task<BaseResponse> UpdateTransportRequestAsync(RequestTransportDTO model) =>
+        public Task<BaseResponse> UpdateTransportRequestAsync(RequestTransportDTO model, int id) =>
             SendRequestAsync<BaseResponse>(() => _httpClient.PutAsJsonAsync("api/application/updateTransportRequests", model));
 
-        public Task<BaseResponse> UpdateUserAsync(RegisterDTO model) =>
+        public Task<BaseResponse> UpdateUserAsync(RegisterDTO model, string email) =>
             SendRequestAsync<BaseResponse>(() => _httpClient.PutAsJsonAsync("api/application/updateUser", model));
 
         public Task<BaseResponse> ConfirmTransportRequestAsync(RequestTransportDTO model) =>
