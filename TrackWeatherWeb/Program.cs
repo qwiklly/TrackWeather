@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Serilog; 
 using System.Text;
 using TrackWeatherWeb.Data;
 using TrackWeatherWeb.Repositories;
@@ -11,11 +12,21 @@ using TrackWeatherWeb.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug() 
+    .WriteTo.Console() //Log to console
+    .WriteTo.Debug() // Log to debug window
+    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day) // Logs in file
+    .CreateLogger();
+
+//serilogs
+builder.Host.UseSerilog();
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddControllers();
 
-//version of swagger + swagger's name
+// Swagger version + swagger's name
 builder.Services.AddSwaggerGen(x =>
 {
     x.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "My API", Version = "v1" });
@@ -25,7 +36,6 @@ builder.Services.AddSwaggerGen(x =>
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-
 });
 
 builder.Services.AddAuthentication(options =>
@@ -46,11 +56,16 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
     };
 });
+
 builder.Services.AddScoped<IAccount, Account>();
 builder.Services.AddScoped<ITransport, Transport>();
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7123/") });
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7118/") });
 builder.Services.AddScoped<IApplicationService, ApplicationService>();
 builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationProvider>();
+builder.Services.AddHttpClient();
+builder.Services.AddHttpContextAccessor();
+
+
 
 var app = builder.Build();
 
@@ -58,40 +73,30 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+app.UseAntiforgery();
+
 app.UseSwagger();
 app.UseSwaggerUI(x =>
 {
     x.SwaggerEndpoint("/swagger/v1/swagger.json", "My API");
 });
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
 app.UseGlobalExceptionMiddleware();
-
-app.UseRouting();
+app.MapRazorPages();
 app.MapControllers();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapRazorPages();
-
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    try
-    {
-        var context = services.GetRequiredService<AppDbContext>();
-        await Account.Create_Admin(context);
-    }
-    catch (Exception ex)
-    {
-        var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "An error occurred while seeding the database.");
-    }
-}
-
 app.Run();
+
+// Clean and Close logger
+Log.CloseAndFlush();
+
