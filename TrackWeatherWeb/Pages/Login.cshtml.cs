@@ -27,7 +27,6 @@ namespace TrackWeatherWeb.Pages
 
         public void OnGet()
         {
-            // Очищаем TempData после загрузки страницы
             TempData["ErrorMessage"] = null;
         }
 
@@ -49,8 +48,8 @@ namespace TrackWeatherWeb.Pages
             var customAuthStateProvider = (AuthenticationProvider)_authStateProvider;
             await customAuthStateProvider.UpdateAuthenticationState(response.JWTToken);
 
-            IsUserLoggedIn = true; 
-            return Page(); 
+            IsUserLoggedIn = true;
+            return RedirectToPage("/Index");
         }
     }
 }
