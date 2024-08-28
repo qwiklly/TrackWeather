@@ -41,7 +41,7 @@ namespace TrackWeatherWeb.Pages
             }
             else
             {
-                ModelState.AddModelError(string.Empty, response.Message ?? "Failed to delete request.");
+                ModelState.AddModelError(string.Empty, response.Message ?? "Не удалось удалить запрос.");
                 return Page();
             }
         }
