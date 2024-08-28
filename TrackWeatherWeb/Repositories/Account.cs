@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using static TrackWeatherWeb.Responses.CustomResponses;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -46,8 +45,11 @@ namespace TrackWeatherWeb.Repositories
                 var findUser = await GetUserAsync(model.Email);
                 if (findUser != null) return new RegisterResponse(false, "User already exist");
 
-                // Add a new user to the database with hashed password.
-                appDbContext.Users.Add(
+				if (model.Password != model.ConfirmPassword)
+					return new RegisterResponse(false, "Passwords do not match");
+
+				// Add a new user to the database with hashed password.
+				appDbContext.Users.Add(
                      new ApplicationUsers()
                      {
                          Role = model.Role,
@@ -95,7 +97,7 @@ namespace TrackWeatherWeb.Repositories
             => await appDbContext.Users.FirstOrDefaultAsync(e => e.Email == email);
 
         // Updates an existing user's details if found, otherwise returns an error message.
-        public async Task<ActionResult<RegisterResponse>> UpdateUserAsync(string email, RegisterDTO model)
+        public async Task<RegisterResponse> UpdateUserAsync(string email, RegisterDTO model)
         {
             try
             {

@@ -2,14 +2,42 @@
 using TrackWeatherWeb.DTOs;
 using TrackWeatherWeb.Models;
 using TrackWeatherWeb.Data;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Newtonsoft.Json;
+using TrackWeatherWeb.WeatherModels;
 
 namespace TrackWeatherWeb.Repositories
 {
-    public class Transport(AppDbContext appDbContext) : ITransport
+    public class Transport(AppDbContext appDbContext, IConfiguration _configuration, IHttpClientFactory _httpClientFactory) : ITransport
     {
+        // Get current weather
+        public async Task<WeatherDTO> GetCurrentWeatherAsync(double lat, double lon)
+        {
+            var client = _httpClientFactory.CreateClient();
+            try
+            {
+                client.BaseAddress = new Uri("http://api.openweathermap.org");
+                string key = _configuration["OpenWeatherApi:ApiKey"]!;
+                var response = await client.GetAsync($"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={key}&units=metric");
+                response.EnsureSuccessStatusCode();
+
+                var stringResult = await response.Content.ReadAsStringAsync();
+                var rawWeather = JsonConvert.DeserializeObject<OpenWeatherResponse>(stringResult);
+                return new WeatherDTO
+                {
+                    Temp = rawWeather.Main?.Temp,
+                    Summary = string.Join(",", rawWeather.Weather?.Select(x => x.Main)!),
+                    City = rawWeather.Name!
+                };
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error while getting TransportRequests");
+                throw;
+            }
+        }
+
         // Retrieves all user coordinates.
         public async Task<List<RequestTransportDTO>> GetTransportRequestsAsync()
         {
@@ -31,7 +59,7 @@ namespace TrackWeatherWeb.Repositories
             {
                 Log.Error(ex, "Error while getting TransportRequests");
                 //display user exception
-                throw new InvalidOperationException("Error while getting TransportRequests ");
+                throw;
             }
         }
 
@@ -49,7 +77,7 @@ namespace TrackWeatherWeb.Repositories
                 {
                     appDbContext.Requests.Remove(coordinates);
                     await appDbContext.SaveChangesAsync();
-                    return new BaseResponse(true, "Coordinates deleted successfully");
+                    return new BaseResponse(true, "Transport request deleted successfully");
                 }
                 else
                 {
@@ -65,7 +93,7 @@ namespace TrackWeatherWeb.Repositories
         }
 
         // Updates a specific coordinate entry by its ID.
-        public async Task<ActionResult<BaseResponse>> UpdateTransportRequestAsync(int id, RequestTransportDTO model)
+        public async Task<BaseResponse> UpdateTransportRequestAsync(int id, RequestTransportDTO model)
         {
             try
             {
@@ -83,7 +111,7 @@ namespace TrackWeatherWeb.Repositories
 
                 await appDbContext.SaveChangesAsync();
 
-                return new BaseResponse(true, "Coordinates updated successfully.");
+                return new BaseResponse(true, "Transport request updated successfully.");
             }
             catch (Exception ex)
             {
@@ -109,7 +137,7 @@ namespace TrackWeatherWeb.Repositories
                      });
 
                 await appDbContext.SaveChangesAsync();
-                return new BaseResponse(true, "Success");
+                return new BaseResponse(true, "Transport request added successfully");
             }
             catch (Exception ex)
             {
