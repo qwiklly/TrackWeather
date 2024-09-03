@@ -77,16 +77,16 @@
 								<a class="nav-link @((ViewContext.RouteData.Values["page"]?.ToString() == "/AddUser") ? "active" : "")" asp-area="" asp-page="/AddUser">Добавление пользователей</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link @((ViewContext.RouteData.Values["page"]?.ToString() == "/AdminMap") ? "active" : "")" asp-area="" asp-page="/AdminMap">Карта спец служб</a>
+								<a class="nav-link @((ViewContext.RouteData.Values["page"]?.ToString() == "/AdminMap") ? "active" : "")" asp-area="" asp-page="/AdminMap">Карта коммунальных служб</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link @((ViewContext.RouteData.Values["page"]?.ToString() == "/UsersMap") ? "active" : "")" asp-area="" asp-page="/UsersMap">Карта</a>
+								<a class="nav-link @((ViewContext.RouteData.Values["page"]?.ToString() == "/UsersMap") ? "active" : "")" asp-area="" asp-page="/UsersMap">Карта погоды</a>
 							</li>
 						}
 						@if (await IsUserInRole("User"))
 						{
 							<li class="nav-item">
-								<a class="nav-link @((ViewContext.RouteData.Values["page"]?.ToString() == "/UsersMap") ? "active" : "")" asp-area="" asp-page="/UsersMap">Карта</a>
+								<a class="nav-link @((ViewContext.RouteData.Values["page"]?.ToString() == "/UsersMap") ? "active" : "")" asp-area="" asp-page="/UsersMap">Карта погоды</a>
 							</li>
 						}
 						@if (await IsUserAuthenticated()==false)

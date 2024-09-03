@@ -10,12 +10,12 @@
 <table class="table">
 	<thead>
 		<tr>
-			<th>Email</th>
-			<th>Coordinate x</th>
-			<th>Coordinate y</th>
-			<th>Comment</th>
-			<th>Time</th>
-			<th>Actions</th>
+			<th>Email адрес</th>
+			<th>Координата широты (x)</th>
+			<th>Координата долготы (y)</th>
+			<th>Комментарий</th>
+			<th>Время</th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -29,7 +29,7 @@
 				<td>@request.Timestamp</td>
 				<td>
 					<form method="post" asp-page-handler="Delete" asp-route-id="@request.Id" onsubmit="return confirmDelete('@request.Id');">
-						<button type="submit" class="btn btn-danger">Delete</button>
+						<button type="submit" class="btn btn-danger">Удалить</button>
 					</form>
 				</td>
 			</tr>

@@ -18,17 +18,17 @@
 
 			<form method="post" onsubmit="showLoading()">
 				<div class="form-group mt-3">
-					<label class="form-label">Name</label>
+					<label class="form-label">Имя</label>
 					<input asp-for="Register.Name" class="form-control" />
 				</div>
 
 				<div class="form-group mt-3">
-					<label class="form-label">Email Address</label>
+					<label class="form-label">Email адрес</label>
 					<input asp-for="Register.Email" type="email" class="form-control" />
 				</div>
 
 				<div class="form-group mt-3">
-					<label class="form-label">Password</label>
+					<label class="form-label">Пароль</label>
 					<div class="input-group">
 						<input asp-for="Register.Password" type="password" class="form-control" id="inputPassword" />
 						<button type="button" class="btn btn-outline-secondary" onclick="togglePasswordVisibility()">👁️‍🗨️</button>
@@ -36,7 +36,7 @@
 				</div>
 
 				<div class="form-group mt-3">
-					<label class="form-label">Confirm Password</label>
+					<label class="form-label">Подтвердить пароль</label>
 					<div class="input-group">
 						<input asp-for="Register.ConfirmPassword" type="password" class="form-control" id="inputConfirmPassword" />
 						<button type="button" class="btn btn-outline-secondary" onclick="toggleConfirmPasswordVisibility()">👁️‍🗨️</button>
@@ -47,7 +47,7 @@
 
 				<div class="form-group mt-3">
 					<button type="submit" id="submitButton" class="btn btn-primary w-100">
-						<span>Register</span>
+						<span>Регистрация</span>
 						<div id="loadingSpinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;"></div>
 					</button>
 				</div>

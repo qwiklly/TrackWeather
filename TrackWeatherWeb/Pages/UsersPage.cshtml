@@ -9,10 +9,10 @@
 <table class="table">
 	<thead>
 		<tr>
-			<th>Name</th>
-			<th>Email</th>
+			<th>Имя</th>
+			<th>Email адрес</th>
 			<th>Role</th>
-			<th>Actions</th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -24,7 +24,7 @@
 				<td>@user.Role</td>
 				<td>
 					<form method="post" asp-page-handler="Delete" asp-route-email="@user.Email" onsubmit="return confirmDelete('@user.Name');">
-						<button type="submit" class="btn btn-danger">Delete</button>
+						<button type="submit" class="btn btn-danger">Удалить</button>
 					</form>
 				</td>
 			</tr>
