@@ -1,21 +1,15 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using TrackWeatherWeb.HttpServices;
 using TrackWeatherWeb.States;
 
 namespace TrackWeatherWeb.Pages
 {
-    public class LogoutPageModel : PageModel
+    public class LogoutPageModel(AuthenticationStateProvider authStateProvider) : PageModel
     {
-		private readonly AuthenticationStateProvider _authStateProvider;
+		private readonly AuthenticationStateProvider _authStateProvider = authStateProvider;
 
-		public LogoutPageModel(IApplicationService accountService, AuthenticationStateProvider authStateProvider)
-		{
-			_authStateProvider = authStateProvider;
-		}
-
-        public async Task<IActionResult> OnGet()
+		public async Task<IActionResult> OnGet()
         {
             var customAuthStateProvider = (AuthenticationProvider)_authStateProvider;
             await customAuthStateProvider.UpdateAuthenticationState(null);
