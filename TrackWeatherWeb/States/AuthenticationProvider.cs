@@ -38,32 +38,34 @@ namespace TrackWeatherWeb.States
 
         public async Task UpdateAuthenticationState(string? jwtToken)
         {
-            var claimsPrincipal = new ClaimsPrincipal();
-            if (!string.IsNullOrEmpty(jwtToken))
-            {
-                Constants.JWTToken = jwtToken;
-                var getUserClaims = DecryptToken(jwtToken);
-                claimsPrincipal = SetClaimPrincipal(getUserClaims);
+                var claimsPrincipal = new ClaimsPrincipal();
+                if (!string.IsNullOrEmpty(jwtToken))
+                {
+                    Constants.JWTToken = jwtToken;
+                    var getUserClaims = DecryptToken(jwtToken);
+                    claimsPrincipal = SetClaimPrincipal(getUserClaims);
                 await SetJwtTokenInCookie(jwtToken);
-            }
-            else
-            {
-                Constants.JWTToken = null!;
+                }
+                else
+                {
+                    Constants.JWTToken = null!;
                 RemoveJwtTokenFromCookie();
-            }
+                }
 
-            NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(claimsPrincipal)));
+                NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(claimsPrincipal)));
         }
 
         private async Task SetJwtTokenInCookie(string token)
         {
             var cookieOptions = new CookieOptions
             {
-                HttpOnly = true,
-                Secure = true, // Используйте только с HTTPS
-                Expires = DateTime.UtcNow.AddDays(7),
-                SameSite = SameSiteMode.Strict
+
+                HttpOnly = true, 
+                Secure = false,  
+                Expires = DateTime.UtcNow.AddDays(4),
+                SameSite = SameSiteMode.Lax // http -> https
             };
+
 
             await Task.Run(() =>
             {
