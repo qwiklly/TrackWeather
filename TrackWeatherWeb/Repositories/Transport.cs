@@ -17,7 +17,7 @@ namespace TrackWeatherWeb.Repositories
             var client = _httpClientFactory.CreateClient();
             try
             {
-                client.BaseAddress = new Uri("http://api.openweathermap.org");
+                client.BaseAddress = new Uri("https://api.openweathermap.org");
                 string key = _configuration["OpenWeatherApi:ApiKey"]!;
                 var response = await client.GetAsync($"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={key}&units=metric");
                 response.EnsureSuccessStatusCode();
