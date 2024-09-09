@@ -18,17 +18,17 @@
 
 			<form method="post" onsubmit="showLoading()">
 				<div class="form-group mt-3">
-					<label class="form-label">Имя</label>
-					<input asp-for="Register.Name" class="form-control" />
+					<label for="inputName" class="form-label">Имя</label>
+					<input asp-for="Register.Name" class="form-control" id="inputName" />
 				</div>
 
 				<div class="form-group mt-3">
-					<label class="form-label">Email адрес</label>
-					<input asp-for="Register.Email" type="email" class="form-control" />
+					<label for="inputEmail" class="form-label">Email адрес</label>
+					<input asp-for="Register.Email" type="email" class="form-control" id="inputEmail" />
 				</div>
 
 				<div class="form-group mt-3">
-					<label class="form-label">Пароль</label>
+					<label for="inputPassword" class="form-label">Пароль</label>
 					<div class="input-group">
 						<input asp-for="Register.Password" type="password" class="form-control" id="inputPassword" />
 						<button type="button" class="btn btn-outline-secondary" onclick="togglePasswordVisibility()">👁️‍🗨️</button>
@@ -36,7 +36,7 @@
 				</div>
 
 				<div class="form-group mt-3">
-					<label class="form-label">Подтвердить пароль</label>
+					<label for="inputConfirmPassword" class="form-label">Подтвердить пароль</label>
 					<div class="input-group">
 						<input asp-for="Register.ConfirmPassword" type="password" class="form-control" id="inputConfirmPassword" />
 						<button type="button" class="btn btn-outline-secondary" onclick="toggleConfirmPasswordVisibility()">👁️‍🗨️</button>
