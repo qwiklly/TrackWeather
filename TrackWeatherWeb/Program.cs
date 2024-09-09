@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Serilog; 
+using Serilog;
 using System.Text;
 using TrackWeatherWeb.Data;
 using TrackWeatherWeb.Repositories;
@@ -13,13 +13,13 @@ using TrackWeatherWeb.Middleware;
 var builder = WebApplication.CreateBuilder(args);
 
 Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Debug() 
-    .WriteTo.Console() //Log to console
-    .WriteTo.Debug() // Log to debug window
-    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day) // Logs in file
+    .MinimumLevel.Debug()
+    .WriteTo.Console()
+    .WriteTo.Debug()
+    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
-//serilogs
+// Serilog
 builder.Host.UseSerilog();
 
 // Add services to the container.
@@ -38,6 +38,13 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+// Define the connection scheme (HTTP/HTTPS) depending on the environment
+var httpBaseAddress = builder.Configuration["BaseUrls:Http"];
+var httpsBaseAddress = builder.Configuration["BaseUrls:Https"];
+
+var baseAddress = builder.Environment.IsDevelopment() ? httpBaseAddress : httpsBaseAddress;
+
+// JWT Auth base on scheme
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -45,27 +52,29 @@ builder.Services.AddAuthentication(options =>
 
 }).AddJwtBearer(options =>
 {
+    options.RequireHttpsMetadata = !builder.Environment.IsDevelopment();
+
+    var issuer = builder.Environment.IsDevelopment() ? httpBaseAddress : httpsBaseAddress;
+
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateIssuerSigningKey = true,
         ValidateLifetime = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
+        ValidIssuer = baseAddress,
+        ValidAudience = baseAddress,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
     };
 });
 
 builder.Services.AddScoped<IAccount, Account>();
 builder.Services.AddScoped<ITransport, Transport>();
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7118/") });
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(baseAddress!) });
 builder.Services.AddScoped<IApplicationService, ApplicationService>();
 builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationProvider>();
 builder.Services.AddHttpClient();
 builder.Services.AddHttpContextAccessor();
-
-
 
 var app = builder.Build();
 
