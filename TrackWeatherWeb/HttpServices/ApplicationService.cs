@@ -26,13 +26,13 @@ namespace TrackWeatherWeb.HttpServices
            SendRequestAsync<BaseResponse>(() => _httpClient.GetAsync("api/application/getWeather"));
 
         public Task<BaseResponse> GetUserAsync(string email) =>
-            SendRequestAsync<BaseResponse>(() => _httpClient.GetAsync($"api/application/getUser?email={email}"));
+            SendRequestAsync<BaseResponse>(() => _httpClient.PostAsJsonAsync("api/application/getUser", email));
 
         public Task<BaseResponse> GetAllTransportRequestsAsync() =>
             SendRequestAsync<BaseResponse>(() => _httpClient.GetAsync("api/application/getAllTransportRequests"));
 
         public Task<BaseResponse> GetTransportRequestAsync(int id) =>
-            SendRequestAsync<BaseResponse>(() => _httpClient.GetAsync($"api/application/getTransportRequest?id={id}"));
+            SendRequestAsync<BaseResponse>(() => _httpClient.PostAsJsonAsync("api/application/getTransportRequest", id));
 
         public Task<LoginResponse> LoginAsync(LoginDTO model) =>
             SendRequestAsync<LoginResponse>(() => _httpClient.PostAsJsonAsync("api/application/login", model));
