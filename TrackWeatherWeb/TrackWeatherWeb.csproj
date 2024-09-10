@@ -4,6 +4,9 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>f306c2f3-92ac-42c2-a6c4-99a757cee4d0</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +16,7 @@
 	<PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
 	<PackageReference Include="LocalStorage" Version="2.1.0" />
 	<PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.1" />
+	<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
 	<PackageReference Include="Serilog.AspNetCore" Version="8.0.2" />
 	<PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.0" />
 	<PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.7.0" />
