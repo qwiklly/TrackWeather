@@ -41,8 +41,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Define the connection scheme (HTTP/HTTPS) depending on the environment
 var httpBaseAddress = builder.Configuration["BaseUrls:Http"];
 var httpsBaseAddress = builder.Configuration["BaseUrls:Https"];
-
-var baseAddress = builder.Environment.IsDevelopment() ? httpBaseAddress : httpsBaseAddress;
+// Сheck if the docker container exists
+var isRunningInDocker = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true";
+var baseAddress = isRunningInDocker ? httpBaseAddress : httpsBaseAddress;
 
 // JWT Auth base on scheme
 builder.Services.AddAuthentication(options =>
@@ -52,9 +53,7 @@ builder.Services.AddAuthentication(options =>
 
 }).AddJwtBearer(options =>
 {
-    options.RequireHttpsMetadata = !builder.Environment.IsDevelopment();
-
-    var issuer = builder.Environment.IsDevelopment() ? httpBaseAddress : httpsBaseAddress;
+    options.RequireHttpsMetadata = !isRunningInDocker; 
 
     options.TokenValidationParameters = new TokenValidationParameters
     {
