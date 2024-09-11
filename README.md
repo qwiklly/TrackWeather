@@ -22,16 +22,16 @@ TrackWeather - это приложение для мониторинга пог�
 # Шаги для запуска проекта::
 Выполните команду в консоли диспетчера пакетов для обновления базы данных:
 ```
-PM> update-database
+update-database
 ```
 В файле appsettings.json добавьте ключи разработчика для YandexApi и OpenWeatherApi.
 
 ![image](https://github.com/user-attachments/assets/b4e9c736-ce4b-4ab8-9194-008861fa3ca7)
 
-* Сборка Docker
+** Сборка Docker
 Соберите Docker image, выполнив команду:
 ```
-PM> docker build -t trackweather/localtrackweather:v1 .
+docker build -t trackweather/localtrackweather:v1 .
 ```
 Затем раскомментируйте строку подключения к базе данных для Docker.
 
@@ -39,7 +39,7 @@ PM> docker build -t trackweather/localtrackweather:v1 .
 
 Создайте и запустите контейнер:
 ```
-PM> docker-compose up --build
+docker-compose up --build
 ```
  
 ## Изображения интерфейса 
