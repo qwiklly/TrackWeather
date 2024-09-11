@@ -28,7 +28,7 @@ update-database
 
 ![image](https://github.com/user-attachments/assets/b4e9c736-ce4b-4ab8-9194-008861fa3ca7)
 
-** Сборка Docker
+**Сборка Docker**
 Соберите Docker image, выполнив команду:
 ```
 docker build -t trackweather/localtrackweather:v1 .
