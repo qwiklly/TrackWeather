@@ -1,18 +1,42 @@
-﻿services: 
-  webapplication: 
-    build: 
-      context: . 
-      dockerfile: Dockerfile 
-    image: trackweather/localtrackweather:v1 
-    container_name: webapplication 
-    ports: 
-     - "5180:8080" 
-    environment: 
-     - ASPNETCORE_ENVIRONMENT=Development 
-     - ConnectionStrings__DefaultConnection=Server=host.docker.internal;Database=TrackWeatherDb;User Id=sa;Password=Password123#;Trusted_Connection=False;TrustServerCertificate=true 
-    networks: 
-     - my_network 
- 
-networks: 
-  my_network: 
-    driver: bridge
+# Everything needed to run the project: cp .env.example .env, fill it in, docker compose up --build
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Express
+      MSSQL_SA_PASSWORD: ${SA_PASSWORD:?Set SA_PASSWORD in .env}
+    volumes:
+      - db-data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -C -b -Q 'SELECT 1'"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+  web:
+    build: .
+    image: trackweather/web:local
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "5180:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__DefaultConnection: Server=db;Database=TrackWeatherDb;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True
+      Database__MigrateOnStartup: "true"
+      DataProtection__KeysPath: /keys
+      Jwt__Key: ${JWT_KEY:?Set JWT_KEY in .env}
+      Seed__AdminEmail: ${SEED_ADMIN_EMAIL:?Set SEED_ADMIN_EMAIL in .env}
+      Seed__AdminPassword: ${SEED_ADMIN_PASSWORD:?Set SEED_ADMIN_PASSWORD in .env}
+      YandexMaps__ApiKey: ${YANDEX_MAPS_API_KEY:-}
+      OpenWeatherApi__ApiKey: ${OPENWEATHER_API_KEY:-}
+      Swagger__Enabled: "true"
+    volumes:
+      - data-protection-keys:/keys
+
+volumes:
+  db-data:
+  data-protection-keys:
