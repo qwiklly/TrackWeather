@@ -1,74 +1,59 @@
-﻿@page
+@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+	ViewData["Title"] = L["Home.Title"].Value;
+	var isSignedIn = User.Identity?.IsAuthenticated == true;
 }
-<br />
-<h2>Добро пожаловать @Model.UserName в приложение "КартаПогоды" !</h2>
-<p>Для полного доступа к функционалу карты и другим возможностям, пожалуйста, зарегистрируйтесь и авторизуйтесь.</p>
+<section class="hero">
+	<h1 class="hero__title">
+		@if (isSignedIn)
+		{
+			@L["Home.WelcomeUser", User.Identity!.Name!]
+		}
+		else
+		{
+			@L["Home.Welcome"]
+		}
+	</h1>
+	<p class="hero__lead">@L["Home.Lead"]</p>
+	@if (isSignedIn)
+	{
+		<a class="btn btn-light" asp-page="/UsersMap"><i class="bi bi-geo-alt-fill" aria-hidden="true"></i> @L["Home.OpenMap"]</a>
+	}
+	else
+	{
+		<a class="btn btn-light" asp-page="/Registration">@L["Nav.Register"]</a>
+		<a class="btn btn-outline-light" asp-page="/Login">@L["Nav.Login"]</a>
+	}
+</section>
 
-<h3>Функционал для пользователей:</h3>
-<ul>
-    <li>
-        <strong>Карта:</strong>
-        <ul>
-            <li>Щелкните правой кнопкой мыши на любой точке карты, чтобы установить метку.</li>
-            <li>Нажмите на метку, чтобы узнать актуальную информацию о погоде в этой точке <br />и построить маршрут от вашего текущего местоположения или определенной точки до метки.</li>
-
-        </ul>
-    </li>
-    <li>
-        <strong>Профиль пользователя:</strong>
-        <ul>
-            <li>Щелкните на иконку профиля, чтобы выйти из аккаунта.</li>
-            <li>Переключите язык интерфейса на английский с помощью Google Translate.</li>
-        </ul>
-    </li>
-</ul>
-
-<h3>Функционал для администраторов:</h3>
-<ul>
-    <li>
-        <strong>Административная панель:</strong>
-        <ul>
-            <li>Вход осуществляется с использованием следующих данных:</li>
-            <li><strong>Email:</strong> admin@example.com</li>
-            <li><strong>Пароль:</strong> Admin123</li>
-        </ul>
-    </li>
-    <li>
-        <strong>Карта:</strong>
-        <ul>
-            <li>Щелкните правой кнопкой мыши на любой точке карты, чтобы установить метку.</li>
-            <li>Нажмите на метку, чтобы узнать актуальную информацию о погоде в этой точке <br />и построить маршрут от вашего текущего местоположения или определенной точки до метки.</li>
-        </ul>
-    </li>
-    <li>
-        <strong>Добавление пользователей:</strong>
-        <ul>
-            <li>Возможность добавления новых пользователей с различными ролями: user / admin</li>
-        </ul>
-    </li>
-    <li>
-        <strong>Карта спецтранспорта:</strong>
-        <ul>
-            <li>Отображение меток, добавленных спецслужбами на трассе М4.</li>
-            <li>Добавление меток осуществляется через интерфейс Swagger.</li>
-        </ul>
-    </li>
-    <li>
-        <strong>Управление пользователями:</strong>
-        <ul>
-            <li>Просмотр списка всех пользователей.</li>
-            <li>Возможность удаления пользователей.</li>
-        </ul>
-    </li>
-    <li>
-        <strong>Управление транспортными запросами:</strong>
-        <ul>
-            <li>Просмотр и удаление транспортных запросов.</li>
-        </ul>
-    </li>
-</ul>
-
-     
+<section class="row g-3">
+	<div class="col-md-6 col-xl-3">
+		<article class="feature-card">
+			<i class="bi bi-cloud-sun" aria-hidden="true"></i>
+			<h2>@L["Home.Feature.Weather.Title"]</h2>
+			<p>@L["Home.Feature.Weather.Text"]</p>
+		</article>
+	</div>
+	<div class="col-md-6 col-xl-3">
+		<article class="feature-card">
+			<i class="bi bi-signpost-split" aria-hidden="true"></i>
+			<h2>@L["Home.Feature.Route.Title"]</h2>
+			<p>@L["Home.Feature.Route.Text"]</p>
+		</article>
+	</div>
+	<div class="col-md-6 col-xl-3">
+		<article class="feature-card">
+			<i class="bi bi-truck" aria-hidden="true"></i>
+			<h2>@L["Home.Feature.Transport.Title"]</h2>
+			<p>@L["Home.Feature.Transport.Text"]</p>
+		</article>
+	</div>
+	<div class="col-md-6 col-xl-3">
+		<article class="feature-card">
+			<i class="bi bi-shield-lock" aria-hidden="true"></i>
+			<h2>@L["Home.Feature.Admin.Title"]</h2>
+			<p>@L["Home.Feature.Admin.Text"]</p>
+		</article>
+	</div>
+</section>

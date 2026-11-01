@@ -1,41 +1,42 @@
-﻿@page
+@page
 @model UsersPageModel
+@using System.Security.Claims
 @{
-	ViewData["Title"] = "Users";
+	ViewData["Title"] = L["Users.Title"].Value;
+	var currentEmail = User.FindFirstValue(ClaimTypes.Email);
 }
-<br />
-<h2>Список пользователей</h2>
+<div class="page-header">
+	<h1>@L["Users.Title"]</h1>
+	<a class="btn btn-primary btn-sm" asp-page="/AddUser"><i class="bi bi-person-plus-fill" aria-hidden="true"></i> @L["Nav.AddUser"]</a>
+</div>
 
-<table class="table">
-	<thead>
-		<tr>
-			<th>Имя</th>
-			<th>Email адрес</th>
-			<th>Role</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (var user in Model.Users)
-		{
+<div class="table-card">
+	<table class="table table-hover align-middle mb-0">
+		<thead>
 			<tr>
-				<td>@user.Name</td>
-				<td>@user.Email</td>
-				<td>@user.Role</td>
-				<td>
-					<form method="post" asp-page-handler="Delete" asp-route-email="@user.Email" onsubmit="return confirmDelete('@user.Name');">
-						<button type="submit" class="btn btn-danger">Удалить</button>
-					</form>
-				</td>
+				<th scope="col">@L["Field.Name"]</th>
+				<th scope="col">@L["Field.Email"]</th>
+				<th scope="col">@L["Field.Role"]</th>
+				<th scope="col"><span class="visually-hidden">@L["Common.Actions"]</span></th>
 			</tr>
-		}
-	</tbody>
-</table>
-
-@section Scripts {
-	<script type="text/javascript">
-		function confirmDelete(userName) {
-			return confirm('Вы действительно хотите удалить пользователя ' + userName + '?');
-		}
-	</script>
-}
+		</thead>
+		<tbody>
+			@foreach (var user in Model.Users)
+			{
+				<tr>
+					<td>@user.Name</td>
+					<td>@user.Email</td>
+					<td><span class="badge @(user.Role == Roles.Admin ? "bg-primary" : "bg-secondary")">@(user.Role == Roles.Admin ? L["Role.Admin"] : L["Role.User"])</span></td>
+					<td class="text-end">
+						@if (user.Email != currentEmail)
+						{
+							<form method="post" asp-page-handler="Delete" asp-route-email="@user.Email" data-confirm="@L["Users.ConfirmDelete", user.Name]">
+								<button type="submit" class="btn btn-outline-danger btn-sm">@L["Common.Delete"]</button>
+							</form>
+						}
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

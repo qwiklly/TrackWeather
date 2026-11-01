@@ -1,21 +1,14 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Options;
+using TrackWeatherWeb.Auth;
+using TrackWeatherWeb.Options;
 
 namespace TrackWeatherWeb.Pages
 {
-    public class AdminMapModel : PageModel
+    [Authorize(Roles = Roles.Admin)]
+    public class AdminMapModel(IOptions<YandexMapsOptions> options) : PageModel
     {
-        private readonly IConfiguration _configuration;
-
-        public string? ApiKey { get; private set; }
-
-        public AdminMapModel(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
-
-        public void OnGet()
-        {
-            ApiKey = _configuration["YandexMaps:ApiKey"]!;
-        }
+        public string ApiKey { get; } = options.Value.ApiKey;
     }
 }

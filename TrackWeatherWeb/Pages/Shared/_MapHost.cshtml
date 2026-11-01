@@ -1,0 +1,14 @@
+@model string
+@* Everything the map scripts need: the container and the texts of the current language *@
+@{
+	const string prefix = "MapJs.";
+	var strings = L.GetAllStrings(includeParentCultures: true)
+		.Where(s => s.Name.StartsWith(prefix, StringComparison.Ordinal))
+		.ToDictionary(s => s.Name[prefix.Length..], s => s.Value);
+}
+<div id="map" class="map" data-language="@SupportedLanguages.Current" data-has-key="@(string.IsNullOrWhiteSpace(Model) ? "false" : "true")"></div>
+<div id="map-status" class="map-status" role="status" aria-live="polite" hidden>
+	<span id="map-status-text"></span>
+	<button type="button" id="map-status-clear" class="btn btn-sm btn-outline-secondary" hidden>@L["MapJs.ClearRoute"]</button>
+</div>
+<script type="application/json" id="map-strings">@Html.Raw(System.Text.Json.JsonSerializer.Serialize(strings))</script>

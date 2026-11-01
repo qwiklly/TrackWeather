@@ -1,48 +1,36 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.RateLimiting;
+using TrackWeatherWeb.Auth;
 using TrackWeatherWeb.DTOs;
-using TrackWeatherWeb.HttpServices;
+using TrackWeatherWeb.Repositories.Interfaces;
 
 namespace TrackWeatherWeb.Pages
 {
-    public class RegistrationModel : PageModel
+    [AllowAnonymous]
+    [EnableRateLimiting(AuthDefaults.RateLimitPolicy)]
+    public class RegistrationModel(IAccountRepo accountRepo) : PageModel
     {
         [BindProperty]
         public RegisterDTO Register { get; set; } = new RegisterDTO();
 
-        public bool IsUserAdded { get; set; } = false;
-
-        private readonly IApplicationService _accountService;
-
-        public RegistrationModel(IApplicationService accountService)
-        {
-            _accountService = accountService;
-        }
-
-        public void OnGet()
-        {
-            // clear temp after reloading page
-            TempData["SuccessMessage"] = null;
-            TempData["ErrorMessage"] = null;
-        }
-
         public async Task<IActionResult> OnPostAsync()
         {
-
-			if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return Page();
             }
-			var response = await _accountService.RegisterAsync(Register);
 
+            var response = await accountRepo.RegisterAsync(Register);
             if (!response.Flag)
             {
-                TempData["ErrorMessage"] = response.Message;
+                ModelState.AddModelError(string.Empty, response.Message);
                 return Page();
             }
 
-            IsUserAdded = true;  
-            return Page(); 
+            TempData["Success"] = response.Message;
+            return RedirectToPage("/Login");
         }
     }
 }

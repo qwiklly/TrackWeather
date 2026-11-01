@@ -1,49 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using TrackWeatherWeb.Auth;
 using TrackWeatherWeb.DTOs;
+using TrackWeatherWeb.Repositories.Interfaces;
 
 namespace TrackWeatherWeb.Pages
 {
-    public class TransportRequestPageModel : PageModel
+    [Authorize(Roles = Roles.Admin)]
+    public class TransportRequestPageModel(ITransportRepo transport) : PageModel
     {
-        private readonly Repositories.ITransport _transport;
-
         // List of requests
-        public List<RequestTransportDTO> Requests { get; set; } = new List<RequestTransportDTO>();
-        public DeleteTransportRequestDTO Delete = new();
-
-        public TransportRequestPageModel(Repositories.ITransport transport)
-        {
-            _transport = transport;
-        }
+        public List<RequestTransportDTO> Requests { get; set; } = [];
 
         public async Task OnGetAsync()
         {
-            TempData["SuccessMessage"] = null;
-            TempData["ErrorMessage"] = null;
-            Requests = await _transport.GetTransportRequestsAsync();
+            Requests = await transport.GetTransportRequestsAsync();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
-            if (id <= 0)
-            {
-                return BadRequest("Id is required.");
-            }
-
-            Delete.Id = id;
-
-            var response = await _transport.DeleteTransportRequestAsync(Delete);
-            if (response.Flag)
-            {
-
-                return RedirectToPage();
-            }
-            else
-            {
-                ModelState.AddModelError(string.Empty, response.Message ?? "Не удалось удалить запрос.");
-                return Page();
-            }
+            var response = await transport.DeleteTransportRequestAsync(id);
+            TempData[response.Flag ? "Success" : "Error"] = response.Message;
+            return RedirectToPage();
         }
     }
 }

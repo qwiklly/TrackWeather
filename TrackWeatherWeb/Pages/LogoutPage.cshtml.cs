@@ -1,19 +1,19 @@
-﻿using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using TrackWeatherWeb.States;
 
 namespace TrackWeatherWeb.Pages
 {
-    public class LogoutPageModel(AuthenticationStateProvider authStateProvider) : PageModel
+    public class LogoutPageModel : PageModel
     {
-		private readonly AuthenticationStateProvider _authStateProvider = authStateProvider;
+        // Signing out changes state, so it is POST only: a link on another site must not log the user out
+        public IActionResult OnGet() => RedirectToPage("/Index");
 
-		public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnPostAsync()
         {
-            var customAuthStateProvider = (AuthenticationProvider)_authStateProvider;
-            await customAuthStateProvider.UpdateAuthenticationState(null);
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToPage("/Login");
-        }	
-	}
+        }
+    }
 }

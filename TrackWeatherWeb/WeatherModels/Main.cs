@@ -1,7 +1,7 @@
-﻿namespace TrackWeatherWeb.WeatherModels
+namespace TrackWeatherWeb.WeatherModels
 {
     public class Main
     {
-        public string? Temp { get; set; }
+        public double? Temp { get; set; }
     }
 }

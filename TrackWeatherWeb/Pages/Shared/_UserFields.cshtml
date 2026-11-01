@@ -1,0 +1,35 @@
+@model TrackWeatherWeb.DTOs.RegisterDTO
+<div class="mb-3">
+	<label asp-for="Name" class="form-label"></label>
+	<input asp-for="Name" class="form-control" autocomplete="name" />
+	<span asp-validation-for="Name" class="text-danger small"></span>
+</div>
+
+<div class="mb-3">
+	<label asp-for="Email" class="form-label"></label>
+	<input asp-for="Email" type="email" class="form-control" autocomplete="email" />
+	<span asp-validation-for="Email" class="text-danger small"></span>
+</div>
+
+<div class="mb-3">
+	<label asp-for="Password" class="form-label"></label>
+	<div class="input-group">
+		<input asp-for="Password" class="form-control" autocomplete="new-password" />
+		<button type="button" class="btn btn-outline-secondary" data-toggle-password aria-label="@L["Common.ShowPassword"]">
+			<i class="bi bi-eye" aria-hidden="true"></i>
+		</button>
+	</div>
+	<div class="form-text">@L["Validation.Password"]</div>
+	<span asp-validation-for="Password" class="text-danger small"></span>
+</div>
+
+<div class="mb-3">
+	<label asp-for="ConfirmPassword" class="form-label"></label>
+	<div class="input-group">
+		<input asp-for="ConfirmPassword" class="form-control" autocomplete="new-password" />
+		<button type="button" class="btn btn-outline-secondary" data-toggle-password aria-label="@L["Common.ShowPassword"]">
+			<i class="bi bi-eye" aria-hidden="true"></i>
+		</button>
+	</div>
+	<span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+</div>

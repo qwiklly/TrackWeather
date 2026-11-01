@@ -1,23 +1,17 @@
-﻿@page
+@page
 @model AdminMapModel
 @{
-    ViewData["Title"] = "AdminMap page";
+	ViewData["Title"] = L["UtilityMap.Title"].Value;
 }
+<div class="page-header">
+	<div>
+		<h1>@L["UtilityMap.Title"]</h1>
+		<p class="page-header__hint">@L["UtilityMap.Hint"]</p>
+	</div>
+</div>
+<partial name="_MapHost" model="Model.ApiKey" />
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/css/map.css">
-</head>
-<body>
-    <br />
-    <div id="map-test" class="map"></div>
-    <script src="https://api-maps.yandex.ru/2.1/?apikey=@Model.ApiKey&lang=ru_RU"></script>
-    <script src="/js/adminMap.js"></script>
-</body>
-</html>
-
+@section Scripts {
+	<partial name="_MapScripts" model="Model.ApiKey" />
+	<script src="~/js/adminMap.js" asp-append-version="true"></script>
+}

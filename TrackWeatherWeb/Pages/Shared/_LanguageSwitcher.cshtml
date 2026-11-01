@@ -1,0 +1,20 @@
+@{
+	var returnUrl = $"{Context.Request.PathBase}{Context.Request.Path}{Context.Request.QueryString}";
+	(string Code, string Label, string Name)[] languages =
+	[
+		(SupportedLanguages.Russian, "RU", "Русский"),
+		(SupportedLanguages.English, "EN", "English"),
+	];
+}
+@* A plain form: works without JavaScript and keeps the user on the same page *@
+<form method="post" action="~/language" asp-antiforgery="true" class="lang-switch" role="group" aria-label="@L["Nav.Language"]">
+	<input type="hidden" name="returnUrl" value="@returnUrl" />
+	@foreach (var language in languages)
+	{
+		var isCurrent = language.Code == SupportedLanguages.Current;
+		<button type="submit" name="culture" value="@language.Code" lang="@language.Code" title="@language.Name"
+				class="lang-switch__option @(isCurrent ? "is-active" : "")" aria-pressed="@(isCurrent ? "true" : "false")">
+			@language.Label
+		</button>
+	}
+</form>

@@ -1,143 +1,100 @@
-﻿@using Microsoft.AspNetCore.Components.Authorization
-@using System.Security.Claims
-@inject AuthenticationStateProvider AuthenticationStateProvider
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="@SupportedLanguages.Current">
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>@ViewData["Title"] - TrackWeatherWeb</title>
+	<title>@ViewData["Title"] - @L["App.Name"]</title>
 	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"
+		  integrity="sha384-XGjxtQfXaH2tnPFa9x+ruJTuLE3Aa6LhHSWRr1XeTyhezb4abCG4ccI5AkVDxqC+" crossorigin="anonymous" />
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
-	<link rel="stylesheet" href="~/css/layout.css" asp-append-version="true" />
 </head>
 <body>
-	<header>
-		<nav class="navbar navbar-expand-lg navbar-dark">
-			<div class="container-fluid">
-				<a class="navbar-brand" asp-area="" asp-page="/Index" style="margin-left:20px">КартаПогоды</a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul class="navbar-nav ms-auto">
-						<!-- User's profile' -->
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-								<span class="bi bi-person-circle"></span> Профиль
-							</a>
-							<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-								@if (await IsUserAuthenticated())
-								{
-									<li><a class="dropdown-item" asp-area="" asp-page="/LogoutPage">Выход</a></li>
-								}
-								else
-								{
-									<li class="nav-item">
-										<a class="dropdown-item" asp-area="" asp-page="/Login">Вход</a>
-									</li>
-									<li class="nav-item">
-										<a class="dropdown-item" asp-area="" asp-page="/Registration">Регистрация</a>
-									</li>
-									
-								}
-								<li class="nav-item">
-									<div id="google_translate_element" style="display: none;"></div> 
-									<a href="#" class="dropdown-item" onclick="translatePage()">Перевести на английский (eng) </a>
-								</li>		
-							</ul>
+	<header class="app-header">
+		<button class="navbar-toggler app-header__toggle d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar"
+				aria-controls="sidebar" aria-expanded="false" aria-label="@L["Nav.Toggle"]">
+			<i class="bi bi-list" aria-hidden="true"></i>
+		</button>
+		<a class="app-header__brand" asp-page="/Index">
+			<i class="bi bi-cloud-sun-fill" aria-hidden="true"></i> @L["App.Name"]
+		</a>
+		<div class="app-header__actions">
+			<partial name="_LanguageSwitcher" />
+			@if (User.Identity?.IsAuthenticated == true)
+			{
+				<div class="dropdown">
+					<button class="btn btn-sm app-header__user dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+						<i class="bi bi-person-circle" aria-hidden="true"></i>
+						<span class="d-none d-sm-inline">@User.Identity.Name</span>
+					</button>
+					<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+						<li>
+							<form method="post" asp-page="/LogoutPage">
+								<button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right" aria-hidden="true"></i> @L["Nav.Logout"]</button>
+							</form>
 						</li>
 					</ul>
 				</div>
-			</div>
-		</nav>
+			}
+			else
+			{
+				<a class="btn btn-sm btn-light" asp-page="/Login">@L["Nav.Login"]</a>
+			}
+		</div>
 	</header>
-	<div class="container-fluid">
-		<div class="row">
-			<nav class="col-md-3 col-lg-2 d-md-block sidebar">
-				<div class="position-sticky">
-					<ul class="nav flex-column">
-						<li class="nav-item">
-							<a class="nav-link @((ViewContext.RouteData.Values["page"]?.ToString() == "/Index") ? "active" : "")" asp-area="" asp-page="/Index">
-								<span class="bi bi-house-door-fill"></span> Главная страница
-							</a>
-						</li>
-						@if (await IsUserInRole("Admin"))
-						{
 
-							<li class="nav-item">
-								<a class="nav-link @((ViewContext.RouteData.Values["page"]?.ToString() == "/TransportRequestPage") ? "active" : "")" asp-area="" asp-page="/TransportRequestPage">Список транспортных запросов</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link @((ViewContext.RouteData.Values["page"]?.ToString() == "/UsersPage") ? "active" : "")" asp-area="" asp-page="/UsersPage">Список пользователей</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link @((ViewContext.RouteData.Values["page"]?.ToString() == "/AddUser") ? "active" : "")" asp-area="" asp-page="/AddUser">Добавление пользователей</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link @((ViewContext.RouteData.Values["page"]?.ToString() == "/AdminMap") ? "active" : "")" asp-area="" asp-page="/AdminMap">Карта коммунальных служб</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link @((ViewContext.RouteData.Values["page"]?.ToString() == "/UsersMap") ? "active" : "")" asp-area="" asp-page="/UsersMap">Карта погоды</a>
-							</li>
-						}
-						@if (await IsUserInRole("User"))
-						{
-							<li class="nav-item">
-								<a class="nav-link @((ViewContext.RouteData.Values["page"]?.ToString() == "/UsersMap") ? "active" : "")" asp-area="" asp-page="/UsersMap">Карта погоды</a>
-							</li>
-						}
-						@if (await IsUserAuthenticated()==false)
-						{
-							<li class="nav-item">
-								<a class="nav-link" asp-area="" asp-page="/Login">Вход</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" asp-area="" asp-page="/Registration">Регистрация</a>
-							</li>
-						}
-					</ul>
-				</div>
-			</nav>
-			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+	<div class="app-body">
+		<nav id="sidebar" class="app-sidebar collapse d-md-block" aria-label="@L["Nav.Main"]">
+			<ul class="nav flex-column">
+				@NavLink("/Index", "bi-house-door-fill", L["Nav.Home"])
+				@if (User.Identity?.IsAuthenticated == true)
+				{
+					@NavLink("/UsersMap", "bi-geo-alt-fill", L["Nav.WeatherMap"])
+				}
+				else
+				{
+					@NavLink("/Login", "bi-box-arrow-in-right", L["Nav.Login"])
+					@NavLink("/Registration", "bi-person-plus-fill", L["Nav.Register"])
+				}
+				@if (User.IsInRole(Roles.Admin))
+				{
+					<li class="app-sidebar__heading">@L["Nav.Administration"]</li>
+					@NavLink("/AdminMap", "bi-truck", L["Nav.UtilityMap"])
+					@NavLink("/TransportRequestPage", "bi-list-check", L["Nav.TransportRequests"])
+					@NavLink("/UsersPage", "bi-people-fill", L["Nav.Users"])
+					@NavLink("/AddUser", "bi-person-plus-fill", L["Nav.AddUser"])
+				}
+			</ul>
+		</nav>
+
+		<div class="app-content">
+			<main class="app-main">
+				<partial name="_StatusMessages" />
 				@RenderBody()
 			</main>
+			<footer class="app-footer">
+				&copy; @DateTime.UtcNow.Year @L["App.Name"] &middot; <a asp-page="/Privacy">@L["Nav.Privacy"]</a>
+			</footer>
 		</div>
 	</div>
-	<footer class="footer">
-		<div class="container">
-			&copy; 2024 - TrackWeatherWeb - <a asp-area="" asp-page="/Privacy">Privacy</a>
-		</div>
-	</footer>
 
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
-	<script src="~/js/googleTranslate.js"></script>
-
-	<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 	@RenderSection("Scripts", required: false)
 </body>
 </html>
 
 @functions {
-	private async Task<ClaimsPrincipal> GetCurrentUserAsync()
+	private Microsoft.AspNetCore.Html.IHtmlContent NavLink(string page, string icon, LocalizedString title)
 	{
-		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-		return authState.User;
-	}
-
-	private async Task<bool> IsUserInRole(string role)
-	{
-		var user = await GetCurrentUserAsync();
-		return user.IsInRole(role);
-	}
-
-	private async Task<bool> IsUserAuthenticated()
-	{
-		var user = await GetCurrentUserAsync();
-		return user.Identity != null && user.Identity.IsAuthenticated;
+		var active = ViewContext.RouteData.Values["page"]?.ToString() == page;
+		var href = Url.Page(page);
+		return new Microsoft.AspNetCore.Html.HtmlContentBuilder()
+			.AppendHtml("<li class=\"nav-item\"><a class=\"nav-link")
+			.AppendHtml(active ? " active\" aria-current=\"page\"" : "\"")
+			.AppendHtml(" href=\"").Append(href ?? "#").AppendHtml("\"><i class=\"bi ")
+			.Append(icon).AppendHtml("\" aria-hidden=\"true\"></i> ")
+			.Append(title.Value).AppendHtml("</a></li>");
 	}
 }

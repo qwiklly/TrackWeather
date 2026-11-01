@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="App.Name" xml:space="preserve"><value>TrackWeatherMap</value></data>
+  <data name="Nav.Home" xml:space="preserve"><value>Home</value></data>
+  <data name="Nav.WeatherMap" xml:space="preserve"><value>Weather map</value></data>
+  <data name="Nav.UtilityMap" xml:space="preserve"><value>Utility map</value></data>
+  <data name="Nav.TransportRequests" xml:space="preserve"><value>Transport requests</value></data>
+  <data name="Nav.Users" xml:space="preserve"><value>Users</value></data>
+  <data name="Nav.AddUser" xml:space="preserve"><value>Add user</value></data>
+  <data name="Nav.Login" xml:space="preserve"><value>Log in</value></data>
+  <data name="Nav.Register" xml:space="preserve"><value>Sign up</value></data>
+  <data name="Nav.Logout" xml:space="preserve"><value>Log out</value></data>
+  <data name="Nav.Administration" xml:space="preserve"><value>Administration</value></data>
+  <data name="Nav.Toggle" xml:space="preserve"><value>Toggle navigation</value></data>
+  <data name="Nav.Main" xml:space="preserve"><value>Main navigation</value></data>
+  <data name="Nav.Language" xml:space="preserve"><value>Interface language</value></data>
+  <data name="Nav.Privacy" xml:space="preserve"><value>Privacy</value></data>
+  <data name="Common.Delete" xml:space="preserve"><value>Delete</value></data>
+  <data name="Common.Actions" xml:space="preserve"><value>Actions</value></data>
+  <data name="Common.ShowPassword" xml:space="preserve"><value>Show or hide password</value></data>
+  <data name="Role.User" xml:space="preserve"><value>User</value></data>
+  <data name="Role.Admin" xml:space="preserve"><value>Administrator</value></data>
+  <data name="Field.Email" xml:space="preserve"><value>Email</value></data>
+  <data name="Field.Password" xml:space="preserve"><value>Password</value></data>
+  <data name="Field.ConfirmPassword" xml:space="preserve"><value>Confirm password</value></data>
+  <data name="Field.Name" xml:space="preserve"><value>Name</value></data>
+  <data name="Field.Role" xml:space="preserve"><value>Role</value></data>
+  <data name="Validation.Required" xml:space="preserve"><value>{0} is required</value></data>
+  <data name="Validation.Email" xml:space="preserve"><value>Enter a valid email address</value></data>
+  <data name="Validation.Password" xml:space="preserve"><value>At least 8 characters with an uppercase letter, a lowercase letter and a digit</value></data>
+  <data name="Validation.PasswordsDiffer" xml:space="preserve"><value>Passwords do not match</value></data>
+  <data name="Validation.Role" xml:space="preserve"><value>Unknown role</value></data>
+  <data name="Validation.MaxLength" xml:space="preserve"><value>{0} must be at most {1} characters long</value></data>
+  <data name="Account.InvalidCredentials" xml:space="preserve"><value>Incorrect email or password</value></data>
+  <data name="Account.LoginSucceeded" xml:space="preserve"><value>Logged in successfully</value></data>
+  <data name="Account.AlreadyExists" xml:space="preserve"><value>A user with this email already exists</value></data>
+  <data name="Account.Registered" xml:space="preserve"><value>User registered successfully</value></data>
+  <data name="Account.NotFound" xml:space="preserve"><value>User not found</value></data>
+  <data name="Account.Updated" xml:space="preserve"><value>User updated successfully</value></data>
+  <data name="Account.Deleted" xml:space="preserve"><value>User deleted successfully</value></data>
+  <data name="Account.LastAdmin" xml:space="preserve"><value>The system must keep at least one administrator</value></data>
+  <data name="Account.CannotDeleteSelf" xml:space="preserve"><value>You cannot delete your own account</value></data>
+  <data name="Home.Title" xml:space="preserve"><value>Home</value></data>
+  <data name="Home.Welcome" xml:space="preserve"><value>Weather and routes on one map</value></data>
+  <data name="Home.WelcomeUser" xml:space="preserve"><value>Welcome, {0}!</value></data>
+  <data name="Home.Lead" xml:space="preserve"><value>Check the current weather anywhere in the world and build a route to it. Utility services see special transport requests on a dedicated map.</value></data>
+  <data name="Home.OpenMap" xml:space="preserve"><value>Open the map</value></data>
+  <data name="Home.Feature.Weather.Title" xml:space="preserve"><value>Weather at a point</value></data>
+  <data name="Home.Feature.Weather.Text" xml:space="preserve"><value>Right-click the map to place a marker and see the current weather there.</value></data>
+  <data name="Home.Feature.Route.Title" xml:space="preserve"><value>Routes</value></data>
+  <data name="Home.Feature.Route.Text" xml:space="preserve"><value>Build a route to the marker from your location or from a given address.</value></data>
+  <data name="Home.Feature.Transport.Title" xml:space="preserve"><value>Special transport</value></data>
+  <data name="Home.Feature.Transport.Text" xml:space="preserve"><value>Special transport requests arrive through the API and appear on the utility map.</value></data>
+  <data name="Home.Feature.Admin.Title" xml:space="preserve"><value>Administration</value></data>
+  <data name="Home.Feature.Admin.Text" xml:space="preserve"><value>Administrators manage users, roles and transport requests.</value></data>
+  <data name="Login.Title" xml:space="preserve"><value>Log in</value></data>
+  <data name="Login.Submit" xml:space="preserve"><value>Log in</value></data>
+  <data name="Login.NoAccount" xml:space="preserve"><value>No account yet?</value></data>
+  <data name="Register.Title" xml:space="preserve"><value>Sign up</value></data>
+  <data name="Register.Submit" xml:space="preserve"><value>Sign up</value></data>
+  <data name="Register.HasAccount" xml:space="preserve"><value>Already have an account?</value></data>
+  <data name="AddUser.Title" xml:space="preserve"><value>New user</value></data>
+  <data name="AddUser.Submit" xml:space="preserve"><value>Add user</value></data>
+  <data name="Users.Title" xml:space="preserve"><value>Users</value></data>
+  <data name="Users.ConfirmDelete" xml:space="preserve"><value>Delete user {0}?</value></data>
+  <data name="Transport.Title" xml:space="preserve"><value>Special transport requests</value></data>
+  <data name="Transport.Empty" xml:space="preserve"><value>There are no requests yet.</value></data>
+  <data name="Transport.Latitude" xml:space="preserve"><value>Latitude</value></data>
+  <data name="Transport.Longitude" xml:space="preserve"><value>Longitude</value></data>
+  <data name="Transport.Comment" xml:space="preserve"><value>Comment</value></data>
+  <data name="Transport.Time" xml:space="preserve"><value>Time</value></data>
+  <data name="Transport.ConfirmDelete" xml:space="preserve"><value>Delete request #{0}?</value></data>
+  <data name="Transport.NotFound" xml:space="preserve"><value>Request not found</value></data>
+  <data name="Transport.Added" xml:space="preserve"><value>Transport request added successfully</value></data>
+  <data name="Transport.Updated" xml:space="preserve"><value>Transport request updated successfully</value></data>
+  <data name="Transport.Deleted" xml:space="preserve"><value>Transport request deleted successfully</value></data>
+  <data name="WeatherMap.Title" xml:space="preserve"><value>Weather map</value></data>
+  <data name="WeatherMap.Hint" xml:space="preserve"><value>Right-click the map (long tap on a phone) to place a marker.</value></data>
+  <data name="UtilityMap.Title" xml:space="preserve"><value>Utility map</value></data>
+  <data name="UtilityMap.Hint" xml:space="preserve"><value>Markers are special transport requests. The route follows the M4 highway and can be changed in the map panel.</value></data>
+  <data name="Privacy.Title" xml:space="preserve"><value>Privacy</value></data>
+  <data name="Privacy.Stored" xml:space="preserve"><value>We store your name, email and a password hash, along with the transport requests you submit. Passwords themselves are never stored.</value></data>
+  <data name="Privacy.Cookies" xml:space="preserve"><value>The site uses only essential cookies: to keep you signed in, protect forms and remember your language.</value></data>
+  <data name="Privacy.ThirdParty" xml:space="preserve"><value>Coordinates of the points you pick are sent to Yandex Maps and OpenWeather to show the map, routes and weather.</value></data>
+  <data name="Error.Title" xml:space="preserve"><value>Something went wrong</value></data>
+  <data name="Error.Server" xml:space="preserve"><value>A server error occurred. Please try again later.</value></data>
+  <data name="Error.Forbidden" xml:space="preserve"><value>You do not have access to this page.</value></data>
+  <data name="Error.NotFound" xml:space="preserve"><value>This page does not exist.</value></data>
+  <data name="Error.TooManyRequests" xml:space="preserve"><value>Too many attempts. Please wait a minute and try again.</value></data>
+  <data name="Error.Timeout" xml:space="preserve"><value>The request timed out. Please try again.</value></data>
+  <data name="Error.WeatherUnavailable" xml:space="preserve"><value>The weather service is currently unavailable.</value></data>
+  <data name="Error.BackHome" xml:space="preserve"><value>Back to home</value></data>
+  <data name="Error.RequestId" xml:space="preserve"><value>Request ID</value></data>
+  <data name="MapJs.Coordinates" xml:space="preserve"><value>Coordinates</value></data>
+  <data name="MapJs.City" xml:space="preserve"><value>City</value></data>
+  <data name="MapJs.Temperature" xml:space="preserve"><value>Temperature</value></data>
+  <data name="MapJs.Weather" xml:space="preserve"><value>Weather</value></data>
+  <data name="MapJs.Email" xml:space="preserve"><value>Email</value></data>
+  <data name="MapJs.Comment" xml:space="preserve"><value>Comment</value></data>
+  <data name="MapJs.Time" xml:space="preserve"><value>Time</value></data>
+  <data name="MapJs.WeatherLoading" xml:space="preserve"><value>Loading weather data…</value></data>
+  <data name="MapJs.WeatherFailed" xml:space="preserve"><value>Failed to load weather data.</value></data>
+  <data name="MapJs.WeatherIncomplete" xml:space="preserve"><value>Incomplete data received.</value></data>
+  <data name="MapJs.RouteFromMe" xml:space="preserve"><value>Route from my location</value></data>
+  <data name="MapJs.RouteFromAddress" xml:space="preserve"><value>Route from an address</value></data>
+  <data name="MapJs.AddressLabel" xml:space="preserve"><value>Starting address</value></data>
+  <data name="MapJs.AddressPlaceholder" xml:space="preserve"><value>Enter an address</value></data>
+  <data name="MapJs.BuildRoute" xml:space="preserve"><value>Build route</value></data>
+  <data name="MapJs.Locating" xml:space="preserve"><value>Finding your location…</value></data>
+  <data name="MapJs.GeolocationFailed" xml:space="preserve"><value>Unable to determine your location.</value></data>
+  <data name="MapJs.AddressNotFound" xml:space="preserve"><value>Address not found.</value></data>
+  <data name="MapJs.RouteBuilding" xml:space="preserve"><value>Building the route…</value></data>
+  <data name="MapJs.RouteFailed" xml:space="preserve"><value>Failed to build the route.</value></data>
+  <data name="MapJs.RouteSummary" xml:space="preserve"><value>Route</value></data>
+  <data name="MapJs.ClearRoute" xml:space="preserve"><value>Clear route</value></data>
+  <data name="MapJs.RequestsFailed" xml:space="preserve"><value>Failed to load transport requests.</value></data>
+  <data name="MapJs.MapUnavailable" xml:space="preserve"><value>Failed to load the map. Check your internet connection and the API key.</value></data>
+  <data name="MapJs.MissingKey" xml:space="preserve"><value>The Yandex Maps key is not configured (YandexMaps:ApiKey).</value></data>
+</root>

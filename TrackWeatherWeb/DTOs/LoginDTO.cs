@@ -1,17 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace TrackWeatherWeb.DTOs
 {
-    public class LoginDTO 
+    public class LoginDTO
     {
-        [Required, DataType(DataType.EmailAddress), EmailAddress]
-        [Display(Name = "Email Address")]
+        [Required(ErrorMessage = "Validation.Required"), EmailAddress(ErrorMessage = "Validation.Email")]
+        [Display(Name = "Field.Email")]
         public string Email { get; set; } = string.Empty;
 
-        [Required, DataType(DataType.Password)]
-        [RegularExpression("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[a-z]).{6,}$",
-            ErrorMessage = "Ваш пароль должен содержать комбинацию прописных, строчних букв и цифр и быть длиной более 5 символов ")]
-
+        // No format rules here: they belong to choosing a password, not to entering one
+        [Required(ErrorMessage = "Validation.Required"), DataType(DataType.Password)]
+        [Display(Name = "Field.Password")]
         public string Password { get; set; } = string.Empty;
     }
 }

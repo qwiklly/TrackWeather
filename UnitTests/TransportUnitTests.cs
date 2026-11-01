@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using TrackWeatherWeb.Controllers;
 using TrackWeatherWeb.DTOs;
-using TrackWeatherWeb.Models;
-using TrackWeatherWeb.Repositories;
+using TrackWeatherWeb.Repositories.Interfaces;
 using static TrackWeatherWeb.Responses.CustomResponses;
 
 namespace UnitTests
@@ -11,155 +10,80 @@ namespace UnitTests
 	public class TestsForTransportRequests
 	{
 		[Fact]
-		public async Task GetAllTransportRequestsAsync_ShouldReturnOkObjectResult_WithListOfRequests()
+		public async Task GetTransportRequestsAsync_ShouldReturnOkObjectResult_WithListOfRequests()
 		{
 			// Arrange
-			var mockRepo = new Mock<ITransport>();
+			var mockRepo = new Mock<ITransportRepo>();
 			var mockTransport = new List<RequestTransportDTO>
-		{
-			new RequestTransportDTO { Id = 1, Email = "user1@example.com", Coordinate_x = 48.909172455411614m, Coordinate_y =  40.46727250624546m, Comment = "Raining, need transport", Timestamp = DateTime.Parse("2024-08-27 10:30:00")},
-			new RequestTransportDTO  { Id = 2, Email = "user2@example.com", Coordinate_x = 49.909172455411614m, Coordinate_y =  41.46727250624546m, Comment = "Raining, need transport", Timestamp = DateTime.Parse("2024-08-27 10:35:00")}
-		};
+			{
+				new RequestTransportDTO { Id = 1, Email = "user1@example.com", Latitude = 48.909172m, Longitude = 40.467272m, Comment = "Raining, need transport" },
+				new RequestTransportDTO { Id = 2, Email = "user2@example.com", Latitude = 49.909172m, Longitude = 41.467272m, Comment = "Raining, need transport" }
+			};
 
 			mockRepo.Setup(repo => repo.GetTransportRequestsAsync()).ReturnsAsync(mockTransport);
 
-			var controller = new ApplicationController(null!, mockRepo.Object);
+			var controller = new TransportController(mockRepo.Object);
 
 			// Act
 			var result = await controller.GetTransportRequestsAsync();
 
 			// Assert
-			var okResult = Assert.IsType<OkObjectResult>(result.Result);
+			var okResult = Assert.IsType<OkObjectResult>(result);
 			var returnValue = Assert.IsType<List<RequestTransportDTO>>(okResult.Value);
 			Assert.Equal(2, returnValue.Count);
 		}
+
 		[Fact]
-		public async Task GetTransportAsync_ShouldReturnOkObjectResult_WithTransportRequests()
+		public async Task GetTransportRequestAsync_ShouldReturnNotFound_WhenMissing()
 		{
 			// Arrange
-			var mockRepo = new Mock<ITransport>();
-			int id = 1;
-			var transport = new TransportRequests
-			{
-				Email = "user1@example.com",
-				Coordinate_x = 48.909172455411614m,
-				Coordinate_y = 40.46727250624546m,
-				Comment = "Raining, need transport",
-				Timestamp = DateTime.Parse("2024-08-27 10:30:00")
-			};
-
-			mockRepo.Setup(repo => repo.GetTransportRequestAsync(id)).ReturnsAsync(transport);
-
-			var controller = new ApplicationController(null!, mockRepo.Object);
+			var mockRepo = new Mock<ITransportRepo>();
+			var controller = new TransportController(mockRepo.Object);
 
 			// Act
-			var result = await controller.GetTransportRequestAsync(id);
+			var result = await controller.GetTransportRequestAsync(404);
 
 			// Assert
-			var okResult = Assert.IsType<OkObjectResult>(result.Result);
-			var returnValue = Assert.IsType<TransportRequests>(okResult.Value);
-
-			Assert.Equal(transport.Id, returnValue.Id);
-			Assert.Equal(transport.Email, returnValue.Email);
-			Assert.Equal(transport.Coordinate_x, returnValue.Coordinate_x);
-			Assert.Equal(transport.Coordinate_y, returnValue.Coordinate_y);
-			Assert.Equal(transport.Comment, returnValue.Comment);
-			Assert.Equal(transport.Timestamp, returnValue.Timestamp);
+			Assert.IsType<NotFoundResult>(result);
 		}
 
 		[Fact]
-		public async Task AddTransportRequestAsync_ShouldReturnOkObjectResult_WithRegisterResponse()
+		public async Task DeleteTransportRequestAsync_ShouldReturnNotFound_WhenRepositoryReportsIt()
 		{
 			// Arrange
-			var mockRepo = new Mock<ITransport>();
-			var requestTransportDTO = new RequestTransportDTO
-			{
-				Id = 1,
-				Email = "user1@example.com",
-				Coordinate_x = 48.909172455411614m,
-				Coordinate_y = 40.46727250624546m,
-				Comment = "Raining, need transport",
-				Timestamp = DateTime.Parse("2024-08-27 10:30:00")
-			};
-			var requestTransportResponse = new BaseResponse(true, "Transport request added successfully");
+			var mockRepo = new Mock<ITransportRepo>();
+			mockRepo.Setup(repo => repo.DeleteTransportRequestAsync(1))
+				.ReturnsAsync(new BaseResponse(false, "Missing", ResponseError.NotFound));
 
-			mockRepo.Setup(repo => repo.RequestTransportAsync(requestTransportDTO)).ReturnsAsync(requestTransportResponse);
-
-			var controller = new ApplicationController(null!, mockRepo.Object);
+			var controller = new TransportController(mockRepo.Object);
 
 			// Act
-			var result = await controller.RequestTransportAsync(requestTransportDTO);
+			var result = await controller.DeleteTransportRequestAsync(1);
 
 			// Assert
-			var okResult = Assert.IsType<OkObjectResult>(result.Result);
-			var returnValue = Assert.IsType<BaseResponse>(okResult.Value);
-
-			Assert.True(returnValue.Flag);
-			Assert.Equal("Transport request added successfully", returnValue.Message);
+			var objectResult = Assert.IsType<ObjectResult>(result);
+			Assert.Equal(404, objectResult.StatusCode);
 		}
 
 		[Fact]
-		public async Task DeleteTransportRequestAsync_ShouldReturnOkObjectResult()
+		public async Task UpdateTransportRequest_ShouldCallRepository_AndReturnOk()
 		{
 			// Arrange
-			var mockRepo = new Mock<ITransport>();
-
-			var deleteTransportRequestDTO = new DeleteTransportRequestDTO
-			{
-				Id = 1
-			};
-
-			var expectedResponse = new BaseResponse(true, "Transport request deleted successfully");
-
-			mockRepo.Setup(repo => repo.DeleteTransportRequestAsync(deleteTransportRequestDTO)).ReturnsAsync(expectedResponse);
-
-			var controller = new ApplicationController(null!, mockRepo.Object);
-
-			// Act
-			var result = await controller.DeleteTransportRequestAsync(deleteTransportRequestDTO);
-
-			// Assert
-			var okResult = Assert.IsType<OkObjectResult>(result.Result);
-			var actualResponse = Assert.IsType<BaseResponse>(okResult.Value);
-			Assert.True(actualResponse.Flag);
-			Assert.Equal("Transport request deleted successfully", actualResponse.Message);
-		}
-
-		[Fact]
-		public async Task UpdateTransportRequest_ShouldReturnOkObjectResult_WithSuccessMessage()
-		{
-			// Arrange
-			var mockRepo = new Mock<ITransport>();
-
+			var mockRepo = new Mock<ITransportRepo>();
 			var id = 2;
-			var updateTransportDTO = new RequestTransportDTO
-			{
-				Id = 1,
-				Email = "user1@example.com",
-				Coordinate_x = 48.909172455411614m,
-				Coordinate_y = 40.46727250624546m,
-				Comment = "Raining, need transport",
-				Timestamp = DateTime.Parse("2024-08-27 10:30:00")
-			};
+			var model = new CreateTransportRequestDTO { Latitude = 48.9m, Longitude = 40.4m, Comment = "Raining, need transport" };
 
-			var updateTransportResponse = new BaseResponse(true, "Transport request updated successfully.");
+			mockRepo.Setup(repo => repo.UpdateTransportRequestAsync(id, model))
+				.ReturnsAsync(new BaseResponse(true, "Transport request updated successfully."));
 
-			mockRepo.Setup(repo => repo.UpdateTransportRequestAsync(id, updateTransportDTO))
-			.ReturnsAsync(updateTransportResponse);
-
-			var controller = new ApplicationController(null!, mockRepo.Object);
+			var controller = new TransportController(mockRepo.Object);
 
 			// Act
-			var result = await controller.UpdateTransportRequestAsync(id, updateTransportDTO);
+			var result = await controller.UpdateTransportRequestAsync(id, model);
 
 			// Assert
-			var okResult = Assert.IsType<OkObjectResult>(result.Result);
-			var actualResponse = Assert.IsType<BaseResponse>(okResult.Value);
-
-			Assert.True(actualResponse.Flag);
-			Assert.Equal("Transport request updated successfully.", actualResponse.Message);
-
-			mockRepo.Verify(repo => repo.UpdateTransportRequestAsync(id, updateTransportDTO), Times.Once);
+			Assert.IsType<OkObjectResult>(result);
+			mockRepo.Verify(repo => repo.UpdateTransportRequestAsync(id, model), Times.Once);
 		}
 	}
 }

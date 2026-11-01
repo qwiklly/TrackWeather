@@ -1,28 +1,34 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Diagnostics;
 
 namespace TrackWeatherWeb.Pages
 {
+    [AllowAnonymous]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     [IgnoreAntiforgeryToken]
     public class ErrorModel : PageModel
     {
+        [BindProperty(SupportsGet = true)]
+        public int? Code { get; set; }
+
         public string? RequestId { get; set; }
 
-        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId) && Code is null or >= 500;
 
-        private readonly ILogger<ErrorModel> _logger;
+        public void OnGet() => Prepare();
 
-        public ErrorModel(ILogger<ErrorModel> logger)
-        {
-            _logger = logger;
-        }
+        // A failed POST is re-executed here with its original method
+        public void OnPost() => Prepare();
 
-        public void OnGet()
+        private void Prepare()
         {
             RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
+            if (Code is >= 400 and < 600)
+            {
+                Response.StatusCode = Code.Value;
+            }
         }
     }
-
 }

@@ -1,52 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Claims;
+using TrackWeatherWeb.Auth;
 using TrackWeatherWeb.DTOs;
+using TrackWeatherWeb.Repositories.Interfaces;
 
 namespace TrackWeatherWeb.Pages
 {
-	public class UsersPageModel : PageModel
-	{
-		private readonly Repositories.IAccount _applicationService;
+    [Authorize(Roles = Roles.Admin)]
+    public class UsersPageModel(IAccountRepo accountRepo) : PageModel
+    {
+        public List<GetUsersDTO> Users { get; set; } = [];
 
-		public List<GetUsersDTO> Users { get; set; } = new List<GetUsersDTO>();
-		public DeleteUserDTO Delete = new();
+        public async Task OnGetAsync()
+        {
+            Users = await accountRepo.GetUsersAsync();
+        }
 
-		public UsersPageModel(Repositories.IAccount applicationService)
-
-		{
-			_applicationService = applicationService;
-		}
-
-		public async Task OnGetAsync()
-		{
-
-			TempData["SuccessMessage"] = null;
-			TempData["ErrorMessage"] = null;
-			Users = await _applicationService.GetUsersAsync();
-		}
-
-		public async Task<IActionResult> OnPostDeleteAsync(string email)
-		{
-			if (string.IsNullOrEmpty(email))
-			{
-				return BadRequest("Email is required.");
-			}
-
-			Delete.Email = email;
-
-			var response = await _applicationService.DeleteUserAsync(Delete);
-			if (response.Flag == true)
-			{
-
-				return RedirectToPage();
-			}
-			else
-			{
-				ModelState.AddModelError(string.Empty, response.Message ?? "Не удалось удалить пользователя.");
-				return Page();
-			}
-		}
-	}
+        public async Task<IActionResult> OnPostDeleteAsync(string email)
+        {
+            var response = await accountRepo.DeleteUserAsync(email, User.FindFirstValue(ClaimTypes.Email));
+            TempData[response.Flag ? "Success" : "Error"] = response.Message;
+            return RedirectToPage();
+        }
+    }
 }
-
-

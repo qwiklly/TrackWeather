@@ -1,8 +1,11 @@
-﻿@page
+@page
 @model PrivacyModel
 @{
-    ViewData["Title"] = "Privacy Policy";
+	ViewData["Title"] = L["Privacy.Title"].Value;
 }
-<h1>@ViewData["Title"]</h1>
-
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="page-header"><h1>@L["Privacy.Title"]</h1></div>
+<div class="prose">
+	<p>@L["Privacy.Stored"]</p>
+	<p>@L["Privacy.Cookies"]</p>
+	<p>@L["Privacy.ThirdParty"]</p>
+</div>

@@ -1,34 +1,28 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.Extensions.Localization;
+using TrackWeatherWeb.Auth;
 using TrackWeatherWeb.DTOs;
-using TrackWeatherWeb.HttpServices;
-using TrackWeatherWeb.States;
+using TrackWeatherWeb.Repositories.Interfaces;
 
 namespace TrackWeatherWeb.Pages
 {
     [AllowAnonymous]
-    public class LoginModel : PageModel
+    [EnableRateLimiting(AuthDefaults.RateLimitPolicy)]
+    public class LoginModel(IAccountRepo accountRepo, IStringLocalizer<SharedResource> localizer) : PageModel
     {
         [BindProperty]
         public LoginDTO Login { get; set; } = new LoginDTO();
 
-        public bool IsUserLoggedIn { get; set; } = false;
+        [BindProperty(SupportsGet = true)]
+        public string? ReturnUrl { get; set; }
 
-        private readonly IApplicationService _accountService;
-        private readonly AuthenticationStateProvider _authStateProvider;
-
-        public LoginModel(IApplicationService accountService, AuthenticationStateProvider authStateProvider)
-        {
-            _accountService = accountService;
-            _authStateProvider = authStateProvider;
-        }
-
-        public void OnGet()
-        {
-            TempData["ErrorMessage"] = null;
-        }
+        public IActionResult OnGet() =>
+            User.Identity?.IsAuthenticated == true ? RedirectToPage("/Index") : Page();
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -37,19 +31,16 @@ namespace TrackWeatherWeb.Pages
                 return Page();
             }
 
-            var response = await _accountService.LoginAsync(Login);
-
-            if (!response.Flag)
+            var user = await accountRepo.AuthenticateAsync(Login);
+            if (user == null)
             {
-                TempData["ErrorMessage"] = response.Message;
+                ModelState.AddModelError(string.Empty, localizer["Account.InvalidCredentials"]);
                 return Page();
             }
 
-            var customAuthStateProvider = (AuthenticationProvider)_authStateProvider;
-            await customAuthStateProvider.UpdateAuthenticationState(response.JWTToken);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, UserClaims.CreateCookiePrincipal(user));
 
-            IsUserLoggedIn = true;
-            return RedirectToPage("/Index");
+            return Url.IsLocalUrl(ReturnUrl) ? LocalRedirect(ReturnUrl) : RedirectToPage("/UsersMap");
         }
     }
 }

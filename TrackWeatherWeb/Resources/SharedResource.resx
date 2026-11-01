@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="App.Name" xml:space="preserve"><value>КартаПогоды</value></data>
+  <data name="Nav.Home" xml:space="preserve"><value>Главная</value></data>
+  <data name="Nav.WeatherMap" xml:space="preserve"><value>Карта погоды</value></data>
+  <data name="Nav.UtilityMap" xml:space="preserve"><value>Карта коммунальных служб</value></data>
+  <data name="Nav.TransportRequests" xml:space="preserve"><value>Транспортные запросы</value></data>
+  <data name="Nav.Users" xml:space="preserve"><value>Пользователи</value></data>
+  <data name="Nav.AddUser" xml:space="preserve"><value>Добавить пользователя</value></data>
+  <data name="Nav.Login" xml:space="preserve"><value>Вход</value></data>
+  <data name="Nav.Register" xml:space="preserve"><value>Регистрация</value></data>
+  <data name="Nav.Logout" xml:space="preserve"><value>Выход</value></data>
+  <data name="Nav.Administration" xml:space="preserve"><value>Администрирование</value></data>
+  <data name="Nav.Toggle" xml:space="preserve"><value>Показать или скрыть меню</value></data>
+  <data name="Nav.Main" xml:space="preserve"><value>Основное меню</value></data>
+  <data name="Nav.Language" xml:space="preserve"><value>Язык интерфейса</value></data>
+  <data name="Nav.Privacy" xml:space="preserve"><value>Конфиденциальность</value></data>
+  <data name="Common.Delete" xml:space="preserve"><value>Удалить</value></data>
+  <data name="Common.Actions" xml:space="preserve"><value>Действия</value></data>
+  <data name="Common.ShowPassword" xml:space="preserve"><value>Показать или скрыть пароль</value></data>
+  <data name="Role.User" xml:space="preserve"><value>Пользователь</value></data>
+  <data name="Role.Admin" xml:space="preserve"><value>Администратор</value></data>
+  <data name="Field.Email" xml:space="preserve"><value>Email</value></data>
+  <data name="Field.Password" xml:space="preserve"><value>Пароль</value></data>
+  <data name="Field.ConfirmPassword" xml:space="preserve"><value>Подтвердите пароль</value></data>
+  <data name="Field.Name" xml:space="preserve"><value>Имя</value></data>
+  <data name="Field.Role" xml:space="preserve"><value>Роль</value></data>
+  <data name="Validation.Required" xml:space="preserve"><value>Заполните поле «{0}»</value></data>
+  <data name="Validation.Email" xml:space="preserve"><value>Введите корректный email</value></data>
+  <data name="Validation.Password" xml:space="preserve"><value>Не короче 8 символов, с заглавной и строчной буквами и цифрой</value></data>
+  <data name="Validation.PasswordsDiffer" xml:space="preserve"><value>Пароли не совпадают</value></data>
+  <data name="Validation.Role" xml:space="preserve"><value>Неизвестная роль</value></data>
+  <data name="Validation.MaxLength" xml:space="preserve"><value>Поле «{0}» не должно быть длиннее {1} символов</value></data>
+  <data name="Account.InvalidCredentials" xml:space="preserve"><value>Неверный email или пароль</value></data>
+  <data name="Account.LoginSucceeded" xml:space="preserve"><value>Вход выполнен</value></data>
+  <data name="Account.AlreadyExists" xml:space="preserve"><value>Пользователь с таким email уже существует</value></data>
+  <data name="Account.Registered" xml:space="preserve"><value>Пользователь зарегистрирован</value></data>
+  <data name="Account.NotFound" xml:space="preserve"><value>Пользователь не найден</value></data>
+  <data name="Account.Updated" xml:space="preserve"><value>Данные пользователя обновлены</value></data>
+  <data name="Account.Deleted" xml:space="preserve"><value>Пользователь удалён</value></data>
+  <data name="Account.LastAdmin" xml:space="preserve"><value>Нельзя оставить систему без администратора</value></data>
+  <data name="Account.CannotDeleteSelf" xml:space="preserve"><value>Нельзя удалить собственную учётную запись</value></data>
+  <data name="Home.Title" xml:space="preserve"><value>Главная</value></data>
+  <data name="Home.Welcome" xml:space="preserve"><value>Погода и маршруты на одной карте</value></data>
+  <data name="Home.WelcomeUser" xml:space="preserve"><value>Добро пожаловать, {0}!</value></data>
+  <data name="Home.Lead" xml:space="preserve"><value>Узнайте текущую погоду в любой точке мира и постройте до неё маршрут. Коммунальные службы видят запросы спецтранспорта на отдельной карте.</value></data>
+  <data name="Home.OpenMap" xml:space="preserve"><value>Открыть карту</value></data>
+  <data name="Home.Feature.Weather.Title" xml:space="preserve"><value>Погода в точке</value></data>
+  <data name="Home.Feature.Weather.Text" xml:space="preserve"><value>Щёлкните правой кнопкой мыши по карте, чтобы поставить метку и увидеть актуальную погоду.</value></data>
+  <data name="Home.Feature.Route.Title" xml:space="preserve"><value>Маршруты</value></data>
+  <data name="Home.Feature.Route.Text" xml:space="preserve"><value>Постройте маршрут до метки от своего местоположения или от указанного адреса.</value></data>
+  <data name="Home.Feature.Transport.Title" xml:space="preserve"><value>Спецтранспорт</value></data>
+  <data name="Home.Feature.Transport.Text" xml:space="preserve"><value>Запросы спецтранспорта приходят через API и отображаются на карте коммунальных служб.</value></data>
+  <data name="Home.Feature.Admin.Title" xml:space="preserve"><value>Администрирование</value></data>
+  <data name="Home.Feature.Admin.Text" xml:space="preserve"><value>Администраторы управляют пользователями, ролями и транспортными запросами.</value></data>
+  <data name="Login.Title" xml:space="preserve"><value>Вход</value></data>
+  <data name="Login.Submit" xml:space="preserve"><value>Войти</value></data>
+  <data name="Login.NoAccount" xml:space="preserve"><value>Нет учётной записи?</value></data>
+  <data name="Register.Title" xml:space="preserve"><value>Регистрация</value></data>
+  <data name="Register.Submit" xml:space="preserve"><value>Зарегистрироваться</value></data>
+  <data name="Register.HasAccount" xml:space="preserve"><value>Уже есть учётная запись?</value></data>
+  <data name="AddUser.Title" xml:space="preserve"><value>Новый пользователь</value></data>
+  <data name="AddUser.Submit" xml:space="preserve"><value>Добавить пользователя</value></data>
+  <data name="Users.Title" xml:space="preserve"><value>Пользователи</value></data>
+  <data name="Users.ConfirmDelete" xml:space="preserve"><value>Удалить пользователя {0}?</value></data>
+  <data name="Transport.Title" xml:space="preserve"><value>Запросы спецтранспорта</value></data>
+  <data name="Transport.Empty" xml:space="preserve"><value>Запросов пока нет.</value></data>
+  <data name="Transport.Latitude" xml:space="preserve"><value>Широта</value></data>
+  <data name="Transport.Longitude" xml:space="preserve"><value>Долгота</value></data>
+  <data name="Transport.Comment" xml:space="preserve"><value>Комментарий</value></data>
+  <data name="Transport.Time" xml:space="preserve"><value>Время</value></data>
+  <data name="Transport.ConfirmDelete" xml:space="preserve"><value>Удалить запрос № {0}?</value></data>
+  <data name="Transport.NotFound" xml:space="preserve"><value>Запрос не найден</value></data>
+  <data name="Transport.Added" xml:space="preserve"><value>Запрос добавлен</value></data>
+  <data name="Transport.Updated" xml:space="preserve"><value>Запрос обновлён</value></data>
+  <data name="Transport.Deleted" xml:space="preserve"><value>Запрос удалён</value></data>
+  <data name="WeatherMap.Title" xml:space="preserve"><value>Карта погоды</value></data>
+  <data name="WeatherMap.Hint" xml:space="preserve"><value>Щёлкните правой кнопкой мыши по карте (на телефоне — долгое нажатие), чтобы поставить метку.</value></data>
+  <data name="UtilityMap.Title" xml:space="preserve"><value>Карта коммунальных служб</value></data>
+  <data name="UtilityMap.Hint" xml:space="preserve"><value>Метки — запросы спецтранспорта. Маршрут задан по трассе М4, его можно изменить на панели карты.</value></data>
+  <data name="Privacy.Title" xml:space="preserve"><value>Конфиденциальность</value></data>
+  <data name="Privacy.Stored" xml:space="preserve"><value>Мы храним ваше имя, email и хеш пароля, а также оставленные вами транспортные запросы. Сами пароли не хранятся.</value></data>
+  <data name="Privacy.Cookies" xml:space="preserve"><value>Сайт использует только необходимые файлы cookie: для входа, защиты форм и запоминания выбранного языка.</value></data>
+  <data name="Privacy.ThirdParty" xml:space="preserve"><value>Координаты выбранных на карте точек передаются сервисам Яндекс Карты и OpenWeather, чтобы показать карту, маршрут и погоду.</value></data>
+  <data name="Error.Title" xml:space="preserve"><value>Что-то пошло не так</value></data>
+  <data name="Error.Server" xml:space="preserve"><value>Произошла ошибка на сервере. Попробуйте ещё раз позже.</value></data>
+  <data name="Error.Forbidden" xml:space="preserve"><value>У вас нет доступа к этой странице.</value></data>
+  <data name="Error.NotFound" xml:space="preserve"><value>Такой страницы не существует.</value></data>
+  <data name="Error.TooManyRequests" xml:space="preserve"><value>Слишком много попыток. Подождите минуту и повторите.</value></data>
+  <data name="Error.Timeout" xml:space="preserve"><value>Время ожидания истекло. Попробуйте ещё раз.</value></data>
+  <data name="Error.WeatherUnavailable" xml:space="preserve"><value>Сервис погоды сейчас недоступен.</value></data>
+  <data name="Error.BackHome" xml:space="preserve"><value>На главную</value></data>
+  <data name="Error.RequestId" xml:space="preserve"><value>Номер запроса</value></data>
+  <data name="MapJs.Coordinates" xml:space="preserve"><value>Координаты</value></data>
+  <data name="MapJs.City" xml:space="preserve"><value>Город</value></data>
+  <data name="MapJs.Temperature" xml:space="preserve"><value>Температура</value></data>
+  <data name="MapJs.Weather" xml:space="preserve"><value>Погода</value></data>
+  <data name="MapJs.Email" xml:space="preserve"><value>Email</value></data>
+  <data name="MapJs.Comment" xml:space="preserve"><value>Комментарий</value></data>
+  <data name="MapJs.Time" xml:space="preserve"><value>Время</value></data>
+  <data name="MapJs.WeatherLoading" xml:space="preserve"><value>Загрузка данных о погоде…</value></data>
+  <data name="MapJs.WeatherFailed" xml:space="preserve"><value>Не удалось загрузить данные о погоде.</value></data>
+  <data name="MapJs.WeatherIncomplete" xml:space="preserve"><value>Получены неполные данные.</value></data>
+  <data name="MapJs.RouteFromMe" xml:space="preserve"><value>Маршрут от меня</value></data>
+  <data name="MapJs.RouteFromAddress" xml:space="preserve"><value>Маршрут от адреса</value></data>
+  <data name="MapJs.AddressLabel" xml:space="preserve"><value>Начальный адрес</value></data>
+  <data name="MapJs.AddressPlaceholder" xml:space="preserve"><value>Введите адрес</value></data>
+  <data name="MapJs.BuildRoute" xml:space="preserve"><value>Проложить маршрут</value></data>
+  <data name="MapJs.Locating" xml:space="preserve"><value>Определяем ваше местоположение…</value></data>
+  <data name="MapJs.GeolocationFailed" xml:space="preserve"><value>Не удалось определить местоположение.</value></data>
+  <data name="MapJs.AddressNotFound" xml:space="preserve"><value>Адрес не найден.</value></data>
+  <data name="MapJs.RouteBuilding" xml:space="preserve"><value>Строим маршрут…</value></data>
+  <data name="MapJs.RouteFailed" xml:space="preserve"><value>Не удалось построить маршрут.</value></data>
+  <data name="MapJs.RouteSummary" xml:space="preserve"><value>Маршрут</value></data>
+  <data name="MapJs.ClearRoute" xml:space="preserve"><value>Убрать маршрут</value></data>
+  <data name="MapJs.RequestsFailed" xml:space="preserve"><value>Не удалось загрузить запросы спецтранспорта.</value></data>
+  <data name="MapJs.MapUnavailable" xml:space="preserve"><value>Не удалось загрузить карту. Проверьте подключение к интернету и ключ API.</value></data>
+  <data name="MapJs.MissingKey" xml:space="preserve"><value>Ключ Яндекс Карт не настроен (параметр YandexMaps:ApiKey).</value></data>
+</root>

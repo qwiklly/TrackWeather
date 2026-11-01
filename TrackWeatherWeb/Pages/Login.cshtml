@@ -1,89 +1,38 @@
-﻿@page
+@page
 @model LoginModel
 @{
-    ViewData["Title"] = "Login Page";
+	ViewData["Title"] = L["Login.Title"].Value;
 }
+<div class="auth-card">
+	<h1 class="auth-card__title">@L["Login.Title"]</h1>
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <h2 class="text-center mb-4">Вход</h2>
+	<form method="post" data-loading-form>
+		<input type="hidden" asp-for="ReturnUrl" />
+		<div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
 
-            @* Bad authorize *@
-            @if (TempData["ErrorMessage"] != null)
-            {
-                <div class="alert alert-danger" role="alert">
-                    @TempData["ErrorMessage"]
-                </div>
-            }
+		<div class="mb-3">
+			<label asp-for="Login.Email" class="form-label"></label>
+			<input asp-for="Login.Email" type="email" class="form-control" autocomplete="email" />
+			<span asp-validation-for="Login.Email" class="text-danger small"></span>
+		</div>
 
-            <form method="post" onsubmit="showLoading()">
-                <div class="form-group">
-                    <label for="inputEmail" class="form-label">Email адрес</label>
-                    <input type="email" id="inputEmail" name="Email" class="form-control" asp-for="Login.Email" autocomplete="email" required />
-                </div>
-                <div class="form-group mt-3">
-                    <label for="inputPassword" class="form-label">Пароль</label>
-                    <div class="input-group">
-                        <input type="password" id="inputPassword" name="Password" class="form-control" asp-for="Login.Password" autocomplete="current-password" required />
-                        <button type="button" class="btn btn-outline-secondary" onclick="togglePasswordVisibility()">👁️‍🗨️</button>
-                    </div>
-                </div>
-                <div class="form-group mt-3">
-                    <button type="submit" id="submitButton" class="btn btn-primary w-100">
-                        <span>Вход</span>
-                        <div id="loadingSpinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;"></div>
-                    </button>
-                </div>
-                <div asp-validation-summary="All" class="text-danger"></div>
-            </form>
-        </div>
-    </div>
-</div>
+		<div class="mb-3">
+			<label asp-for="Login.Password" class="form-label"></label>
+			<div class="input-group">
+				<input asp-for="Login.Password" class="form-control" autocomplete="current-password" />
+				<button type="button" class="btn btn-outline-secondary" data-toggle-password aria-label="@L["Common.ShowPassword"]">
+					<i class="bi bi-eye" aria-hidden="true"></i>
+				</button>
+			</div>
+			<span asp-validation-for="Login.Password" class="text-danger small"></span>
+		</div>
 
-<!-- Modal -->
-<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="successModalLabel">Успех</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-                Вы успешно авторизовались!
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary w-100" data-bs-dismiss="modal">ОК</button>
-            </div>
-        </div>
-    </div>
+		<button type="submit" class="btn btn-primary w-100">@L["Login.Submit"]</button>
+	</form>
+
+	<p class="auth-card__footer">@L["Login.NoAccount"] <a asp-page="/Registration">@L["Nav.Register"]</a></p>
 </div>
 
 @section Scripts {
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var isUserLoggedIn = '@Model.IsUserLoggedIn';
-
-            if (isUserLoggedIn === 'True') {
-                var successModal = new bootstrap.Modal(document.getElementById('successModal'));
-                successModal.show();
-            }
-        });
-
-        function togglePasswordVisibility() {
-            var passwordField = document.getElementById('inputPassword');
-            passwordField.type = passwordField.type === 'password' ? 'text' : 'password';
-        }
-
-        function showLoading() {
-            var button = document.getElementById('submitButton');
-            var spinner = document.getElementById('loadingSpinner');
-
-            button.disabled = true;
-            spinner.style.display = 'inline-block';
-        }
-    </script>
+	<partial name="_ValidationScriptsPartial" />
 }
-
-
-
