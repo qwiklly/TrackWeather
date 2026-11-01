@@ -1,82 +1,133 @@
 # КартаПогоды (TrackWeather)
 
-TrackWeather - это приложение для мониторинга погодных условий и построения маршрутов с учетом погодной обстановки. Оно предназначено для путешественников и технических служб, таких как аварийные службы, которым необходимо быстро реагировать на изменения погоды.
+[![CI](https://github.com/qwiklly/TrackWeather/actions/workflows/ci.yml/badge.svg)](https://github.com/qwiklly/TrackWeather/actions/workflows/ci.yml)
+![.NET 10](https://img.shields.io/badge/.NET-10-512BD4)
 
-# Основной функционал:
-* Просмотр погоды в любой точке мира
-* Построение маршрутов с учетом погодных условий
-* Регистрация и авторизация пользователей
-* Администрирование: просмотр и управление пользователями, управление транспортными запросами
+**Русский** · [English](README.en.md)
 
-# Используемые технологии:
-.Net 8, C#, ASP Net, JavaScript, API, MS SQL, Swagger, Unit tests, Docker
+Веб-приложение на ASP.NET Core: текущая погода в любой точке карты, маршруты до выбранной точки и отдельная карта запросов спецтранспорта для коммунальных служб.
 
-## Примеры использования:
-- **Для путешественников:** находите места с хорошей погодой для планирования поездок.
-- **Для коммунальных служб:** отслеживайте районы с неблагоприятной погодой для отправки специального транспорта.
+## Возможности
 
-### Используемая технология аутентификации:
-- Аутентификация пользователей осуществляется с использованием Web токенов (JWT).
-- JWT хранится в куки, тем самым сессия пользователя сохраняется.
+- **Погода в точке.** Правый клик по карте ставит метку и показывает текущую погоду от OpenWeather на языке интерфейса. Ответы кешируются на 10 минут.
+- **Маршруты.** От вашего местоположения или от адреса, с длиной и временем в пути (Яндекс Карты).
+- **Спецтранспорт.** Пользователи создают запросы через API, администраторы видят их на карте и в таблице.
+- **Администрирование.** Пользователи и роли; нельзя удалить себя и последнего администратора.
+- **Два языка.** Русский и английский с переключателем в шапке.
+- **REST API.** Swagger, JWT, единый формат ошибок ProblemDetails.
 
-# Шаги для запуска проекта:
-Выполните команду в консоли диспетчера пакетов для обновления базы данных:
+## Интерфейс
+
+<p>
+  <img src="docs/screenshots/weather-map-ru.jpg" alt="Погода в выбранной точке" width="49%" />
+  <img src="docs/screenshots/route-en.jpg" alt="Маршрут на английском интерфейсе" width="49%" />
+</p>
+<p>
+  <img src="docs/screenshots/utility-map-en.jpg" alt="Карта запросов спецтранспорта" width="49%" />
+  <img src="docs/screenshots/home-ru.jpg" alt="Главная страница" width="49%" />
+</p>
+<p><img src="docs/screenshots/mobile-en.jpg" alt="Карта на телефоне" width="240" /></p>
+
+## Стек
+
+.NET 10 · ASP.NET Core (Razor Pages + Web API) · EF Core · SQL Server · JWT и cookie-аутентификация · Serilog · Polly · xUnit · Docker · GitHub Actions
+
+## Архитектура
+
+```mermaid
+flowchart LR
+    Browser["Браузер<br/>Razor Pages, карта"] -- cookie --> App
+    Client["Клиент API"] -- JWT --> App
+    subgraph App["ASP.NET Core"]
+        Pipeline["Локализация, rate limit,<br/>аутентификация, авторизация"] --> Pages["Razor Pages"]
+        Pipeline --> Api["Контроллеры API"]
+        Pages --> Repos["Репозитории"]
+        Api --> Repos
+    end
+    Repos --> Db[("SQL Server")]
+    Repos -- "кеш 10 мин, повторы" --> OpenWeather["OpenWeather"]
+    Browser --> Yandex["Яндекс Карты"]
 ```
-update-database
+
+Заметные решения:
+
+- **Закрыто по умолчанию.** Глобальная политика требует вход; публичные страницы и методы явно помечены `[AllowAnonymous]`.
+- **Две схемы входа.** Браузер использует HttpOnly-cookie, клиенты API — JWT. Схему выбирает заголовок `Authorization`.
+- **Роль не приходит от клиента.** Публичная регистрация всегда создаёт обычного пользователя, автор запроса на транспорт берётся из токена.
+- **Секреты вне репозитория.** Настройки проверяются при запуске; без ключа JWT приложение не стартует и объясняет почему.
+
+## Локализация
+
+Тексты лежат в [`Resources/SharedResource.resx`](TrackWeatherWeb/Resources/SharedResource.resx) и [`SharedResource.en.resx`](TrackWeatherWeb/Resources/SharedResource.en.resx). Переключатель RU/EN работает без JavaScript и оставляет на текущей странице. Выбор хранится в cookie, а при первом визите язык определяется по браузеру.
+
+Переводятся интерфейс, ошибки валидации, ответы API, описание погоды и сама карта. Тесты проверяют, что ключи совпадают в обоих файлах, что каждый ключ из кода существует и что в разметке нет текста, вписанного напрямую.
+
+## Быстрый старт
+
+### Docker
+
+Нужны Docker и, для карты и погоды, ключи [Яндекс Карт](https://developer.tech.yandex.ru) и [OpenWeather](https://openweathermap.org/api).
+
+```bash
+cp .env.example .env
 ```
-В файле appsettings.json добавьте ключи разработчика для YandexApi и OpenWeatherApi.
 
-![image](https://github.com/user-attachments/assets/b4e9c736-ce4b-4ab8-9194-008861fa3ca7)
+Заполните `.env`, затем запустите:
 
-**Сборка Docker**
-Соберите Docker image, выполнив команду:
+```bash
+docker compose up --build
 ```
-docker build -t trackweather/localtrackweather:v1 .
+
+Приложение откроется на <http://localhost:5180>, Swagger — на <http://localhost:5180/swagger>, проверка состояния — на <http://localhost:5180/health>. Администратор создаётся из `SEED_ADMIN_EMAIL` и `SEED_ADMIN_PASSWORD`.
+
+### Локально
+
+Нужны .NET 10 SDK и SQL Server. Строка подключения для разработки находится в `appsettings.Development.json`.
+
+```bash
+cd TrackWeatherWeb
+dotnet user-secrets set "Jwt:Key" "случайная-строка-не-короче-32-символов"
+dotnet user-secrets set "YandexMaps:ApiKey" "ваш-ключ"
+dotnet user-secrets set "OpenWeatherApi:ApiKey" "ваш-ключ"
+dotnet user-secrets set "Seed:AdminEmail" "you@example.com"
+dotnet user-secrets set "Seed:AdminPassword" "надёжный-пароль"
+dotnet ef database update
+dotnet run --launch-profile https
 ```
-Затем раскомментируйте строку подключения к базе данных для Docker.
 
-![image](https://github.com/user-attachments/assets/0fb95e4b-d5d0-4cfc-9113-1d34443167bd)
+### Обновление существующей базы
 
-Создайте и запустите контейнер:
+Миграция `HardenSchema` переименовывает столбцы с сохранением данных, сокращает длины полей и добавляет уникальный индекс на email. Если в базе есть повторяющиеся email, миграция остановится с ошибкой: дубликаты нужно убрать заранее. Перед применением сделайте резервную копию.
+
+## Тесты
+
+```bash
+dotnet test
 ```
-docker-compose up --build
-```
- 
-## Изображения интерфейса 
-### **Начальный экран**
 
-![Screenshot 2024-09-09 132443](https://github.com/user-attachments/assets/e84515fa-115d-47c8-8762-09e90ce0ee90)
+- **UnitTests** — контроллеры и `WeatherRepo`: кеш, формат координат при русской культуре, отсутствие ключа API в ошибках.
+- **IntegrationTests** — приложение целиком через `WebApplicationFactory` на SQLite: права доступа, поддельные токены и cookie, повышение привилегий, XSS, ограничение попыток входа, переключение языка, полнота переводов.
 
-### **Окно карты для пользователей**
+Интеграционные тесты не проверяют миграции SQL Server и работу карт Яндекса в браузере.
 
-![Screenshot 2024-09-09 132754](https://github.com/user-attachments/assets/6a8d78c8-7723-4f70-8c7e-93e90f2106ce)
+## API
 
-### **Окно карты для коммунальных служб**
+| Метод | Адрес | Доступ | Назначение |
+|---|---|---|---|
+| POST | `/api/auth/register` | все | Регистрация |
+| POST | `/api/auth/login` | все | Получение JWT |
+| GET | `/api/weather?lat=&lon=` | вход | Погода в точке |
+| POST | `/api/transport-requests` | вход | Запрос транспорта |
+| GET | `/api/transport-requests`, `/{id}` | админ | Просмотр запросов |
+| PUT, DELETE | `/api/transport-requests/{id}` | админ | Изменение и удаление |
+| GET, POST | `/api/users` | админ | Список и создание пользователей |
+| GET, PUT, DELETE | `/api/users/{email}` | админ | Просмотр, изменение, удаление |
+| GET | `/health` | все | Состояние приложения и базы |
 
-![Screenshot 2024-09-09 132654](https://github.com/user-attachments/assets/45306f26-2dd5-4faa-a3bf-c2939bc604a2)
+Полное описание — в Swagger.
 
-### **Список запросов транспортных средств с их координатами и удаление**
+## Планы
 
-![Screenshot 2024-09-09 132512](https://github.com/user-attachments/assets/d3aa22d7-c46b-4c9c-bbce-96e9c55b9f1d)
-
-### **Список пользователей и удаление**
-
-![Screenshot 2024-09-09 132615](https://github.com/user-attachments/assets/656016ee-a34f-406b-9109-8ed1abcd6ae5)
-
-### **Окно добавления пользователя**
-
-![Screenshot 2024-09-09 132634](https://github.com/user-attachments/assets/e2cc27d2-794d-41cc-a1f9-4ce72ef928a2)
-
-### **Окно авторизации**
-
-![Screenshot 2024-09-09 132841](https://github.com/user-attachments/assets/73ac316b-97ce-4e38-ab69-0141d0ed1b7f)
-
-### Профиль пользователя
-**Авторизован**            |  **Не авторизован**
-:-------------------------:|:-------------------------:
-![Screenshot 2024-08-28 172831](https://github.com/user-attachments/assets/bf7bf5fd-83c5-474b-92e2-698d6c2748dd) |  ![Screenshot 2024-08-28 172904](https://github.com/user-attachments/assets/d7b757be-d8fc-4f4b-930a-fe0d665feb32)
-
-### **Окно Swagger**
-
-![image](https://github.com/user-attachments/assets/94ac7b50-6f50-455d-a86c-7b5e45d5c5db)
-
+- Погода вдоль всего маршрута с подсветкой опасных участков.
+- Прогноз на несколько дней и погодные оповещения.
+- Создание запроса на транспорт прямо с карты и статусы его выполнения.
