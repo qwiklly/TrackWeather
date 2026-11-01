@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - run: dotnet restore TrackWeather.sln
+      - run: dotnet build TrackWeather.sln -c Release --no-restore
+      - run: dotnet test TrackWeather.sln -c Release --no-build --collect:"XPlat Code Coverage" --results-directory coverage
+      - name: Fail on vulnerable packages
+        run: |
+          dotnet list TrackWeatherWeb/TrackWeatherWeb.csproj package --vulnerable --include-transitive | tee vulnerable.txt
+          ! grep -q "has the following vulnerable packages" vulnerable.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage
+          path: coverage
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t trackweather/web:ci .
