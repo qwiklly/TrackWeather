@@ -36,10 +36,15 @@
     });
 
     // <time data-local-time datetime="...">: UTC on the server, the visitor's time zone on screen
-    document.querySelectorAll('time[data-local-time]').forEach(function (element) {
-        const date = new Date(element.dateTime);
-        if (!isNaN(date)) {
-            element.textContent = date.toLocaleString(document.documentElement.lang);
-        }
-    });
+    function localizeTimes(root) {
+        root.querySelectorAll('time[data-local-time]').forEach(function (element) {
+            const date = new Date(element.dateTime);
+            if (!isNaN(date)) {
+                element.textContent = date.toLocaleString(document.documentElement.lang);
+            }
+        });
+    }
+
+    localizeTimes(document);
+    window.TrackWeatherSite = { localizeTimes };
 })();

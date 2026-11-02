@@ -8,7 +8,7 @@
   <data name="Nav.Home" xml:space="preserve"><value>Главная</value></data>
   <data name="Nav.WeatherMap" xml:space="preserve"><value>Карта погоды</value></data>
   <data name="Nav.UtilityMap" xml:space="preserve"><value>Карта коммунальных служб</value></data>
-  <data name="Nav.TransportRequests" xml:space="preserve"><value>Транспортные запросы</value></data>
+  <data name="Nav.TransportRequests" xml:space="preserve"><value>Заявки на спецтранспорт</value></data>
   <data name="Nav.Users" xml:space="preserve"><value>Пользователи</value></data>
   <data name="Nav.AddUser" xml:space="preserve"><value>Добавить пользователя</value></data>
   <data name="Nav.Login" xml:space="preserve"><value>Вход</value></data>
@@ -47,16 +47,16 @@
   <data name="Home.Title" xml:space="preserve"><value>Главная</value></data>
   <data name="Home.Welcome" xml:space="preserve"><value>Погода и маршруты на одной карте</value></data>
   <data name="Home.WelcomeUser" xml:space="preserve"><value>Добро пожаловать, {0}!</value></data>
-  <data name="Home.Lead" xml:space="preserve"><value>Узнайте текущую погоду в любой точке мира и постройте до неё маршрут. Коммунальные службы видят запросы спецтранспорта на отдельной карте.</value></data>
+  <data name="Home.Lead" xml:space="preserve"><value>Узнайте, какая погода ждёт вас на каждом участке пути, и вызовите спецтранспорт, если нужна помощь. Диспетчеры видят заявки на карте и сразу назначают исполнителей.</value></data>
   <data name="Home.OpenMap" xml:space="preserve"><value>Открыть карту</value></data>
   <data name="Home.Feature.Weather.Title" xml:space="preserve"><value>Погода в точке</value></data>
   <data name="Home.Feature.Weather.Text" xml:space="preserve"><value>Щёлкните правой кнопкой мыши по карте, чтобы поставить метку и увидеть актуальную погоду.</value></data>
-  <data name="Home.Feature.Route.Title" xml:space="preserve"><value>Маршруты</value></data>
-  <data name="Home.Feature.Route.Text" xml:space="preserve"><value>Постройте маршрут до метки от своего местоположения или от указанного адреса.</value></data>
-  <data name="Home.Feature.Transport.Title" xml:space="preserve"><value>Спецтранспорт</value></data>
-  <data name="Home.Feature.Transport.Text" xml:space="preserve"><value>Запросы спецтранспорта приходят через API и отображаются на карте коммунальных служб.</value></data>
+  <data name="Home.Feature.Route.Title" xml:space="preserve"><value>Погода на маршруте</value></data>
+  <data name="Home.Feature.Route.Text" xml:space="preserve"><value>Постройте маршрут и увидите опасные участки по прогнозу на время, когда вы туда доедете.</value></data>
+  <data name="Home.Feature.Transport.Title" xml:space="preserve"><value>Вызов спецтранспорта</value></data>
+  <data name="Home.Feature.Transport.Text" xml:space="preserve"><value>Вызовите спецтранспорт прямо с карты и следите за статусом заявки в реальном времени.</value></data>
   <data name="Home.Feature.Admin.Title" xml:space="preserve"><value>Администрирование</value></data>
-  <data name="Home.Feature.Admin.Text" xml:space="preserve"><value>Администраторы управляют пользователями, ролями и транспортными запросами.</value></data>
+  <data name="Home.Feature.Admin.Text" xml:space="preserve"><value>Диспетчеры назначают исполнителей, а также управляют заявками, пользователями и ролями.</value></data>
   <data name="Login.Title" xml:space="preserve"><value>Вход</value></data>
   <data name="Login.Submit" xml:space="preserve"><value>Войти</value></data>
   <data name="Login.NoAccount" xml:space="preserve"><value>Нет учётной записи?</value></data>
@@ -67,25 +67,25 @@
   <data name="AddUser.Submit" xml:space="preserve"><value>Добавить пользователя</value></data>
   <data name="Users.Title" xml:space="preserve"><value>Пользователи</value></data>
   <data name="Users.ConfirmDelete" xml:space="preserve"><value>Удалить пользователя {0}?</value></data>
-  <data name="Transport.Title" xml:space="preserve"><value>Запросы спецтранспорта</value></data>
-  <data name="Transport.Empty" xml:space="preserve"><value>Запросов пока нет.</value></data>
+  <data name="Transport.Title" xml:space="preserve"><value>Заявки на спецтранспорт</value></data>
+  <data name="Transport.Empty" xml:space="preserve"><value>Заявок пока нет.</value></data>
   <data name="Transport.Latitude" xml:space="preserve"><value>Широта</value></data>
   <data name="Transport.Longitude" xml:space="preserve"><value>Долгота</value></data>
   <data name="Transport.Comment" xml:space="preserve"><value>Комментарий</value></data>
   <data name="Transport.Time" xml:space="preserve"><value>Время</value></data>
-  <data name="Transport.ConfirmDelete" xml:space="preserve"><value>Удалить запрос № {0}?</value></data>
-  <data name="Transport.NotFound" xml:space="preserve"><value>Запрос не найден</value></data>
-  <data name="Transport.Added" xml:space="preserve"><value>Запрос добавлен</value></data>
-  <data name="Transport.Updated" xml:space="preserve"><value>Запрос обновлён</value></data>
-  <data name="Transport.Deleted" xml:space="preserve"><value>Запрос удалён</value></data>
+  <data name="Transport.ConfirmDelete" xml:space="preserve"><value>Удалить заявку № {0}?</value></data>
+  <data name="Transport.NotFound" xml:space="preserve"><value>Заявка не найдена</value></data>
+  <data name="Transport.Added" xml:space="preserve"><value>Заявка отправлена</value></data>
+  <data name="Transport.Updated" xml:space="preserve"><value>Заявка обновлена</value></data>
+  <data name="Transport.Deleted" xml:space="preserve"><value>Заявка удалена</value></data>
   <data name="WeatherMap.Title" xml:space="preserve"><value>Карта погоды</value></data>
   <data name="WeatherMap.Hint" xml:space="preserve"><value>Щёлкните правой кнопкой мыши по карте (на телефоне — долгое нажатие), чтобы поставить метку.</value></data>
   <data name="UtilityMap.Title" xml:space="preserve"><value>Карта коммунальных служб</value></data>
-  <data name="UtilityMap.Hint" xml:space="preserve"><value>Метки — запросы спецтранспорта. Маршрут задан по трассе М4, его можно изменить на панели карты.</value></data>
+  <data name="UtilityMap.Hint" xml:space="preserve"><value>Метки — открытые заявки: красные новые, оранжевые в работе. Карта обновляется сама.</value></data>
   <data name="Privacy.Title" xml:space="preserve"><value>Конфиденциальность</value></data>
   <data name="Privacy.Stored" xml:space="preserve"><value>Мы храним ваше имя, email и хеш пароля, а также оставленные вами транспортные запросы. Сами пароли не хранятся.</value></data>
   <data name="Privacy.Cookies" xml:space="preserve"><value>Сайт использует только необходимые файлы cookie: для входа, защиты форм и запоминания выбранного языка.</value></data>
-  <data name="Privacy.ThirdParty" xml:space="preserve"><value>Координаты выбранных на карте точек передаются сервисам Яндекс Карты и OpenWeather, чтобы показать карту, маршрут и погоду.</value></data>
+  <data name="Privacy.ThirdParty" xml:space="preserve"><value>Координаты выбранных на карте точек и маршрутов передаются сервисам Яндекс Карты и OpenWeather, чтобы показать карту, маршрут и погоду.</value></data>
   <data name="Error.Title" xml:space="preserve"><value>Что-то пошло не так</value></data>
   <data name="Error.Server" xml:space="preserve"><value>Произошла ошибка на сервере. Попробуйте ещё раз позже.</value></data>
   <data name="Error.Forbidden" xml:space="preserve"><value>У вас нет доступа к этой странице.</value></data>
@@ -117,7 +117,76 @@
   <data name="MapJs.RouteFailed" xml:space="preserve"><value>Не удалось построить маршрут.</value></data>
   <data name="MapJs.RouteSummary" xml:space="preserve"><value>Маршрут</value></data>
   <data name="MapJs.ClearRoute" xml:space="preserve"><value>Убрать маршрут</value></data>
-  <data name="MapJs.RequestsFailed" xml:space="preserve"><value>Не удалось загрузить запросы спецтранспорта.</value></data>
+  <data name="MapJs.RequestsFailed" xml:space="preserve"><value>Не удалось загрузить заявки.</value></data>
   <data name="MapJs.MapUnavailable" xml:space="preserve"><value>Не удалось загрузить карту. Проверьте подключение к интернету и ключ API.</value></data>
   <data name="MapJs.MissingKey" xml:space="preserve"><value>Ключ Яндекс Карт не настроен (параметр YandexMaps:ApiKey).</value></data>
+  <data name="Nav.MyRequests" xml:space="preserve"><value>Мои заявки</value></data>
+  <data name="Status.New" xml:space="preserve"><value>Новая</value></data>
+  <data name="Status.InProgress" xml:space="preserve"><value>В работе</value></data>
+  <data name="Status.Completed" xml:space="preserve"><value>Выполнена</value></data>
+  <data name="Status.Cancelled" xml:space="preserve"><value>Отменена</value></data>
+  <data name="Hazard.Ice" xml:space="preserve"><value>Гололёд</value></data>
+  <data name="Hazard.Snow" xml:space="preserve"><value>Снег</value></data>
+  <data name="Hazard.HeavyRain" xml:space="preserve"><value>Сильный дождь</value></data>
+  <data name="Hazard.Wind" xml:space="preserve"><value>Сильный ветер</value></data>
+  <data name="Hazard.PoorVisibility" xml:space="preserve"><value>Плохая видимость</value></data>
+  <data name="Hazard.Thunderstorm" xml:space="preserve"><value>Гроза</value></data>
+  <data name="Transport.FilterAll" xml:space="preserve"><value>Все</value></data>
+  <data name="Transport.Place" xml:space="preserve"><value>Место</value></data>
+  <data name="Transport.Status" xml:space="preserve"><value>Статус</value></data>
+  <data name="Transport.Assignee" xml:space="preserve"><value>Исполнитель</value></data>
+  <data name="Transport.ChooseAssignee" xml:space="preserve"><value>Выберите исполнителя</value></data>
+  <data name="Transport.Assign" xml:space="preserve"><value>Назначить</value></data>
+  <data name="Transport.Complete" xml:space="preserve"><value>Завершить</value></data>
+  <data name="Transport.Cancel" xml:space="preserve"><value>Отменить</value></data>
+  <data name="Transport.ConfirmCancel" xml:space="preserve"><value>Отменить заявку № {0}?</value></data>
+  <data name="Transport.Assigned" xml:space="preserve"><value>Исполнитель назначен, заявка в работе</value></data>
+  <data name="Transport.Completed" xml:space="preserve"><value>Заявка выполнена</value></data>
+  <data name="Transport.Cancelled" xml:space="preserve"><value>Заявка отменена</value></data>
+  <data name="Transport.Forbidden" xml:space="preserve"><value>У вас нет прав на это действие</value></data>
+  <data name="Transport.WrongState" xml:space="preserve"><value>В текущем статусе заявки это действие недоступно</value></data>
+  <data name="Transport.Stale" xml:space="preserve"><value>Заявку только что изменил кто-то другой. Обновите страницу.</value></data>
+  <data name="MyRequests.Title" xml:space="preserve"><value>Мои заявки</value></data>
+  <data name="MyRequests.Hint" xml:space="preserve"><value>Заявки, которые вы создали или которые назначены вам. Статусы обновляются сами.</value></data>
+  <data name="MyRequests.Empty" xml:space="preserve"><value>Заявок пока нет. Создать заявку можно с карты погоды.</value></data>
+  <data name="MyRequests.Role" xml:space="preserve"><value>Ваша роль</value></data>
+  <data name="MyRequests.YouAsked" xml:space="preserve"><value>Автор</value></data>
+  <data name="MyRequests.YouExecute" xml:space="preserve"><value>Исполнитель</value></data>
+  <data name="RouteWeather.Title" xml:space="preserve"><value>Погода на маршруте</value></data>
+  <data name="RouteWeather.Departure" xml:space="preserve"><value>Выезд</value></data>
+  <data name="RouteWeather.DepartNow" xml:space="preserve"><value>Сейчас</value></data>
+  <data name="RouteWeather.DepartIn" xml:space="preserve"><value>Через {0} ч</value></data>
+  <data name="RouteWeather.Disclaimer" xml:space="preserve"><value>Оценка ориентировочная: она основана на прогнозе с шагом 3 часа и не заменяет сводки дорожных служб.</value></data>
+  <data name="TransportForm.Title" xml:space="preserve"><value>Вызов спецтранспорта</value></data>
+  <data name="TransportForm.Place" xml:space="preserve"><value>Координаты</value></data>
+  <data name="TransportForm.Submit" xml:space="preserve"><value>Отправить заявку</value></data>
+  <data name="TransportForm.Close" xml:space="preserve"><value>Закрыть</value></data>
+  <data name="MapJs.RequestTransport" xml:space="preserve"><value>Вызвать спецтранспорт</value></data>
+  <data name="MapJs.TransportFailed" xml:space="preserve"><value>Не удалось отправить заявку.</value></data>
+  <data name="MapJs.RiskLow" xml:space="preserve"><value>Без опасных явлений</value></data>
+  <data name="MapJs.RiskModerate" xml:space="preserve"><value>Будьте внимательны</value></data>
+  <data name="MapJs.RiskHigh" xml:space="preserve"><value>Опасно</value></data>
+  <data name="MapJs.RiskUnknown" xml:space="preserve"><value>Нет прогноза</value></data>
+  <data name="MapJs.OverallLow" xml:space="preserve"><value>По прогнозу опасных участков нет.</value></data>
+  <data name="MapJs.OverallModerate" xml:space="preserve"><value>На маршруте будьте внимательны.</value></data>
+  <data name="MapJs.OverallHigh" xml:space="preserve"><value>На маршруте есть опасные участки.</value></data>
+  <data name="MapJs.OverallUnknown" xml:space="preserve"><value>Прогноза на это время нет.</value></data>
+  <data name="MapJs.DangerousStretches" xml:space="preserve"><value>Участков с риском</value></data>
+  <data name="MapJs.KmShort" xml:space="preserve"><value>км</value></data>
+  <data name="MapJs.RouteWeatherLoading" xml:space="preserve"><value>Проверяем прогноз вдоль маршрута…</value></data>
+  <data name="MapJs.RouteWeatherFailed" xml:space="preserve"><value>Не удалось получить прогноз для маршрута.</value></data>
+  <data name="MapJs.StatusNew" xml:space="preserve"><value>Новая</value></data>
+  <data name="MapJs.StatusInProgress" xml:space="preserve"><value>В работе</value></data>
+  <data name="MapJs.StatusCompleted" xml:space="preserve"><value>Выполнена</value></data>
+  <data name="MapJs.StatusCancelled" xml:space="preserve"><value>Отменена</value></data>
+  <data name="MapJs.Number" xml:space="preserve"><value>Заявка №</value></data>
+  <data name="MapJs.Status" xml:space="preserve"><value>Статус</value></data>
+  <data name="MapJs.Assignee" xml:space="preserve"><value>Исполнитель</value></data>
+  <data name="LiveJs.NewRequest" xml:space="preserve"><value>Новая заявка</value></data>
+  <data name="LiveJs.Request" xml:space="preserve"><value>Заявка</value></data>
+  <data name="LiveJs.RequestDeleted" xml:space="preserve"><value>Удалена заявка</value></data>
+  <data name="LiveJs.StatusNew" xml:space="preserve"><value>новая</value></data>
+  <data name="LiveJs.StatusInProgress" xml:space="preserve"><value>в работе</value></data>
+  <data name="LiveJs.StatusCompleted" xml:space="preserve"><value>выполнена</value></data>
+  <data name="LiveJs.StatusCancelled" xml:space="preserve"><value>отменена</value></data>
 </root>

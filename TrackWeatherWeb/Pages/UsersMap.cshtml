@@ -11,7 +11,51 @@
 </div>
 <partial name="_MapHost" model="Model.ApiKey" />
 
+<section id="route-weather" class="route-weather" aria-live="polite" hidden>
+	<div class="route-weather__header">
+		<div>
+			<h2>@L["RouteWeather.Title"]</h2>
+			<div id="route-weather-overall" class="route-weather__overall"></div>
+		</div>
+		<div class="route-weather__departure">
+			<label class="form-label small mb-1" for="route-departure">@L["RouteWeather.Departure"]</label>
+			<select id="route-departure" class="form-select form-select-sm">
+				<option value="0">@L["RouteWeather.DepartNow"]</option>
+				<option value="3">@L["RouteWeather.DepartIn", 3]</option>
+				<option value="6">@L["RouteWeather.DepartIn", 6]</option>
+				<option value="12">@L["RouteWeather.DepartIn", 12]</option>
+				<option value="24">@L["RouteWeather.DepartIn", 24]</option>
+				<option value="48">@L["RouteWeather.DepartIn", 48]</option>
+			</select>
+		</div>
+	</div>
+	<ol id="route-weather-points" class="route-weather__points"></ol>
+	<p class="route-weather__note">@L["RouteWeather.Disclaimer"]</p>
+</section>
+
+<div class="modal fade" id="transport-modal" tabindex="-1" aria-labelledby="transport-modal-title" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<form class="modal-content" id="transport-form">
+			<div class="modal-header">
+				<h2 class="modal-title h5" id="transport-modal-title">@L["TransportForm.Title"]</h2>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="@L["TransportForm.Close"]"></button>
+			</div>
+			<div class="modal-body">
+				<p class="text-muted small mb-2">@L["TransportForm.Place"]: <span id="transport-place"></span></p>
+				<label class="form-label" for="transport-comment">@L["Transport.Comment"]</label>
+				<textarea class="form-control" id="transport-comment" rows="3" maxlength="1000" required></textarea>
+				<div class="alert alert-danger mt-3 mb-0" id="transport-error" role="alert" hidden></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">@L["TransportForm.Close"]</button>
+				<button type="submit" class="btn btn-primary" id="transport-submit">@L["TransportForm.Submit"]</button>
+			</div>
+		</form>
+	</div>
+</div>
+
 @section Scripts {
 	<partial name="_MapScripts" model="Model.ApiKey" />
+	<script src="~/js/routeWeather.js" asp-append-version="true"></script>
 	<script src="~/js/usersMap.js" asp-append-version="true"></script>
 }

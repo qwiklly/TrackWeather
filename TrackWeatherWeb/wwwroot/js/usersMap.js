@@ -19,6 +19,7 @@ TrackWeatherMap.ready(function () {
                     <div class="map-balloon__actions">
                         <button type="button" class="btn btn-primary btn-sm" data-map-action="route-from-me">${escapeHtml(t('RouteFromMe'))}</button>
                         <button type="button" class="btn btn-outline-primary btn-sm" data-map-action="ask-address">${escapeHtml(t('RouteFromAddress'))}</button>
+                        <button type="button" class="btn btn-outline-danger btn-sm" data-map-action="request-transport">${escapeHtml(t('RequestTransport'))}</button>
                     </div>
                 </div>`;
     }
@@ -54,7 +55,6 @@ TrackWeatherMap.ready(function () {
             console.error(error);
             body = `<div class="map-balloon__row text-danger">${escapeHtml(t('WeatherFailed'))}</div>`;
         }
-        placemark.weatherBody = body;
         placemark.properties.set('balloonContent', balloon(coords, body));
     }
 
@@ -79,6 +79,7 @@ TrackWeatherMap.ready(function () {
             map.geoObjects.remove(activeRoute);
             activeRoute = null;
         }
+        TrackWeatherRouteWeather.clear();
         showStatus('');
     }
 
@@ -94,6 +95,7 @@ TrackWeatherMap.ready(function () {
             // Yandex formats these for HTML ("19&#160;км"), the status line shows plain text
             const plain = value => value.replace(/&#160;|&nbsp;/g, ' ');
             showStatus(`${t('RouteSummary')}: ${plain(route.getHumanLength())}, ${plain(route.getHumanTime())}`, clearRoute);
+            TrackWeatherRouteWeather.show(route);
         } catch (error) {
             console.error(error);
             showStatus(t('RouteFailed'));
@@ -143,6 +145,56 @@ TrackWeatherMap.ready(function () {
         }
     }
 
+    // The transport request form, opened from a marker or from a dangerous stretch of a route
+    const transportModal = new bootstrap.Modal(document.getElementById('transport-modal'));
+    const transportForm = document.getElementById('transport-form');
+    const transportComment = document.getElementById('transport-comment');
+    const transportError = document.getElementById('transport-error');
+    const transportSubmit = document.getElementById('transport-submit');
+    let transportCoords = null;
+
+    function openTransportForm(coords, comment) {
+        transportCoords = coords;
+        document.getElementById('transport-place').textContent = formatCoords(coords);
+        transportComment.value = comment ?? '';
+        transportError.hidden = true;
+        transportModal.show();
+    }
+
+    transportForm.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        transportSubmit.disabled = true;
+        transportError.hidden = true;
+        try {
+            const response = await fetch('/api/transport-requests', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    latitude: Number(transportCoords[0].toFixed(6)),
+                    longitude: Number(transportCoords[1].toFixed(6)),
+                    comment: transportComment.value.trim()
+                })
+            });
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok) {
+                transportError.textContent = result.detail ?? t('TransportFailed');
+                transportError.hidden = false;
+                return;
+            }
+            transportModal.hide();
+            map.balloon.close();
+            window.TrackWeatherLive?.toast(result.message);
+        } catch (error) {
+            console.error(error);
+            transportError.textContent = t('TransportFailed');
+            transportError.hidden = false;
+        } finally {
+            transportSubmit.disabled = false;
+        }
+    });
+
+    TrackWeatherRouteWeather.init(map, openTransportForm);
+
     // Balloon markup is re-created on every update, so actions are handled in one place.
     // Capture phase: the map stops some click events from bubbling out of its balloons.
     document.addEventListener('click', function (event) {
@@ -159,6 +211,9 @@ TrackWeatherMap.ready(function () {
                 break;
             case 'route-from-address':
                 routeFromAddress(openPlacemark, document.getElementById('route-address').value.trim());
+                break;
+            case 'request-transport':
+                openTransportForm(openPlacemark.geometry.getCoordinates());
                 break;
         }
     }, true);

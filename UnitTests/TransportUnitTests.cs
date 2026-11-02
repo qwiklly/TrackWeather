@@ -20,7 +20,7 @@ namespace UnitTests
 				new RequestTransportDTO { Id = 2, Email = "user2@example.com", Latitude = 49.909172m, Longitude = 41.467272m, Comment = "Raining, need transport" }
 			};
 
-			mockRepo.Setup(repo => repo.GetTransportRequestsAsync()).ReturnsAsync(mockTransport);
+			mockRepo.Setup(repo => repo.GetTransportRequestsAsync(null)).ReturnsAsync(mockTransport);
 
 			var controller = new TransportController(mockRepo.Object);
 

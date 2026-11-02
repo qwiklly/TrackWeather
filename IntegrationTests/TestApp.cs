@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using TrackWeatherWeb.Data;
 using TrackWeatherWeb.DTOs;
 using TrackWeatherWeb.Repositories.Interfaces;
+using TrackWeatherWeb.WeatherModels;
 using static TrackWeatherWeb.Responses.CustomResponses;
 
 namespace IntegrationTests
@@ -24,12 +25,14 @@ namespace IntegrationTests
 
         private readonly SqliteConnection _connection = new("DataSource=:memory:");
         private readonly int _authPermitsPerMinute;
+        private readonly int _userActionsPerMinute;
 
         public FakeWeatherRepo Weather { get; } = new();
 
-        public TestApp(int authPermitsPerMinute = 10_000)
+        public TestApp(int authPermitsPerMinute = 10_000, int userActionsPerMinute = 10_000)
         {
             _authPermitsPerMinute = authPermitsPerMinute;
+            _userActionsPerMinute = userActionsPerMinute;
             _connection.Open();
         }
 
@@ -44,6 +47,7 @@ namespace IntegrationTests
                 ["Seed:AdminEmail"] = AdminEmail,
                 ["Seed:AdminPassword"] = AdminPassword,
                 ["RateLimiting:AuthPermitsPerMinute"] = _authPermitsPerMinute.ToString(),
+                ["RateLimiting:UserActionsPerMinute"] = _userActionsPerMinute.ToString(),
                 ["YandexMaps:ApiKey"] = "test-yandex-key",
             }));
             builder.ConfigureServices(services =>
@@ -126,6 +130,14 @@ namespace IntegrationTests
         public string? LastLanguage { get; private set; }
 
         public Exception? Failure { get; set; }
+
+        public Func<double, double, IReadOnlyList<ForecastItem>> Forecast { get; set; } = (_, _) => [];
+
+        public Task<IReadOnlyList<ForecastItem>> GetForecastAsync(double lat, double lon, string language)
+        {
+            LastLanguage = language;
+            return Task.FromResult(Forecast(lat, lon));
+        }
 
         public Task<WeatherDTO> GetCurrentWeatherAsync(double lat, double lon, string language)
         {

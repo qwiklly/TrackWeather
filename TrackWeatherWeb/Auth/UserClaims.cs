@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using TrackWeatherWeb.DTOs;
+using TrackWeatherWeb.Services;
 
 namespace TrackWeatherWeb.Auth
 {
@@ -15,5 +16,8 @@ namespace TrackWeatherWeb.Auth
 
         public static ClaimsPrincipal CreateCookiePrincipal(GetUsersDTO user) =>
             new(new ClaimsIdentity(Create(user), CookieAuthenticationDefaults.AuthenticationScheme));
+
+        public static TransportActor ToTransportActor(this ClaimsPrincipal user) =>
+            new(user.FindFirstValue(ClaimTypes.Email)!, user.IsInRole(Roles.Admin));
     }
 }

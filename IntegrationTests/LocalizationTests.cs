@@ -200,8 +200,18 @@ namespace IntegrationTests
             Scan(@"ErrorMessage = ""((?:Validation)\.[^""]+)""", "*.cs");
             Scan(@"Display\(Name = ""([^""]+)""", "*.cs");
             Scan(@"\bt\('([^']+)'\)", "*.js", "MapJs.");
+            Scan(@"\bstrings\.([A-Z]\w+)", "transportLive.js", "LiveJs.");
 
             Assert.Empty(missing);
+        }
+
+        [Fact]
+        public void EveryStatusAndHazard_HasATranslation()
+        {
+            var known = LoadResources("SharedResource.resx").Keys.ToHashSet();
+
+            Assert.All(Enum.GetNames<TrackWeatherWeb.Models.TransportStatus>(), name => Assert.Contains($"Status.{name}", known));
+            Assert.All(Enum.GetNames<TrackWeatherWeb.Services.Hazard>(), name => Assert.Contains($"Hazard.{name}", known));
         }
 
         [Fact]

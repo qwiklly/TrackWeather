@@ -1,0 +1,16 @@
+@page
+@model MyRequestsModel
+@{
+	ViewData["Title"] = L["MyRequests.Title"].Value;
+}
+<div class="page-header">
+	<div>
+		<h1>@L["MyRequests.Title"]</h1>
+		<p class="page-header__hint">@L["MyRequests.Hint"]</p>
+	</div>
+	<a class="btn btn-primary btn-sm" asp-page="/UsersMap"><i class="bi bi-geo-alt-fill" aria-hidden="true"></i> @L["Nav.WeatherMap"]</a>
+</div>
+
+<div data-live-table="@Url.Page("/MyRequests", "Table")">
+	<partial name="_MyRequestsTable" model="Model" />
+</div>

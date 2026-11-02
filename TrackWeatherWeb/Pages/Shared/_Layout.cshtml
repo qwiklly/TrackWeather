@@ -50,6 +50,7 @@
 				@if (User.Identity?.IsAuthenticated == true)
 				{
 					@NavLink("/UsersMap", "bi-geo-alt-fill", L["Nav.WeatherMap"])
+					@NavLink("/MyRequests", "bi-card-checklist", L["Nav.MyRequests"])
 				}
 				else
 				{
@@ -81,6 +82,10 @@
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
+	@if (User.Identity?.IsAuthenticated == true)
+	{
+		<partial name="_LiveUpdates" />
+	}
 	@RenderSection("Scripts", required: false)
 </body>
 </html>

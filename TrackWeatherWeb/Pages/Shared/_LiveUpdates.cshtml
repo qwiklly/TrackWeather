@@ -1,0 +1,12 @@
+@* Live updates about transport requests for signed-in users *@
+@{
+	const string prefix = "LiveJs.";
+	var strings = L.GetAllStrings(includeParentCultures: true)
+		.Where(s => s.Name.StartsWith(prefix, StringComparison.Ordinal))
+		.ToDictionary(s => s.Name[prefix.Length..], s => s.Value);
+}
+<div id="live-toasts" class="toast-container position-fixed bottom-0 end-0 p-3" data-is-admin="@(User.IsInRole(Roles.Admin) ? "true" : "false")"></div>
+<script type="application/json" id="live-strings">@Html.Raw(System.Text.Json.JsonSerializer.Serialize(strings))</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/10.0.0/signalr.min.js"
+		integrity="sha384-WlPNGnp2GG/eMuGnbuG2p5ov9pzHsqoPQbzjOz61V608d7JfDa+3abt0YOoyUwU5" crossorigin="anonymous"></script>
+<script src="~/js/transportLive.js" asp-append-version="true"></script>

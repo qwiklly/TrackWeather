@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using Serilog;
 using System.Globalization;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
@@ -23,6 +24,7 @@ using TrackWeatherWeb.Infrastructure;
 using TrackWeatherWeb.Options;
 using TrackWeatherWeb.Repositories;
 using TrackWeatherWeb.Repositories.Interfaces;
+using TrackWeatherWeb.Services;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -165,6 +167,14 @@ try
                 PermitLimit = builder.Configuration.GetValue("RateLimiting:AuthPermitsPerMinute", 20),
                 Window = TimeSpan.FromMinutes(1)
             }));
+        // Route checks spend the OpenWeather quota and requests reach dispatchers, so each user gets a budget
+        options.AddPolicy(AuthDefaults.UserActionsPolicy, context => RateLimitPartition.GetFixedWindowLimiter(
+            context.User.FindFirstValue(ClaimTypes.Email) ?? "anonymous",
+            _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = builder.Configuration.GetValue("RateLimiting:UserActionsPerMinute", 20),
+                Window = TimeSpan.FromMinutes(1)
+            }));
     });
 
     builder.Services.AddScoped<IAccountRepo, AccountRepo>();
@@ -174,6 +184,10 @@ try
     {
         client.BaseAddress = new Uri(services.GetRequiredService<IOptions<OpenWeatherOptions>>().Value.BaseUrl);
     }).AddStandardResilienceHandler();
+    builder.Services.AddSingleton(TimeProvider.System);
+    builder.Services.AddScoped<IRouteWeatherService, RouteWeatherService>();
+    builder.Services.AddSignalR();
+    builder.Services.AddSingleton<ITransportNotifier, SignalRTransportNotifier>();
     builder.Services.AddTransient<DatabaseInitializer>();
 
     var app = builder.Build();
@@ -200,10 +214,10 @@ try
 
     // API errors stay ProblemDetails, the site shows a friendly page
     app.UseWhen(
-        context => context.Request.Path.StartsWithSegments("/api"),
+        context => IsApiPath(context.Request.Path),
         branch => branch.UseStatusCodePages());
     app.UseWhen(
-        context => !context.Request.Path.StartsWithSegments("/api"),
+        context => !IsApiPath(context.Request.Path),
         branch => branch.UseStatusCodePagesWithReExecute("/Error/{0}"));
 
     app.UseStaticFiles();
@@ -219,13 +233,14 @@ try
     }
 
     app.UseRouting();
-    app.UseRateLimiter();
     app.UseAuthentication();
     app.UseAuthorization();
+    app.UseRateLimiter();
 
     app.MapHealthChecks("/health").AllowAnonymous();
     app.MapRazorPages();
     app.MapControllers();
+    app.MapHub<TransportHub>(TransportHub.Path);
 
     await app.RunAsync();
 }
@@ -240,9 +255,12 @@ finally
     await Log.CloseAndFlushAsync();
 }
 
+static bool IsApiPath(PathString path) =>
+    path.StartsWithSegments("/api") || path.StartsWithSegments("/hubs");
+
 static Task RedirectOrStatus(RedirectContext<CookieAuthenticationOptions> context, int statusCode)
 {
-    if (context.Request.Path.StartsWithSegments("/api"))
+    if (IsApiPath(context.Request.Path))
     {
         context.Response.StatusCode = statusCode;
     }

@@ -87,6 +87,39 @@ namespace UnitTests
 		}
 
 		[Fact]
+		public async Task Forecast_IsParsed_WithThreeHourPrecipitation()
+		{
+			const string body = """
+				{ "list": [ { "dt": 1793642400, "main": { "temp": 8.9, "humidity": 100 },
+				  "weather": [ { "id": 500, "description": "дождь" } ], "wind": { "speed": 2.0, "gust": 3.5 },
+				  "visibility": 9584, "pop": 0.46, "rain": { "3h": 0.51 } } ] }
+				""";
+
+			var forecast = await CreateRepo(new FakeHandler(HttpStatusCode.OK, body)).GetForecastAsync(51.67, 39.18, "ru");
+
+			var item = Assert.Single(forecast);
+			Assert.Equal(1793642400, item.Dt);
+			Assert.Equal(500, item.Weather![0].Id);
+			Assert.Equal(0.51, item.Rain!.ThreeHours);
+			Assert.Equal(3.5, item.Wind!.Gust);
+			Assert.Equal(9584, item.Visibility);
+		}
+
+		[Fact]
+		public async Task Forecast_SharesARequestAcrossNearbyPoints()
+		{
+			var handler = new FakeHandler(HttpStatusCode.OK, "{ \"list\": [] }");
+			var repo = CreateRepo(handler);
+
+			await repo.GetForecastAsync(51.62, 39.18, "ru");
+			await repo.GetForecastAsync(51.64, 39.21, "ru");
+
+			var query = Assert.Single(handler.Requests).Query;
+			Assert.Contains("lat=51.6&", query);
+			Assert.Contains("lon=39.2&", query);
+		}
+
+		[Fact]
 		public async Task Failure_DoesNotExposeTheApiKey()
 		{
 			var repo = CreateRepo(new FakeHandler(HttpStatusCode.Unauthorized, "{}"));

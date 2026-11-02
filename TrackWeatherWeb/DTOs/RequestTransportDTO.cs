@@ -1,3 +1,5 @@
+using TrackWeatherWeb.Models;
+
 namespace TrackWeatherWeb.DTOs
 {
     public class RequestTransportDTO
@@ -8,5 +10,8 @@ namespace TrackWeatherWeb.DTOs
         public decimal Longitude { get; set; }
         public string Comment { get; set; } = string.Empty;
         public DateTime Timestamp { get; set; }
+        public TransportStatus Status { get; set; }
+        public string? AssignedToEmail { get; set; }
+        public DateTime? UpdatedAt { get; set; }
     }
 }

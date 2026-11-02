@@ -1,0 +1,54 @@
+@model TrackWeatherWeb.Pages.MyRequestsModel
+@using TrackWeatherWeb.Services
+@if (Model.Requests.Count == 0)
+{
+	<p class="text-muted">@L["MyRequests.Empty"]</p>
+}
+else
+{
+	var actor = User.ToTransportActor();
+	<div class="table-card">
+		<table class="table table-hover align-middle mb-0">
+			<thead>
+				<tr>
+					<th scope="col">№</th>
+					<th scope="col">@L["Transport.Place"]</th>
+					<th scope="col">@L["Transport.Comment"]</th>
+					<th scope="col">@L["Transport.Time"]</th>
+					<th scope="col">@L["Transport.Status"]</th>
+					<th scope="col">@L["MyRequests.Role"]</th>
+					<th scope="col"><span class="visually-hidden">@L["Common.Actions"]</span></th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var request in Model.Requests)
+				{
+					<tr>
+						<td>@request.Id</td>
+						<td class="text-nowrap">@request.Latitude.ToString("F4"), @request.Longitude.ToString("F4")</td>
+						<td class="transport-comment">@request.Comment</td>
+						<td class="text-nowrap"><time datetime="@request.Timestamp.ToString("O")" data-local-time>@request.Timestamp.ToString("g") UTC</time></td>
+						<td><partial name="_TransportStatus" model="request.Status" /></td>
+						<td>@(request.AssignedToEmail == actor.Email ? L["MyRequests.YouExecute"] : L["MyRequests.YouAsked"])</td>
+						<td class="text-end">
+							<div class="transport-actions">
+								@if (request.AssignedToEmail == actor.Email && TransportWorkflow.CanComplete(request.Status, request.AssignedToEmail, actor))
+								{
+									<form method="post" asp-page-handler="Complete" asp-route-id="@request.Id">
+										<button type="submit" class="btn btn-success btn-sm">@L["Transport.Complete"]</button>
+									</form>
+								}
+								@if (TransportWorkflow.CanCancel(request.Status, request.Email, actor))
+								{
+									<form method="post" asp-page-handler="Cancel" asp-route-id="@request.Id" data-confirm="@L["Transport.ConfirmCancel", request.Id]">
+										<button type="submit" class="btn btn-outline-secondary btn-sm">@L["Transport.Cancel"]</button>
+									</form>
+								}
+							</div>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+}

@@ -47,16 +47,16 @@
   <data name="Home.Title" xml:space="preserve"><value>Home</value></data>
   <data name="Home.Welcome" xml:space="preserve"><value>Weather and routes on one map</value></data>
   <data name="Home.WelcomeUser" xml:space="preserve"><value>Welcome, {0}!</value></data>
-  <data name="Home.Lead" xml:space="preserve"><value>Check the current weather anywhere in the world and build a route to it. Utility services see special transport requests on a dedicated map.</value></data>
+  <data name="Home.Lead" xml:space="preserve"><value>See what weather awaits you on every stretch of the way and request special transport when you need help. Dispatchers see requests on a map and assign executors right away.</value></data>
   <data name="Home.OpenMap" xml:space="preserve"><value>Open the map</value></data>
   <data name="Home.Feature.Weather.Title" xml:space="preserve"><value>Weather at a point</value></data>
   <data name="Home.Feature.Weather.Text" xml:space="preserve"><value>Right-click the map to place a marker and see the current weather there.</value></data>
-  <data name="Home.Feature.Route.Title" xml:space="preserve"><value>Routes</value></data>
-  <data name="Home.Feature.Route.Text" xml:space="preserve"><value>Build a route to the marker from your location or from a given address.</value></data>
+  <data name="Home.Feature.Route.Title" xml:space="preserve"><value>Weather along the route</value></data>
+  <data name="Home.Feature.Route.Text" xml:space="preserve"><value>Build a route and see dangerous stretches, based on the forecast for when you get there.</value></data>
   <data name="Home.Feature.Transport.Title" xml:space="preserve"><value>Special transport</value></data>
-  <data name="Home.Feature.Transport.Text" xml:space="preserve"><value>Special transport requests arrive through the API and appear on the utility map.</value></data>
+  <data name="Home.Feature.Transport.Text" xml:space="preserve"><value>Request special transport right from the map and follow the status of your request live.</value></data>
   <data name="Home.Feature.Admin.Title" xml:space="preserve"><value>Administration</value></data>
-  <data name="Home.Feature.Admin.Text" xml:space="preserve"><value>Administrators manage users, roles and transport requests.</value></data>
+  <data name="Home.Feature.Admin.Text" xml:space="preserve"><value>Dispatchers assign executors and manage requests, users and roles.</value></data>
   <data name="Login.Title" xml:space="preserve"><value>Log in</value></data>
   <data name="Login.Submit" xml:space="preserve"><value>Log in</value></data>
   <data name="Login.NoAccount" xml:space="preserve"><value>No account yet?</value></data>
@@ -81,11 +81,11 @@
   <data name="WeatherMap.Title" xml:space="preserve"><value>Weather map</value></data>
   <data name="WeatherMap.Hint" xml:space="preserve"><value>Right-click the map (long tap on a phone) to place a marker.</value></data>
   <data name="UtilityMap.Title" xml:space="preserve"><value>Utility map</value></data>
-  <data name="UtilityMap.Hint" xml:space="preserve"><value>Markers are special transport requests. The route follows the M4 highway and can be changed in the map panel.</value></data>
+  <data name="UtilityMap.Hint" xml:space="preserve"><value>Markers are open requests: red are new, orange are in progress. The map updates on its own.</value></data>
   <data name="Privacy.Title" xml:space="preserve"><value>Privacy</value></data>
   <data name="Privacy.Stored" xml:space="preserve"><value>We store your name, email and a password hash, along with the transport requests you submit. Passwords themselves are never stored.</value></data>
   <data name="Privacy.Cookies" xml:space="preserve"><value>The site uses only essential cookies: to keep you signed in, protect forms and remember your language.</value></data>
-  <data name="Privacy.ThirdParty" xml:space="preserve"><value>Coordinates of the points you pick are sent to Yandex Maps and OpenWeather to show the map, routes and weather.</value></data>
+  <data name="Privacy.ThirdParty" xml:space="preserve"><value>Coordinates of the points and routes you pick are sent to Yandex Maps and OpenWeather to show the map, routes and weather.</value></data>
   <data name="Error.Title" xml:space="preserve"><value>Something went wrong</value></data>
   <data name="Error.Server" xml:space="preserve"><value>A server error occurred. Please try again later.</value></data>
   <data name="Error.Forbidden" xml:space="preserve"><value>You do not have access to this page.</value></data>
@@ -120,4 +120,73 @@
   <data name="MapJs.RequestsFailed" xml:space="preserve"><value>Failed to load transport requests.</value></data>
   <data name="MapJs.MapUnavailable" xml:space="preserve"><value>Failed to load the map. Check your internet connection and the API key.</value></data>
   <data name="MapJs.MissingKey" xml:space="preserve"><value>The Yandex Maps key is not configured (YandexMaps:ApiKey).</value></data>
+  <data name="Nav.MyRequests" xml:space="preserve"><value>My requests</value></data>
+  <data name="Status.New" xml:space="preserve"><value>New</value></data>
+  <data name="Status.InProgress" xml:space="preserve"><value>In progress</value></data>
+  <data name="Status.Completed" xml:space="preserve"><value>Completed</value></data>
+  <data name="Status.Cancelled" xml:space="preserve"><value>Cancelled</value></data>
+  <data name="Hazard.Ice" xml:space="preserve"><value>Ice</value></data>
+  <data name="Hazard.Snow" xml:space="preserve"><value>Snow</value></data>
+  <data name="Hazard.HeavyRain" xml:space="preserve"><value>Heavy rain</value></data>
+  <data name="Hazard.Wind" xml:space="preserve"><value>Strong wind</value></data>
+  <data name="Hazard.PoorVisibility" xml:space="preserve"><value>Poor visibility</value></data>
+  <data name="Hazard.Thunderstorm" xml:space="preserve"><value>Thunderstorm</value></data>
+  <data name="Transport.FilterAll" xml:space="preserve"><value>All</value></data>
+  <data name="Transport.Place" xml:space="preserve"><value>Place</value></data>
+  <data name="Transport.Status" xml:space="preserve"><value>Status</value></data>
+  <data name="Transport.Assignee" xml:space="preserve"><value>Assignee</value></data>
+  <data name="Transport.ChooseAssignee" xml:space="preserve"><value>Choose an assignee</value></data>
+  <data name="Transport.Assign" xml:space="preserve"><value>Assign</value></data>
+  <data name="Transport.Complete" xml:space="preserve"><value>Complete</value></data>
+  <data name="Transport.Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Transport.ConfirmCancel" xml:space="preserve"><value>Cancel request #{0}?</value></data>
+  <data name="Transport.Assigned" xml:space="preserve"><value>Assignee set, the request is in progress</value></data>
+  <data name="Transport.Completed" xml:space="preserve"><value>Request completed</value></data>
+  <data name="Transport.Cancelled" xml:space="preserve"><value>Request cancelled</value></data>
+  <data name="Transport.Forbidden" xml:space="preserve"><value>You are not allowed to do this</value></data>
+  <data name="Transport.WrongState" xml:space="preserve"><value>This action is not available in the current status</value></data>
+  <data name="Transport.Stale" xml:space="preserve"><value>Someone has just changed this request. Refresh the page.</value></data>
+  <data name="MyRequests.Title" xml:space="preserve"><value>My requests</value></data>
+  <data name="MyRequests.Hint" xml:space="preserve"><value>Requests you created or were assigned to. Statuses update on their own.</value></data>
+  <data name="MyRequests.Empty" xml:space="preserve"><value>There are no requests yet. You can create one from the weather map.</value></data>
+  <data name="MyRequests.Role" xml:space="preserve"><value>Your role</value></data>
+  <data name="MyRequests.YouAsked" xml:space="preserve"><value>Author</value></data>
+  <data name="MyRequests.YouExecute" xml:space="preserve"><value>Assignee</value></data>
+  <data name="RouteWeather.Title" xml:space="preserve"><value>Weather along the route</value></data>
+  <data name="RouteWeather.Departure" xml:space="preserve"><value>Departure</value></data>
+  <data name="RouteWeather.DepartNow" xml:space="preserve"><value>Now</value></data>
+  <data name="RouteWeather.DepartIn" xml:space="preserve"><value>In {0} h</value></data>
+  <data name="RouteWeather.Disclaimer" xml:space="preserve"><value>This is an estimate based on a forecast with a 3 hour step. It does not replace road service reports.</value></data>
+  <data name="TransportForm.Title" xml:space="preserve"><value>Request special transport</value></data>
+  <data name="TransportForm.Place" xml:space="preserve"><value>Coordinates</value></data>
+  <data name="TransportForm.Submit" xml:space="preserve"><value>Send request</value></data>
+  <data name="TransportForm.Close" xml:space="preserve"><value>Close</value></data>
+  <data name="MapJs.RequestTransport" xml:space="preserve"><value>Request transport</value></data>
+  <data name="MapJs.TransportFailed" xml:space="preserve"><value>Failed to send the request.</value></data>
+  <data name="MapJs.RiskLow" xml:space="preserve"><value>No hazards</value></data>
+  <data name="MapJs.RiskModerate" xml:space="preserve"><value>Take care</value></data>
+  <data name="MapJs.RiskHigh" xml:space="preserve"><value>Dangerous</value></data>
+  <data name="MapJs.RiskUnknown" xml:space="preserve"><value>No forecast</value></data>
+  <data name="MapJs.OverallLow" xml:space="preserve"><value>No dangerous stretches in the forecast.</value></data>
+  <data name="MapJs.OverallModerate" xml:space="preserve"><value>Take care on this route.</value></data>
+  <data name="MapJs.OverallHigh" xml:space="preserve"><value>The route has dangerous stretches.</value></data>
+  <data name="MapJs.OverallUnknown" xml:space="preserve"><value>There is no forecast for this time.</value></data>
+  <data name="MapJs.DangerousStretches" xml:space="preserve"><value>Stretches at risk</value></data>
+  <data name="MapJs.KmShort" xml:space="preserve"><value>km</value></data>
+  <data name="MapJs.RouteWeatherLoading" xml:space="preserve"><value>Checking the forecast along the route…</value></data>
+  <data name="MapJs.RouteWeatherFailed" xml:space="preserve"><value>Failed to load the forecast for the route.</value></data>
+  <data name="MapJs.StatusNew" xml:space="preserve"><value>New</value></data>
+  <data name="MapJs.StatusInProgress" xml:space="preserve"><value>In progress</value></data>
+  <data name="MapJs.StatusCompleted" xml:space="preserve"><value>Completed</value></data>
+  <data name="MapJs.StatusCancelled" xml:space="preserve"><value>Cancelled</value></data>
+  <data name="MapJs.Number" xml:space="preserve"><value>Request #</value></data>
+  <data name="MapJs.Status" xml:space="preserve"><value>Status</value></data>
+  <data name="MapJs.Assignee" xml:space="preserve"><value>Assignee</value></data>
+  <data name="LiveJs.NewRequest" xml:space="preserve"><value>New request</value></data>
+  <data name="LiveJs.Request" xml:space="preserve"><value>Request</value></data>
+  <data name="LiveJs.RequestDeleted" xml:space="preserve"><value>Deleted request</value></data>
+  <data name="LiveJs.StatusNew" xml:space="preserve"><value>new</value></data>
+  <data name="LiveJs.StatusInProgress" xml:space="preserve"><value>in progress</value></data>
+  <data name="LiveJs.StatusCompleted" xml:space="preserve"><value>completed</value></data>
+  <data name="LiveJs.StatusCancelled" xml:space="preserve"><value>cancelled</value></data>
 </root>

@@ -1,48 +1,32 @@
 @page
 @model TransportRequestPageModel
+@using TrackWeatherWeb.Models
 @{
 	ViewData["Title"] = L["Transport.Title"].Value;
+	(TransportStatus? Value, string Label)[] filters =
+	[
+		(null, L["Transport.FilterAll"]),
+		(TransportStatus.New, L["Status.New"]),
+		(TransportStatus.InProgress, L["Status.InProgress"]),
+		(TransportStatus.Completed, L["Status.Completed"]),
+		(TransportStatus.Cancelled, L["Status.Cancelled"]),
+	];
 }
 <div class="page-header">
 	<h1>@L["Transport.Title"]</h1>
 	<a class="btn btn-primary btn-sm" asp-page="/AdminMap"><i class="bi bi-truck" aria-hidden="true"></i> @L["Nav.UtilityMap"]</a>
 </div>
 
-@if (Model.Requests.Count == 0)
-{
-	<p class="text-muted">@L["Transport.Empty"]</p>
-}
-else
-{
-	<div class="table-card">
-		<table class="table table-hover align-middle mb-0">
-			<thead>
-				<tr>
-					<th scope="col">@L["Field.Email"]</th>
-					<th scope="col">@L["Transport.Latitude"]</th>
-					<th scope="col">@L["Transport.Longitude"]</th>
-					<th scope="col">@L["Transport.Comment"]</th>
-					<th scope="col">@L["Transport.Time"]</th>
-					<th scope="col"><span class="visually-hidden">@L["Common.Actions"]</span></th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach (var request in Model.Requests)
-				{
-					<tr>
-						<td>@request.Email</td>
-						<td>@request.Latitude.ToString("F6")</td>
-						<td>@request.Longitude.ToString("F6")</td>
-						<td>@request.Comment</td>
-						<td><time datetime="@request.Timestamp.ToString("O")" data-local-time>@request.Timestamp.ToString("g") UTC</time></td>
-						<td class="text-end">
-							<form method="post" asp-page-handler="Delete" asp-route-id="@request.Id" data-confirm="@L["Transport.ConfirmDelete", request.Id]">
-								<button type="submit" class="btn btn-outline-danger btn-sm">@L["Common.Delete"]</button>
-							</form>
-						</td>
-					</tr>
-				}
-			</tbody>
-		</table>
-	</div>
-}
+<ul class="nav nav-pills status-filter mb-3">
+	@foreach (var filter in filters)
+	{
+		var isActive = Model.Status == filter.Value;
+		<li class="nav-item">
+			<a class="nav-link @(isActive ? "active" : "")" aria-current="@(isActive ? "page" : null)" asp-page="/TransportRequestPage" asp-route-status="@filter.Value">@filter.Label</a>
+		</li>
+	}
+</ul>
+
+<div data-live-table="@Url.Page("/TransportRequestPage", "Table", new { status = Model.Status })">
+	<partial name="_TransportTable" model="Model" />
+</div>

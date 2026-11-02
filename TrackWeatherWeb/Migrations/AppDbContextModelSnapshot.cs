@@ -65,6 +65,10 @@ namespace TrackWeatherWeb.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AssignedToEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
                     b.Property<string>("Comment")
                         .IsRequired()
                         .HasMaxLength(1000)
@@ -81,10 +85,27 @@ namespace TrackWeatherWeb.Migrations
                     b.Property<decimal>("Longitude")
                         .HasColumnType("decimal(18, 6)");
 
+                    b.Property<string>("Status")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)")
+                        .HasDefaultValue("New");
+
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("AssignedToEmail");
+
+                    b.HasIndex("Email");
+
+                    b.HasIndex("Status");
 
                     b.ToTable("Requests");
                 });

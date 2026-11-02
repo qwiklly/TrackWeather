@@ -1,0 +1,77 @@
+@model TrackWeatherWeb.Pages.TransportRequestPageModel
+@using TrackWeatherWeb.Services
+@if (Model.Requests.Count == 0)
+{
+	<p class="text-muted">@L["Transport.Empty"]</p>
+}
+else
+{
+	var actor = User.ToTransportActor();
+	<div class="table-card">
+		<table class="table table-hover align-middle mb-0">
+			<thead>
+				<tr>
+					<th scope="col">№</th>
+					<th scope="col">@L["Field.Email"]</th>
+					<th scope="col">@L["Transport.Place"]</th>
+					<th scope="col">@L["Transport.Comment"]</th>
+					<th scope="col">@L["Transport.Time"]</th>
+					<th scope="col">@L["Transport.Status"]</th>
+					<th scope="col">@L["Transport.Assignee"]</th>
+					<th scope="col"><span class="visually-hidden">@L["Common.Actions"]</span></th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var request in Model.Requests)
+				{
+					<tr>
+						<td>@request.Id</td>
+						<td class="transport-email">@request.Email</td>
+						<td>@request.Latitude.ToString("F4"),<br />@request.Longitude.ToString("F4")</td>
+						<td class="transport-comment">@request.Comment</td>
+						<td><time datetime="@request.Timestamp.ToString("O")" data-local-time>@request.Timestamp.ToString("g") UTC</time></td>
+						<td><partial name="_TransportStatus" model="request.Status" /></td>
+						<td>
+							@if (TransportWorkflow.CanAssign(request.Status, actor))
+							{
+								<form method="post" asp-page-handler="Assign" asp-route-id="@request.Id" asp-route-status="@Model.Status" class="transport-assign">
+									<select name="email" class="form-select form-select-sm" required aria-label="@L["Transport.Assignee"]">
+										<option value="">@L["Transport.ChooseAssignee"]</option>
+										@foreach (var user in Model.Assignees)
+										{
+											<option value="@user.Email" selected="@(user.Email == request.AssignedToEmail)">@user.Name (@user.Email)</option>
+										}
+									</select>
+									<button type="submit" class="btn btn-primary btn-sm">@L["Transport.Assign"]</button>
+								</form>
+							}
+							else
+							{
+								@(request.AssignedToEmail ?? "—")
+							}
+						</td>
+						<td class="text-end">
+							<div class="transport-actions">
+								@if (TransportWorkflow.CanComplete(request.Status, request.AssignedToEmail, actor))
+								{
+									<form method="post" asp-page-handler="Complete" asp-route-id="@request.Id" asp-route-status="@Model.Status">
+										<button type="submit" class="btn btn-success btn-sm">@L["Transport.Complete"]</button>
+									</form>
+								}
+								@if (TransportWorkflow.CanCancel(request.Status, request.Email, actor))
+								{
+									<form method="post" asp-page-handler="Cancel" asp-route-id="@request.Id" asp-route-status="@Model.Status" data-confirm="@L["Transport.ConfirmCancel", request.Id]">
+										<button type="submit" class="btn btn-outline-secondary btn-sm">@L["Transport.Cancel"]</button>
+									</form>
+								}
+								<form method="post" asp-page-handler="Delete" asp-route-id="@request.Id" asp-route-status="@Model.Status" data-confirm="@L["Transport.ConfirmDelete", request.Id]">
+									<button type="submit" class="btn btn-outline-danger btn-sm">@L["Common.Delete"]</button>
+								</form>
+							</div>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+}
