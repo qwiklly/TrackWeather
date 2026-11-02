@@ -5,12 +5,12 @@
 
 [Русский](README.md) · **English**
 
-An ASP.NET Core web application: current weather at any point on a map, routes to the chosen point, and a dedicated map of special transport requests for utility services.
+An ASP.NET Core web application for trips: it shows the weather on every stretch of a route at the time you get there. If you need help on the way, a request goes straight to a road service dispatcher.
 
 ## Features
 
 - **Weather along the route.** A route is split into stretches, each rated by the forecast for when you get there. Dangerous stretches are coloured on the map and listed with the reason: ice, snow, heavy rain, wind, poor visibility or a thunderstorm. You can compare departure times.
-- **Special transport requests.** Send a request from the map or right from a dangerous stretch. Statuses: new → in progress → completed or cancelled. Authors and assignees see their requests on a dedicated page.
+- **Roadside help.** Send a request from a dangerous stretch of a route. Statuses: new → in progress → completed or cancelled. Authors and assignees see their requests on a dedicated page.
 - **Dispatcher workspace.** Requests with a status filter and assignment, open requests on a map. New requests and status changes arrive instantly, without a page reload (SignalR).
 - **Weather at a point.** Right-click the map to place a marker and see the current OpenWeather conditions in the interface language.
 - **Routes.** From your location or from an address, with distance and travel time (Yandex Maps).
@@ -32,6 +32,7 @@ An ASP.NET Core web application: current weather at any point on a map, routes t
   <img src="docs/screenshots/weather-map-ru.jpg" alt="Weather at the chosen point" width="49%" />
   <img src="docs/screenshots/home-ru.jpg" alt="Home page" width="49%" />
 </p>
+<p><img src="docs/screenshots/roadside-help-ru.jpg" alt="The roadside help form" width="49%" /></p>
 <p><img src="docs/screenshots/mobile-ru.jpg" alt="The map on a phone" width="240" /></p>
 
 ## Stack
