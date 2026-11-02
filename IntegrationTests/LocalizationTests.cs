@@ -114,7 +114,7 @@ namespace IntegrationTests
 
         [Theory]
         [InlineData("ru", "ru_RU")]
-        [InlineData("en", "en_US")]
+        [InlineData("en", "en_RU")]
         public async Task Map_LoadsYandexInTheCurrentLanguage(string language, string yandexLanguage)
         {
             var browser = await _app.SignInNewUserAsync();

@@ -4,7 +4,7 @@ TrackWeatherMap.ready(function () {
     const { t, escapeHtml, formatCoords, showStatus } = TrackWeatherMap;
 
     const map = new ymaps.Map('map', {
-        center: [51.672, 39.1843],
+        center: [55.7558, 37.6173],
         zoom: 10,
         controls: ['zoomControl', 'searchControl', 'typeSelector', 'geolocationControl']
     });

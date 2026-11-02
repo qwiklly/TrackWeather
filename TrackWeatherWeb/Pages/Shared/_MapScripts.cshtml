@@ -1,6 +1,6 @@
 @model string
 @if (!string.IsNullOrWhiteSpace(Model))
 {
-	<script src="https://api-maps.yandex.ru/2.1/?apikey=@(Uri.EscapeDataString(Model))&lang=@(SupportedLanguages.Current == SupportedLanguages.English ? "en_US" : "ru_RU")"></script>
+	<script src="https://api-maps.yandex.ru/2.1/?apikey=@(Uri.EscapeDataString(Model))&lang=@(SupportedLanguages.Current == SupportedLanguages.English ? "en_RU" : "ru_RU")"></script>
 }
 <script src="~/js/mapCommon.js" asp-append-version="true"></script>

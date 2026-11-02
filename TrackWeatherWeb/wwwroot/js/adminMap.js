@@ -12,7 +12,7 @@ TrackWeatherMap.ready(async function () {
     const STATUS_ICONS = { New: 'islands#redAutoIcon', InProgress: 'islands#orangeAutoIcon' };
 
     const map = new ymaps.Map('map', {
-        center: [51.672, 39.1843],
+        center: [55.7558, 37.6173],
         zoom: 7,
         controls: ['zoomControl', 'typeSelector', 'routePanelControl']
     });
