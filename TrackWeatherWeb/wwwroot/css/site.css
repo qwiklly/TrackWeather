@@ -264,7 +264,13 @@ body {
     font-size: 1.6rem;
 }
 
-.feature-card h2 {
+.home-section-title {
+    margin: 0 0 .75rem;
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+.feature-card h3 {
     margin: .5rem 0;
     font-size: 1.05rem;
     font-weight: 600;

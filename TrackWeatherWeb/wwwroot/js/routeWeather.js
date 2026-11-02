@@ -82,7 +82,7 @@ window.TrackWeatherRouteWeather = (function () {
         const hazards = point.hazards.map(h =>
             `<span class="hazard hazard--${escapeHtml(h.level.toLowerCase())}">${escapeHtml(h.title)}</span>`).join('');
         const action = point.risk === 'Moderate' || point.risk === 'High'
-            ? `<button type="button" class="btn btn-outline-danger btn-sm" data-route-request="${index}">${escapeHtml(t('RequestTransport'))}</button>`
+            ? `<button type="button" class="btn btn-outline-danger btn-sm" data-route-request="${index}">${escapeHtml(t('RoadsideHelp'))}</button>`
             : '';
         return `<li class="route-point route-point--${escapeHtml(point.risk.toLowerCase())}">
                     <button type="button" class="route-point__main" data-route-point="${index}">

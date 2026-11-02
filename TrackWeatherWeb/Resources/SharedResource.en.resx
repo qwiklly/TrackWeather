@@ -45,18 +45,14 @@
   <data name="Account.LastAdmin" xml:space="preserve"><value>The system must keep at least one administrator</value></data>
   <data name="Account.CannotDeleteSelf" xml:space="preserve"><value>You cannot delete your own account</value></data>
   <data name="Home.Title" xml:space="preserve"><value>Home</value></data>
-  <data name="Home.Welcome" xml:space="preserve"><value>Weather and routes on one map</value></data>
+  <data name="Home.Welcome" xml:space="preserve"><value>See the weather along your whole trip before you leave</value></data>
   <data name="Home.WelcomeUser" xml:space="preserve"><value>Welcome, {0}!</value></data>
-  <data name="Home.Lead" xml:space="preserve"><value>See what weather awaits you on every stretch of the way and request special transport when you need help. Dispatchers see requests on a map and assign executors right away.</value></data>
-  <data name="Home.OpenMap" xml:space="preserve"><value>Open the map</value></data>
-  <data name="Home.Feature.Weather.Title" xml:space="preserve"><value>Weather at a point</value></data>
-  <data name="Home.Feature.Weather.Text" xml:space="preserve"><value>Right-click the map to place a marker and see the current weather there.</value></data>
+  <data name="Home.Lead" xml:space="preserve"><value>Build a route and see the weather on every stretch at the time you get there. Compare departure times and choose when to go.</value></data>
+  <data name="Home.OpenMap" xml:space="preserve"><value>Build a route</value></data>
+  <data name="Home.Feature.Weather.Title" xml:space="preserve"><value>Weather anywhere</value></data>
+  <data name="Home.Feature.Weather.Text" xml:space="preserve"><value>Right-click the map to place a marker, see the current weather and build a route there.</value></data>
   <data name="Home.Feature.Route.Title" xml:space="preserve"><value>Weather along the route</value></data>
-  <data name="Home.Feature.Route.Text" xml:space="preserve"><value>Build a route and see dangerous stretches, based on the forecast for when you get there.</value></data>
-  <data name="Home.Feature.Transport.Title" xml:space="preserve"><value>Special transport</value></data>
-  <data name="Home.Feature.Transport.Text" xml:space="preserve"><value>Request special transport right from the map and follow the status of your request live.</value></data>
-  <data name="Home.Feature.Admin.Title" xml:space="preserve"><value>Administration</value></data>
-  <data name="Home.Feature.Admin.Text" xml:space="preserve"><value>Dispatchers assign executors and manage requests, users and roles.</value></data>
+  <data name="Home.Feature.Route.Text" xml:space="preserve"><value>Every stretch is rated by the forecast, with dangerous places marked on the map: ice, snow, heavy rain, wind and poor visibility.</value></data>
   <data name="Login.Title" xml:space="preserve"><value>Log in</value></data>
   <data name="Login.Submit" xml:space="preserve"><value>Log in</value></data>
   <data name="Login.NoAccount" xml:space="preserve"><value>No account yet?</value></data>
@@ -148,7 +144,7 @@
   <data name="Transport.Stale" xml:space="preserve"><value>Someone has just changed this request. Refresh the page.</value></data>
   <data name="MyRequests.Title" xml:space="preserve"><value>My requests</value></data>
   <data name="MyRequests.Hint" xml:space="preserve"><value>Requests you created or were assigned to. Statuses update on their own.</value></data>
-  <data name="MyRequests.Empty" xml:space="preserve"><value>There are no requests yet. You can create one from the weather map.</value></data>
+  <data name="MyRequests.Empty" xml:space="preserve"><value>There are no requests yet. You can ask for help on a dangerous stretch of a route.</value></data>
   <data name="MyRequests.Role" xml:space="preserve"><value>Your role</value></data>
   <data name="MyRequests.YouAsked" xml:space="preserve"><value>Author</value></data>
   <data name="MyRequests.YouExecute" xml:space="preserve"><value>Assignee</value></data>
@@ -157,11 +153,10 @@
   <data name="RouteWeather.DepartNow" xml:space="preserve"><value>Now</value></data>
   <data name="RouteWeather.DepartIn" xml:space="preserve"><value>In {0} h</value></data>
   <data name="RouteWeather.Disclaimer" xml:space="preserve"><value>This is an estimate based on a forecast with a 3 hour step. It does not replace road service reports.</value></data>
-  <data name="TransportForm.Title" xml:space="preserve"><value>Request special transport</value></data>
+  <data name="TransportForm.Title" xml:space="preserve"><value>Need roadside help</value></data>
   <data name="TransportForm.Place" xml:space="preserve"><value>Coordinates</value></data>
-  <data name="TransportForm.Submit" xml:space="preserve"><value>Send request</value></data>
+  <data name="TransportForm.Submit" xml:space="preserve"><value>Ask for help</value></data>
   <data name="TransportForm.Close" xml:space="preserve"><value>Close</value></data>
-  <data name="MapJs.RequestTransport" xml:space="preserve"><value>Request transport</value></data>
   <data name="MapJs.TransportFailed" xml:space="preserve"><value>Failed to send the request.</value></data>
   <data name="MapJs.RiskLow" xml:space="preserve"><value>No hazards</value></data>
   <data name="MapJs.RiskModerate" xml:space="preserve"><value>Take care</value></data>
@@ -189,4 +184,14 @@
   <data name="LiveJs.StatusInProgress" xml:space="preserve"><value>in progress</value></data>
   <data name="LiveJs.StatusCompleted" xml:space="preserve"><value>completed</value></data>
   <data name="LiveJs.StatusCancelled" xml:space="preserve"><value>cancelled</value></data>
+  <data name="Home.ForTravelers" xml:space="preserve"><value>For your trip</value></data>
+  <data name="Home.ForServices" xml:space="preserve"><value>Roadside help and road services</value></data>
+  <data name="Home.Feature.Departure.Title" xml:space="preserve"><value>When to leave</value></data>
+  <data name="Home.Feature.Departure.Text" xml:space="preserve"><value>Compare leaving now, in a few hours or tomorrow, and see how the weather on the way changes.</value></data>
+  <data name="Home.Feature.Help.Title" xml:space="preserve"><value>Roadside help</value></data>
+  <data name="Home.Feature.Help.Text" xml:space="preserve"><value>On a dangerous stretch of a route you can ask for help and follow your request live.</value></data>
+  <data name="Home.Feature.Dispatch.Title" xml:space="preserve"><value>Dispatcher workspace</value></data>
+  <data name="Home.Feature.Dispatch.Text" xml:space="preserve"><value>Services see requests on a map and in a table, assign executors and get status updates instantly.</value></data>
+  <data name="TransportForm.Hint" xml:space="preserve"><value>A road service dispatcher will receive your request and assign an executor. You can follow its status in “My requests”.</value></data>
+  <data name="MapJs.RoadsideHelp" xml:space="preserve"><value>Need roadside help</value></data>
 </root>

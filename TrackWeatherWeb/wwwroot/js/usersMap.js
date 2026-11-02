@@ -19,7 +19,6 @@ TrackWeatherMap.ready(function () {
                     <div class="map-balloon__actions">
                         <button type="button" class="btn btn-primary btn-sm" data-map-action="route-from-me">${escapeHtml(t('RouteFromMe'))}</button>
                         <button type="button" class="btn btn-outline-primary btn-sm" data-map-action="ask-address">${escapeHtml(t('RouteFromAddress'))}</button>
-                        <button type="button" class="btn btn-outline-danger btn-sm" data-map-action="request-transport">${escapeHtml(t('RequestTransport'))}</button>
                     </div>
                 </div>`;
     }
@@ -145,7 +144,7 @@ TrackWeatherMap.ready(function () {
         }
     }
 
-    // The transport request form, opened from a marker or from a dangerous stretch of a route
+    // The roadside help form, opened from a dangerous stretch of a route
     const transportModal = new bootstrap.Modal(document.getElementById('transport-modal'));
     const transportForm = document.getElementById('transport-form');
     const transportComment = document.getElementById('transport-comment');
@@ -211,9 +210,6 @@ TrackWeatherMap.ready(function () {
                 break;
             case 'route-from-address':
                 routeFromAddress(openPlacemark, document.getElementById('route-address').value.trim());
-                break;
-            case 'request-transport':
-                openTransportForm(openPlacemark.geometry.getCoordinates());
                 break;
         }
     }, true);

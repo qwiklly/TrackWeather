@@ -55,6 +55,18 @@ namespace IntegrationTests
         }
 
         [Fact]
+        public async Task HomePage_TalksAboutTheTripBeforeTheServices()
+        {
+            var client = _app.CreateClient();
+            client.DefaultRequestHeaders.AcceptLanguage.ParseAdd("en");
+
+            var page = await client.GetStringAsync("/");
+
+            Assert.True(page.IndexOf("For your trip", StringComparison.Ordinal) >= 0);
+            Assert.True(page.IndexOf("For your trip", StringComparison.Ordinal) < page.IndexOf("Dispatcher workspace", StringComparison.Ordinal));
+        }
+
+        [Fact]
         public async Task UnknownPage_ShowsFriendly404()
         {
             var browser = await _app.SignInNewUserAsync();

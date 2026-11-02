@@ -18,7 +18,7 @@
 	<p class="hero__lead">@L["Home.Lead"]</p>
 	@if (isSignedIn)
 	{
-		<a class="btn btn-light" asp-page="/UsersMap"><i class="bi bi-geo-alt-fill" aria-hidden="true"></i> @L["Home.OpenMap"]</a>
+		<a class="btn btn-light" asp-page="/UsersMap"><i class="bi bi-signpost-split" aria-hidden="true"></i> @L["Home.OpenMap"]</a>
 	}
 	else
 	{
@@ -27,33 +27,45 @@
 	}
 </section>
 
-<section class="row g-3">
-	<div class="col-md-6 col-xl-3">
-		<article class="feature-card">
-			<i class="bi bi-cloud-sun" aria-hidden="true"></i>
-			<h2>@L["Home.Feature.Weather.Title"]</h2>
-			<p>@L["Home.Feature.Weather.Text"]</p>
-		</article>
-	</div>
-	<div class="col-md-6 col-xl-3">
+<h2 class="home-section-title">@L["Home.ForTravelers"]</h2>
+<section class="row g-3 mb-4">
+	<div class="col-md-4">
 		<article class="feature-card">
 			<i class="bi bi-signpost-split" aria-hidden="true"></i>
-			<h2>@L["Home.Feature.Route.Title"]</h2>
+			<h3>@L["Home.Feature.Route.Title"]</h3>
 			<p>@L["Home.Feature.Route.Text"]</p>
 		</article>
 	</div>
-	<div class="col-md-6 col-xl-3">
+	<div class="col-md-4">
 		<article class="feature-card">
-			<i class="bi bi-truck" aria-hidden="true"></i>
-			<h2>@L["Home.Feature.Transport.Title"]</h2>
-			<p>@L["Home.Feature.Transport.Text"]</p>
+			<i class="bi bi-clock-history" aria-hidden="true"></i>
+			<h3>@L["Home.Feature.Departure.Title"]</h3>
+			<p>@L["Home.Feature.Departure.Text"]</p>
 		</article>
 	</div>
-	<div class="col-md-6 col-xl-3">
+	<div class="col-md-4">
 		<article class="feature-card">
-			<i class="bi bi-shield-lock" aria-hidden="true"></i>
-			<h2>@L["Home.Feature.Admin.Title"]</h2>
-			<p>@L["Home.Feature.Admin.Text"]</p>
+			<i class="bi bi-cloud-sun" aria-hidden="true"></i>
+			<h3>@L["Home.Feature.Weather.Title"]</h3>
+			<p>@L["Home.Feature.Weather.Text"]</p>
+		</article>
+	</div>
+</section>
+
+<h2 class="home-section-title">@L["Home.ForServices"]</h2>
+<section class="row g-3">
+	<div class="col-md-6">
+		<article class="feature-card">
+			<i class="bi bi-life-preserver" aria-hidden="true"></i>
+			<h3>@L["Home.Feature.Help.Title"]</h3>
+			<p>@L["Home.Feature.Help.Text"]</p>
+		</article>
+	</div>
+	<div class="col-md-6">
+		<article class="feature-card">
+			<i class="bi bi-truck" aria-hidden="true"></i>
+			<h3>@L["Home.Feature.Dispatch.Title"]</h3>
+			<p>@L["Home.Feature.Dispatch.Text"]</p>
 		</article>
 	</div>
 </section>

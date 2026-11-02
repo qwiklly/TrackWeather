@@ -45,18 +45,14 @@
   <data name="Account.LastAdmin" xml:space="preserve"><value>Нельзя оставить систему без администратора</value></data>
   <data name="Account.CannotDeleteSelf" xml:space="preserve"><value>Нельзя удалить собственную учётную запись</value></data>
   <data name="Home.Title" xml:space="preserve"><value>Главная</value></data>
-  <data name="Home.Welcome" xml:space="preserve"><value>Погода и маршруты на одной карте</value></data>
+  <data name="Home.Welcome" xml:space="preserve"><value>Узнайте погоду на всём пути ещё до выезда</value></data>
   <data name="Home.WelcomeUser" xml:space="preserve"><value>Добро пожаловать, {0}!</value></data>
-  <data name="Home.Lead" xml:space="preserve"><value>Узнайте, какая погода ждёт вас на каждом участке пути, и вызовите спецтранспорт, если нужна помощь. Диспетчеры видят заявки на карте и сразу назначают исполнителей.</value></data>
-  <data name="Home.OpenMap" xml:space="preserve"><value>Открыть карту</value></data>
-  <data name="Home.Feature.Weather.Title" xml:space="preserve"><value>Погода в точке</value></data>
-  <data name="Home.Feature.Weather.Text" xml:space="preserve"><value>Щёлкните правой кнопкой мыши по карте, чтобы поставить метку и увидеть актуальную погоду.</value></data>
+  <data name="Home.Lead" xml:space="preserve"><value>Постройте маршрут, и мы покажем погоду на каждом участке в то время, когда вы туда доедете. Сравните время выезда и выберите, когда ехать.</value></data>
+  <data name="Home.OpenMap" xml:space="preserve"><value>Построить маршрут</value></data>
+  <data name="Home.Feature.Weather.Title" xml:space="preserve"><value>Погода в любой точке</value></data>
+  <data name="Home.Feature.Weather.Text" xml:space="preserve"><value>Щёлкните правой кнопкой мыши по карте, чтобы поставить метку, узнать текущую погоду и проложить туда маршрут.</value></data>
   <data name="Home.Feature.Route.Title" xml:space="preserve"><value>Погода на маршруте</value></data>
-  <data name="Home.Feature.Route.Text" xml:space="preserve"><value>Постройте маршрут и увидите опасные участки по прогнозу на время, когда вы туда доедете.</value></data>
-  <data name="Home.Feature.Transport.Title" xml:space="preserve"><value>Вызов спецтранспорта</value></data>
-  <data name="Home.Feature.Transport.Text" xml:space="preserve"><value>Вызовите спецтранспорт прямо с карты и следите за статусом заявки в реальном времени.</value></data>
-  <data name="Home.Feature.Admin.Title" xml:space="preserve"><value>Администрирование</value></data>
-  <data name="Home.Feature.Admin.Text" xml:space="preserve"><value>Диспетчеры назначают исполнителей, а также управляют заявками, пользователями и ролями.</value></data>
+  <data name="Home.Feature.Route.Text" xml:space="preserve"><value>Каждый участок пути оценивается по прогнозу, а опасные места отмечены на карте: гололёд, снег, ливень, ветер, плохая видимость.</value></data>
   <data name="Login.Title" xml:space="preserve"><value>Вход</value></data>
   <data name="Login.Submit" xml:space="preserve"><value>Войти</value></data>
   <data name="Login.NoAccount" xml:space="preserve"><value>Нет учётной записи?</value></data>
@@ -148,7 +144,7 @@
   <data name="Transport.Stale" xml:space="preserve"><value>Заявку только что изменил кто-то другой. Обновите страницу.</value></data>
   <data name="MyRequests.Title" xml:space="preserve"><value>Мои заявки</value></data>
   <data name="MyRequests.Hint" xml:space="preserve"><value>Заявки, которые вы создали или которые назначены вам. Статусы обновляются сами.</value></data>
-  <data name="MyRequests.Empty" xml:space="preserve"><value>Заявок пока нет. Создать заявку можно с карты погоды.</value></data>
+  <data name="MyRequests.Empty" xml:space="preserve"><value>Заявок пока нет. Попросить помощь можно на опасном участке маршрута.</value></data>
   <data name="MyRequests.Role" xml:space="preserve"><value>Ваша роль</value></data>
   <data name="MyRequests.YouAsked" xml:space="preserve"><value>Автор</value></data>
   <data name="MyRequests.YouExecute" xml:space="preserve"><value>Исполнитель</value></data>
@@ -157,11 +153,10 @@
   <data name="RouteWeather.DepartNow" xml:space="preserve"><value>Сейчас</value></data>
   <data name="RouteWeather.DepartIn" xml:space="preserve"><value>Через {0} ч</value></data>
   <data name="RouteWeather.Disclaimer" xml:space="preserve"><value>Оценка ориентировочная: она основана на прогнозе с шагом 3 часа и не заменяет сводки дорожных служб.</value></data>
-  <data name="TransportForm.Title" xml:space="preserve"><value>Вызов спецтранспорта</value></data>
+  <data name="TransportForm.Title" xml:space="preserve"><value>Нужна помощь на дороге</value></data>
   <data name="TransportForm.Place" xml:space="preserve"><value>Координаты</value></data>
-  <data name="TransportForm.Submit" xml:space="preserve"><value>Отправить заявку</value></data>
+  <data name="TransportForm.Submit" xml:space="preserve"><value>Попросить помощь</value></data>
   <data name="TransportForm.Close" xml:space="preserve"><value>Закрыть</value></data>
-  <data name="MapJs.RequestTransport" xml:space="preserve"><value>Вызвать спецтранспорт</value></data>
   <data name="MapJs.TransportFailed" xml:space="preserve"><value>Не удалось отправить заявку.</value></data>
   <data name="MapJs.RiskLow" xml:space="preserve"><value>Без опасных явлений</value></data>
   <data name="MapJs.RiskModerate" xml:space="preserve"><value>Будьте внимательны</value></data>
@@ -189,4 +184,14 @@
   <data name="LiveJs.StatusInProgress" xml:space="preserve"><value>в работе</value></data>
   <data name="LiveJs.StatusCompleted" xml:space="preserve"><value>выполнена</value></data>
   <data name="LiveJs.StatusCancelled" xml:space="preserve"><value>отменена</value></data>
+  <data name="Home.ForTravelers" xml:space="preserve"><value>В дорогу</value></data>
+  <data name="Home.ForServices" xml:space="preserve"><value>Помощь в пути и дорожные службы</value></data>
+  <data name="Home.Feature.Departure.Title" xml:space="preserve"><value>Когда лучше выехать</value></data>
+  <data name="Home.Feature.Departure.Text" xml:space="preserve"><value>Сравните выезд сейчас, через несколько часов или завтра и посмотрите, как изменится погода в пути.</value></data>
+  <data name="Home.Feature.Help.Title" xml:space="preserve"><value>Помощь на дороге</value></data>
+  <data name="Home.Feature.Help.Text" xml:space="preserve"><value>На опасном участке маршрута можно попросить помощь и следить за статусом заявки в реальном времени.</value></data>
+  <data name="Home.Feature.Dispatch.Title" xml:space="preserve"><value>Рабочее место диспетчера</value></data>
+  <data name="Home.Feature.Dispatch.Text" xml:space="preserve"><value>Службы видят заявки на карте и в таблице, назначают исполнителей и сразу получают обновления статусов.</value></data>
+  <data name="TransportForm.Hint" xml:space="preserve"><value>Заявку получит диспетчер дорожной службы и назначит исполнителя. Статус можно смотреть в разделе «Мои заявки».</value></data>
+  <data name="MapJs.RoadsideHelp" xml:space="preserve"><value>Нужна помощь на дороге</value></data>
 </root>
