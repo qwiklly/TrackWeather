@@ -7,7 +7,7 @@ namespace TrackWeatherWeb.Options
         public const string SectionName = "Jwt";
 
         // HMAC-SHA256 needs at least 256 bits
-        [Required(ErrorMessage = "Jwt:Key is not configured. Set it with `dotnet user-secrets` or the Jwt__Key environment variable.")]
+        [Required(ErrorMessage = "Jwt:Key is not configured. Set the Jwt__Key environment variable.")]
         [MinLength(32, ErrorMessage = "Jwt:Key must be at least 32 characters long.")]
         public string Key { get; set; } = string.Empty;
 

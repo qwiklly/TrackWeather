@@ -281,6 +281,33 @@ namespace IntegrationTests
         }
     }
 
+    public class JwtKeyConfigurationTests
+    {
+        [Fact]
+        public async Task Development_StartsWithoutAKey_AndIssuesWorkingTokens()
+        {
+            using var app = new TestApp(environment: "Development", jwtKey: "");
+
+            var token = await app.GetJwtAsync(TestApp.AdminEmail, TestApp.AdminPassword);
+
+            var client = app.CreateClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            Assert.Equal(HttpStatusCode.OK, (await client.GetAsync("/api/users")).StatusCode);
+        }
+
+        [Theory]
+        [InlineData("Production")]
+        [InlineData("Staging")]
+        public void OtherEnvironments_RefuseToStartWithoutAKey(string environment)
+        {
+            using var app = new TestApp(environment: environment, jwtKey: "");
+
+            var exception = Assert.ThrowsAny<Exception>(() => app.CreateClient());
+
+            Assert.Contains("Jwt:Key is not configured", exception.ToString());
+        }
+    }
+
     public class DatabaseInitializerTests
     {
         [Fact]

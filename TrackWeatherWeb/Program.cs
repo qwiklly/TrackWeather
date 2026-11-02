@@ -13,6 +13,7 @@ using Microsoft.OpenApi;
 using Serilog;
 using System.Globalization;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
@@ -40,8 +41,17 @@ try
         .ReadFrom.Services(services), preserveStaticLogger: true);
 
     // Options validated at startup, so a missing secret fails fast with a clear message
+    var temporaryJwtKey = Convert.ToBase64String(RandomNumberGenerator.GetBytes(48));
     builder.Services.AddOptions<JwtOptions>()
         .BindConfiguration(JwtOptions.SectionName)
+        // Development should start on a fresh clone; every other environment must be given a real key
+        .PostConfigure(options =>
+        {
+            if (builder.Environment.IsDevelopment() && string.IsNullOrWhiteSpace(options.Key))
+            {
+                options.Key = temporaryJwtKey;
+            }
+        })
         .ValidateDataAnnotations()
         .ValidateOnStart();
     builder.Services.AddOptions<OpenWeatherOptions>().BindConfiguration(OpenWeatherOptions.SectionName);
@@ -191,6 +201,11 @@ try
     builder.Services.AddTransient<DatabaseInitializer>();
 
     var app = builder.Build();
+
+    if (!app.Environment.IsEnvironment("Testing"))
+    {
+        app.LogMissingSettings();
+    }
 
     await using (var scope = app.Services.CreateAsyncScope())
     {

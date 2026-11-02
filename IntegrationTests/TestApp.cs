@@ -26,11 +26,19 @@ namespace IntegrationTests
         private readonly SqliteConnection _connection = new("DataSource=:memory:");
         private readonly int _authPermitsPerMinute;
         private readonly int _userActionsPerMinute;
+        private readonly string _environment;
+        private readonly string _jwtKey;
 
         public FakeWeatherRepo Weather { get; } = new();
 
-        public TestApp(int authPermitsPerMinute = 10_000, int userActionsPerMinute = 10_000)
+        public TestApp(
+            int authPermitsPerMinute = 10_000,
+            int userActionsPerMinute = 10_000,
+            string environment = "Testing",
+            string jwtKey = "integration-tests-only-signing-key-0123456789")
         {
+            _environment = environment;
+            _jwtKey = jwtKey;
             _authPermitsPerMinute = authPermitsPerMinute;
             _userActionsPerMinute = userActionsPerMinute;
             _connection.Open();
@@ -38,10 +46,10 @@ namespace IntegrationTests
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
-            builder.UseEnvironment("Testing");
+            builder.UseEnvironment(_environment);
             builder.ConfigureAppConfiguration(configuration => configuration.AddInMemoryCollection(new Dictionary<string, string?>
             {
-                ["Jwt:Key"] = "integration-tests-only-signing-key-0123456789",
+                ["Jwt:Key"] = _jwtKey,
                 ["Jwt:Issuer"] = "TrackWeather",
                 ["Jwt:Audience"] = "TrackWeather.Api",
                 ["Seed:AdminEmail"] = AdminEmail,
